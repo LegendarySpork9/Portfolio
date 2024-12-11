@@ -120,3 +120,71 @@ Like most of my tools, the Log4Net library is used to perform detailed logging t
 Minor configurtion required under "appSettings" in App.config to allow for operation.
 
 #### Repo Link: https://github.com/LegendarySpork9/RAG-Report-V3
+
+## Server Backup Tool
+Created as a way to backup game server world data for if there was ever a need to roll the game back such as corruption or data loss. This operates on the machine where the game server is hosted and runs the server internally. When opened, the tool will calculate the time between now and the specified backup time. It will set a timer for then and start the server. Commands to the server can still be entered through the tool's console by typing it out and hitting enter.
+
+![Main App](https://github.com/LegendarySpork9/Portfolio/blob/main/Images/SBT/App.png?raw=true)
+
+It will also send out emails if configured to do so, the body of which can be read from .html files or directly from the App.config. These can be triggered off server messages or set system messages such as open/close events. Warnings can also be set up to trigger at intervals before the actual backup time. These will send messages through the sever to players when the timer has elapsed. With a wide configuration, the tool can be customised to perform largely to the user’s preferences.
+
+![Email](https://github.com/LegendarySpork9/Portfolio/blob/main/Images/SBT/Email.png?raw=true)
+
+### History
+This is actually the third iteration of this tool! 
+
+Originally conceptualised as a console app to sync multiple local game servers between my friend’s computers. As we didn’t want to pay for server hosting and our computers couldn’t be left on 24/7, each player would have a local copy of the server that they would run. The original version would check every 5 minutes for the server in processes, then would ZIP the files to Dropbox when the sever closed. This would then be picked up and extracted by the other installations of the tool.
+
+#### Repo Link: https://github.com/LegendarySpork9/Other-Projects/tree/main/Minecraft%20Server%20Sync
+
+The tool was then updated with a huge upgrade to a windows form UI with more control while still using the Dropbox link method. In this instance, the tool would run the server with internal logging and server control. The user would be able to send commands to the server as well as stopping and starting it. Once started, a file in Dropbox would be updated to say the server is running. This would then propagate a maximum of five minutes later across all installations, preventing other players from starting their own localised copy.
+
+#### Repo Link: https://github.com/LegendarySpork9/Server-Sync
+
+Both previous versions worked well but had their issues. These issues eventually resulted in my friends and I paying for server hosting. Eventually, I would invest in a mini-PC which could host our games servers 24/7 without issue. We would, however, lose the automated backup feature paid server hosting offered. As such I would update the then Server Sync once more into the tool it is now.
+
+### Log4Net
+Once again Log4Net comes through and is used to control all logging both to the console and to log files. In this tool, two log files are generated, one for the tool and one for the game server. These files are also archived once a backup of the server takes place. This is so that it is easier to identify which logs belong to which server world data.
+
+![Logging](https://github.com/LegendarySpork9/Portfolio/blob/main/Images/SBT/Log4Net.png?raw=true)
+
+### Configuration
+This is where things get tricky. Due to the operation of this tool, there are LOADS of things that must be filled out for it to function. Most importantly are the server details and timer details. The notifications, while nice, are not required for functionality and are essentially used as another diagnostic function within the tool.
+
+![Configuration](https://github.com/LegendarySpork9/Portfolio/blob/main/Images/SBT/Configuration.png?raw=true)
+
+#### Repo Link: https://github.com/LegendarySpork9/Server-Backup-Tool
+
+## Hunter Industries API
+This is my first attempt at web development. Created to store the global configuration of my virtual assistant project that has been expanded to eventually encompass more of my tools and applications. Functions using IIS and a Web.config allowing for users to test and call the API to get a variety of information that they need. Returns easy to process and use JSON with a simple Swagger page detailing the calls and return types.
+
+![Swagger](https://github.com/LegendarySpork9/Portfolio/blob/main/Images/HIAPI/Swagger.png?raw=true)
+
+#### Swagger: https://hunter-industries.co.uk/swagger/ui/index
+
+### Origin
+Hunter Industries is currently a fictional company featured in my books and lore behind my in-game characters. It will eventually exist as a copyright entity that I will register some of my applications under like the Server Backup Tool. The API was developed to move away from Dropbox links/downloads to a more user friendly and accessible/reliable service. Through my interaction with APIs, I decided it would be good to make one both for personal and professional development.
+
+### History
+The API was originally programmed as a .NET MVC project but when it came to deploying it was found to be terrible. It was also poorly written upon retrospect and although it functioned, it left a lot to be desired. A friend of mine reviewed and simple asked “Why?” when he looked at how I had written it. He then helped me get my .NET Framework web API set up and left the rest to me. I then rewrote the entire project into a more friendly application.
+
+### Operation
+The first call to make is to the Token endpoint. Here you are required to give a basic authorisation in the form of Username and Password. A JSON body must also be provided with the key “phrase” which tells the API which application you are looking to access. If you pass authentication, a bearer token will be returned lasting 15 minutes with the scope information telling you what you can and can’t access.
+
+![Token](https://github.com/LegendarySpork9/Portfolio/blob/main/Images/HIAPI/Token%20Call.png?raw=true)
+
+The bearer token is used as authorisation for all other calls which return their own JSON depending on the given filters, bodies and token. Currently, the API is only set up for the Virtual Assistant project but will eventually support more of my tools/projects as I move to shift from .config files to JSON where appropriate.
+
+![Audit History](https://github.com/LegendarySpork9/Portfolio/blob/main/Images/HIAPI/Audit%20History.png?raw=true)
+
+All the data is stored on a SQL database which the API is used to interface with.
+
+### Log4Net
+Once again used to handle the logging for the API. It will output detailed diagnostic information to both a .log file and a SQL table. The SQL table looks to store errors while the .log files store the remaining diagnostic data. From the logs you can see what the call was made with, what it extracted from the database and what it returned as well as any decision making it does along the way.
+
+![Logs](https://github.com/LegendarySpork9/Portfolio/blob/main/Images/HIAPI/Logs.png?raw=true)
+
+### Testing
+If you wish to test the API for yourself then let me know and a user can be setup and provided to you.
+
+#### Repo Link: https://github.com/LegendarySpork9/Hunter-Industries-API
