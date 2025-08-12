@@ -1,4 +1,5 @@
 import Navbar from '../../Components/Navbar/Navbar'
+import RightSidebar from '../../Components/Sidebars/Right/RightSidebar'
 import './Home.css'
 
 function Home() {
@@ -21,6 +22,7 @@ function Home() {
           </a>
         </header>
       </div>
+      <RightSidebar />
     </div>
   );
 }
