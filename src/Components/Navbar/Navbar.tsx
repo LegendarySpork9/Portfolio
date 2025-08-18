@@ -1,6 +1,6 @@
 import './Navbar.css';
 
-const Navbar = () => {
+function Navbar() {
   return (
     <nav className="navbar" >
       <a href="https://github.com/LegendarySpork9" style={{paddingLeft: "2rem"}}>
@@ -16,4 +16,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Navbar

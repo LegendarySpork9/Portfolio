@@ -1,0 +1,83 @@
+.dropdown-container { 
+  margin-top: 8px; 
+  width: 260px; 
+}
+
+.dropdown-label { 
+  color: white !important; 
+}
+
+.dropdown-select { 
+  background-color: #1e2430 !important; 
+  color: white !important; 
+}
+
+.MuiOutlinedInput-root {
+  height: 48px;
+}
+
+.MuiOutlinedInput-notchedOutline { 
+  border-color: #444 !important; 
+}
+
+.Mui-focused .MuiOutlinedInput-notchedOutline { 
+  border-color: #00ff66 !important; 
+}
+
+.dropdown-menu-paper {
+  background-color: #1e2430 !important;
+  color: white !important;
+  max-height: 90vh;
+  overflow: auto;
+}
+
+.dropdown-controls {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: #1e2430;
+  z-index: 1;
+}
+
+.btn {
+  flex: 1;
+  font-size: 12px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:disabled { 
+  opacity: 0.5; 
+  cursor: default; 
+}
+
+.btn-ghost { 
+  background: #3e3e3e; 
+  color: #9aa3ab; 
+}
+
+.btn-primary { 
+  background: #3e7abe; 
+  color: #ffffff; 
+}
+
+.dropdown-divider { 
+  background-color: #555 !important; 
+  margin: 4px 0 !important; 
+}
+
+.dropdown-menu-paper::-webkit-scrollbar { 
+  width: 12px; 
+}
+
+.dropdown-menu-paper::-webkit-scrollbar-track { 
+  background: #1e2430; 
+}
+
+.dropdown-menu-paper::-webkit-scrollbar-thumb {
+  background-color: #3e7abe;
+  border-radius: 6px;
+  border: 3px solid #1e2430;
+}

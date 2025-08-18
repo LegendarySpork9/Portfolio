@@ -16,7 +16,7 @@
   }
   
   .sidebar.expanded {
-    width: 192px;
+    width: 276px;
   }
   
   .sidebar-content {
@@ -24,6 +24,10 @@
     align-items: center;
     padding: 8px;
     gap: 12px;
+  }
+
+  .sidebar-content-dropdown {
+    width: 260px;
   }
   
   .sidebar-image {
