@@ -32,11 +32,12 @@ function GetStyles(name: string, selected: string[], theme: Theme) {
 interface DropdownMUIProps {
   label: string;
   options: string[];
+  selected: string[];
+  setSelected: (value: string[]) => void;
 }
 
-const DropdownMUI = ({ label, options }: DropdownMUIProps) => {
+const DropdownMUI = ({ label, options, selected, setSelected }: DropdownMUIProps) => {
   const theme = useTheme();
-  const [selected, setSelected] = React.useState<string[]>([]);
 
   const handleChange = (event: SelectChangeEvent<typeof selected>) => {
     const { value } = event.target;
