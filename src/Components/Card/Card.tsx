@@ -17,6 +17,20 @@ interface ItemCardProps {
 }
 
 const ItemCard = ({image, title, status, date}: ItemCardProps) => {
+  var message: string
+  
+  if (status === "Green"){
+    message = "There are no GitHub issues for this item."
+  }
+
+  else if (status === "Yellow"){
+    message = "There are more GitHub issues that are new features than bugs for this item."
+  }
+
+  else{
+    message = "There are more GitHub issues that are bugs than new features for this item."
+  }
+
   return (
     <Card className="card" >
       <CardActionArea className="card-action" >
@@ -36,13 +50,13 @@ const ItemCard = ({image, title, status, date}: ItemCardProps) => {
           </Paper>
 
           <div className="card-div" style={{marginTop: "10px"}} >
-            <Tooltip className="card-tooltip" title="Issue Indicator: Green = 0, Yellow = < New Features, Red = < Bugs" arrow placement="top" >
+            <Tooltip className="card-tooltip" title={message} arrow placement="top" >
               <Paper className="card-paper" >
                 <Circle style={{color: status, fontSize: 14}} />
               </Paper>
             </Tooltip>
 
-            <Tooltip className="card-tooltip" title="Last Modified Date" arrow placement="top" >
+            <Tooltip className="card-tooltip" title="Last Release Date" arrow placement="top" >
               <Paper className="card-paper" style={{flex: "1"}} >
                 <Typography variant="subtitle2" color="var(--colour-text)" >
                   {date}

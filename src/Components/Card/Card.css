@@ -2,6 +2,11 @@
     border-radius: 5px;
     background-color: var(--colour-object) !important;
     box-shadow: 0px 0px 6px 1px rgba(0,0,0,0.10);
+    transition: 0.3s !important;
+}
+
+.card:hover {
+    transform: scale(1.025);
 }
 
 .card-action {

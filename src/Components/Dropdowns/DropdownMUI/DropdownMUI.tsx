@@ -18,7 +18,7 @@ const MenuProps: any = {
     disablePadding: true, 
     autoFocusItem: false 
   },
-  disableAutoFocusItem: true,
+  disableAutoFocusItem: true
 };
 
 function GetStyles(name: string, selected: string[], theme: Theme) {
