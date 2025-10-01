@@ -2,10 +2,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #3E3E3E;
+  background: var(--colour-object);
   padding-top: 1rem;
   padding-bottom: 1rem;
-  color: white;
+  color: var(--colour-text);
   position: fixed;
   top: 0;
   left: 0;

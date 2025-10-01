@@ -6,6 +6,7 @@ import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography';
 import Circle from '@mui/icons-material/Circle';
 import Tooltip from '@mui/material/Tooltip';
+import "../../Colours.css";
 import './Card.css';
 
 interface ItemCardProps {
@@ -29,7 +30,7 @@ const ItemCard = ({image, title, status, date}: ItemCardProps) => {
 
         <CardContent>
           <Paper className="card-paper" >
-            <Typography variant="subtitle2" color="white" >
+            <Typography variant="subtitle2" color="var(--colour-text)" >
               {title}
             </Typography>
           </Paper>
@@ -43,7 +44,7 @@ const ItemCard = ({image, title, status, date}: ItemCardProps) => {
 
             <Tooltip className="card-tooltip" title="Last Modified Date" arrow placement="top" >
               <Paper className="card-paper" style={{flex: "1"}} >
-                <Typography variant="subtitle2" color="white" >
+                <Typography variant="subtitle2" color="var(--colour-text)" >
                   {date}
                 </Typography>
               </Paper>

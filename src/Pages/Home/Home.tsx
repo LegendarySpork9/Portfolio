@@ -1,6 +1,7 @@
 import Navbar from '../../Components/Navbar/Navbar'
 import RightSidebar from '../../Components/Sidebars/Right/RightSidebar'
 import Card from '../../Components/Card/Card'
+import "../../Colours.css";
 import './Home.css'
 
 const items = [

@@ -1,3 +1,4 @@
+import "../../Colours.css";
 import './Navbar.css';
 
 function Navbar() {

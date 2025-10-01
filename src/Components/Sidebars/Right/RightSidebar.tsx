@@ -1,6 +1,7 @@
 import { useState } from "react";
 import DropdownMUI from "../../Dropdowns/DropdownMUI/DropdownMUI";
 import Badge from '@mui/material/Badge'
+import "../../../Colours.css";
 import './RightSidebar.css'
 
 function RightSidebar() {
