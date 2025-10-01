@@ -12,11 +12,11 @@ import "./DropdownMUI.css";
 const MenuProps: any = {
   PaperProps: { 
     className: "dropdown-menu-paper", 
-    style: { maxHeight: 48 * 4.5 + 8 } 
+    style: { maxHeight: 48 * 4.5 + 8, marginLeft: 8 } 
   },
   MenuListProps: { 
     disablePadding: true, 
-    autoFocusItem: false 
+    autoFocusItem: false
   },
   disableAutoFocusItem: true
 };
