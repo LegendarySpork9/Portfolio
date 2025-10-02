@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navbar from '../../Components/Navbar/Navbar'
 import RightSidebar from '../../Components/Sidebars/Right/RightSidebar'
 import Card from '../../Components/Card/Card'
@@ -10,77 +11,115 @@ const items = [
     image: "https://raw.githubusercontent.com/LegendarySpork9/Other-Projects/refs/heads/main/NASA%20Image%20Report/NASA%20Image%20Report/Content/Logo.ico",
     title: "NASA Image Report",
     status: "Green",
-    date: "30 September 2025 21:20"
+    date: "30 September 2025 21:20",
+    tags: ["C#", ".NET", "Windows"]
   },
   {
     id: 2,
     image: "https://raw.githubusercontent.com/LegendarySpork9/Other-Projects/refs/heads/main/NASA%20Image%20Report/NASA%20Image%20Report/Content/Logo.ico",
     title: "GitHub to Codecks",
     status: "Yellow",
-    date: "30 September 2025 21:20"
+    date: "30 September 2025 21:20",
+    tags: ["C#", ".NET", "Windows"]
   },
   {
     id: 3,
     image: "https://raw.githubusercontent.com/LegendarySpork9/Other-Projects/refs/heads/main/NASA%20Image%20Report/NASA%20Image%20Report/Content/Logo.ico",
     title: "Hunter Industries API",
     status: "Red",
-    date: "30 September 2025 21:20"
+    date: "30 September 2025 21:20",
+    tags: ["C#", "CSS", "SQL", ".NET Framework", "ASP.NET", "Website"]
   },
   {
     id: 4,
     image: "https://raw.githubusercontent.com/LegendarySpork9/Other-Projects/refs/heads/main/NASA%20Image%20Report/NASA%20Image%20Report/Content/Logo.ico",
     title: "Server Status",
     status: "Green",
-    date: "30 September 2025 21:20"
+    date: "30 September 2025 21:20",
+    tags: ["C#", "HTML", "CSS", ".NET", "MSTest", "Website"]
   },
   {
     id: 5,
     image: "https://raw.githubusercontent.com/LegendarySpork9/Other-Projects/refs/heads/main/NASA%20Image%20Report/NASA%20Image%20Report/Content/Logo.ico",
     title: "Server Backup Tool",
     status: "Yellow",
-    date: "30 September 2025 21:20"
+    date: "30 September 2025 21:20",
+    tags: ["C#", ".NET", "MSTest", "Windows"]
   },
   {
     id: 6,
     image: "https://raw.githubusercontent.com/LegendarySpork9/Other-Projects/refs/heads/main/NASA%20Image%20Report/NASA%20Image%20Report/Content/Logo.ico",
     title: "Database BLM Creator",
     status: "Red",
-    date: "30 September 2025 21:20"
+    date: "30 September 2025 21:20",
+    tags: ["C#", ".NET", "Windows"]
   },
   {
     id: 7,
     image: "https://raw.githubusercontent.com/LegendarySpork9/Other-Projects/refs/heads/main/NASA%20Image%20Report/NASA%20Image%20Report/Content/Logo.ico",
     title: "RAG V3",
     status: "Red",
-    date: "30 September 2025 21:20"
+    date: "30 September 2025 21:20",
+    tags: ["C#", ".NET", "Windows"]
   },
   {
     id: 8,
     image: "https://raw.githubusercontent.com/LegendarySpork9/Other-Projects/refs/heads/main/NASA%20Image%20Report/NASA%20Image%20Report/Content/Logo.ico",
     title: "Google Drive Sync",
     status: "Red",
-    date: "30 September 2025 21:20"
+    date: "30 September 2025 21:20",
+    tags: ["C#", ".NET Framework", "MSTest", "Windows"]
   }
 ]
 
 function Home() {
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+  const [selectedFrameworks, setSelectedFrameworks] = useState<string[]>([]);
+  const [selectedEnvironments, setSelectedEnvironments] = useState<string[]>([]);
+
+  var displayItems: {
+    id: number;
+    image: string;
+    title: string;
+    status: string;
+    date: string;
+    tags: string[];
+  }[];
+
+  if (selectedLanguages.length > 0 || selectedFrameworks.length > 0 || selectedEnvironments.length > 0){
+    displayItems = items.filter(item => Object.values(item.tags).some(tag => selectedLanguages.includes(tag)) || Object.values(item.tags).some(tag => selectedFrameworks.includes(tag)) || Object.values(item.tags).some(tag => selectedEnvironments.includes(tag)))
+  }
+
+  else {
+    displayItems = items
+  }
+
   return (
     <div className="home-container">
       <Navbar />
 
       <div className="grid-container">
-        {items.map((item) => (
-          <Card
-            key={item.id}
-            image={item.image}
-            title={item.title}
-            status={item.status}
-            date={item.date}
-          />
-        ))}
+        {
+          displayItems.map((item) => (
+            <Card
+              key={item.id}
+              image={item.image}
+              title={item.title}
+              status={item.status}
+              date={item.date}
+            />
+          ))
+        }
       </div>
       
-      <RightSidebar />
+      <RightSidebar 
+        languages={selectedLanguages} 
+        setLanguages={setSelectedLanguages} 
+        frameworks={selectedFrameworks} 
+        setFrameworks={setSelectedFrameworks} 
+        environments={selectedEnvironments} 
+        setEnvironments={setSelectedEnvironments}
+      />
     </div>
   );
 }

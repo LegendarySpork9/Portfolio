@@ -4,25 +4,30 @@ import Badge from '@mui/material/Badge'
 import "../../../Colours.css";
 import './RightSidebar.css'
 
-function RightSidebar() {
-  const [hovered, setHovered] = useState(false);
+interface RightSidebarProps {
+  languages: string[];
+  setLanguages: (value: string[]) => void;
+  frameworks: string[];
+  setFrameworks: (value: string[]) => void;
+  environments: string[];
+  setEnvironments: (value: string[]) => void;
+}
 
-  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
-  const [selectedFrameworks, setSelectedFrameworks] = useState<string[]>([]);
-  const [selectedEnvironments, setSelectedEnvironments] = useState<string[]>([]);
+function RightSidebar({ languages, setLanguages, frameworks, setFrameworks, environments, setEnvironments }: RightSidebarProps) {
+  const [hovered, setHovered] = useState(false);
 
   return (
     <div className={`sidebar ${hovered ? "expanded" : "collapsed"}`} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <div className="sidebar-content">
         {hovered && (
-          <DropdownMUI label="Languages" options={["C#", "Python", "HTML", "CSS", "SQL"]} selected={selectedLanguages} setSelected={setSelectedLanguages} />
+          <DropdownMUI label="Languages" options={["C#", "Python", "HTML", "CSS", "SQL"]} selected={languages} setSelected={setLanguages} />
         )}
         {!hovered && (
           <Badge
-            badgeContent={selectedLanguages.length} 
+            badgeContent={languages.length} 
             color="error" 
             overlap="rectangular" 
-            invisible={selectedLanguages.length === 0} 
+            invisible={languages.length === 0} 
             anchorOrigin={{ vertical: "top", horizontal: "right"}}
             classes={{ badge: "custom-badge"}}
           >
@@ -32,14 +37,14 @@ function RightSidebar() {
       </div>
       <div className="sidebar-content">
         {hovered && (
-          <DropdownMUI label="Frameworks" options={[".NET", ".NET Framework", "React", "MSTest", "ASP.NET", "ASPX"]} selected={selectedFrameworks} setSelected={setSelectedFrameworks} />
+          <DropdownMUI label="Frameworks" options={[".NET", ".NET Framework", "React", "MSTest", "ASP.NET", "ASPX"]} selected={frameworks} setSelected={setFrameworks} />
         )}
         {!hovered && (
           <Badge
-            badgeContent={selectedFrameworks.length} 
+            badgeContent={frameworks.length} 
             color="error" 
             overlap="rectangular" 
-            invisible={selectedFrameworks.length === 0} 
+            invisible={frameworks.length === 0} 
             anchorOrigin={{ vertical: "top", horizontal: "right"}}
             classes={{ badge: "custom-badge"}}
           >
@@ -49,14 +54,14 @@ function RightSidebar() {
       </div>
       <div className="sidebar-content">
         {hovered && (
-          <DropdownMUI label="Environments" options={["Windows", "Website"]} selected={selectedEnvironments} setSelected={setSelectedEnvironments} />
+          <DropdownMUI label="Environments" options={["Windows", "Website"]} selected={environments} setSelected={setEnvironments} />
         )}
         {!hovered && (
           <Badge
-            badgeContent={selectedEnvironments.length} 
+            badgeContent={environments.length} 
             color="error" 
             overlap="rectangular" 
-            invisible={selectedEnvironments.length === 0} 
+            invisible={environments.length === 0} 
             anchorOrigin={{ vertical: "top", horizontal: "right"}}
             classes={{ badge: "custom-badge"}}
           >
