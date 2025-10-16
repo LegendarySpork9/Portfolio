@@ -73,6 +73,8 @@ const items = [
 ]
 
 function Home() {
+  const [openLogin, setOpenLogin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
   const [selectedFrameworks, setSelectedFrameworks] = useState<string[]>([]);
   const [selectedEnvironments, setSelectedEnvironments] = useState<string[]>([]);
@@ -96,7 +98,7 @@ function Home() {
 
   return (
     <div className="home-container">
-      <Navbar />
+      <Navbar open={openLogin} setOpen={setOpenLogin} setAdmin={setIsAdmin} />
 
       <div className="grid-container">
         {

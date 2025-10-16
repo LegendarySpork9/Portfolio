@@ -27,7 +27,7 @@ const ItemCard = ({image, title, status, date}: ItemCardProps) => {
     message = "There are more GitHub issues that are new features than bugs for this item."
   }
 
-  else{
+  else {
     message = "There are more GitHub issues that are bugs than new features for this item."
   }
 
