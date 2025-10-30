@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: space-between;
   background: var(--colour-object);
+  box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.46);
   padding-top: 1rem;
   padding-bottom: 1rem;
   color: var(--colour-text);

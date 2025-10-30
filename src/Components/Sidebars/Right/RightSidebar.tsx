@@ -1,6 +1,6 @@
 import { useState } from "react";
 import DropdownMUI from "../../Dropdowns/DropdownMUI/DropdownMUI";
-import Badge from '@mui/material/Badge'
+import Badge from '@mui/material/Badge';
 import "../../../Colours.css";
 import './RightSidebar.css'
 
@@ -17,8 +17,8 @@ function RightSidebar({ languages, setLanguages, frameworks, setFrameworks, envi
   const [hovered, setHovered] = useState(false);
 
   return (
-    <div className={`sidebar ${hovered ? "expanded" : "collapsed"}`} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
-      <div className="sidebar-content">
+    <div className={`sidebar-right ${hovered ? "expanded" : "collapsed"}`} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+      <div className="sidebar-right-content">
         {hovered && (
           <DropdownMUI label="Languages" options={["C#", "Python", "HTML", "CSS", "SQL"]} selected={languages} setSelected={setLanguages} />
         )}
@@ -31,11 +31,11 @@ function RightSidebar({ languages, setLanguages, frameworks, setFrameworks, envi
             anchorOrigin={{ vertical: "top", horizontal: "right"}}
             classes={{ badge: "custom-badge"}}
           >
-            <img src="/filter.svg" alt="Language" className="sidebar-image" />
+            <img src="/filter.svg" alt="Language" className="sidebar-right-image" />
           </Badge>
         )}
       </div>
-      <div className="sidebar-content">
+      <div className="sidebar-right-content">
         {hovered && (
           <DropdownMUI label="Frameworks" options={[".NET", ".NET Framework", "React", "MSTest", "ASP.NET", "ASPX"]} selected={frameworks} setSelected={setFrameworks} />
         )}
@@ -48,11 +48,11 @@ function RightSidebar({ languages, setLanguages, frameworks, setFrameworks, envi
             anchorOrigin={{ vertical: "top", horizontal: "right"}}
             classes={{ badge: "custom-badge"}}
           >
-            <img src="/filter.svg" alt="Language" className="sidebar-image" />
+            <img src="/filter.svg" alt="Language" className="sidebar-right-image" />
           </Badge>
         )}
       </div>
-      <div className="sidebar-content">
+      <div className="sidebar-right-content">
         {hovered && (
           <DropdownMUI label="Environments" options={["Windows", "Website"]} selected={environments} setSelected={setEnvironments} />
         )}
@@ -65,7 +65,7 @@ function RightSidebar({ languages, setLanguages, frameworks, setFrameworks, envi
             anchorOrigin={{ vertical: "top", horizontal: "right"}}
             classes={{ badge: "custom-badge"}}
           >
-            <img src="/filter.svg" alt="Language" className="sidebar-image" />
+            <img src="/filter.svg" alt="Language" className="sidebar-right-image" />
           </Badge>
         )}
       </div>

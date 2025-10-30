@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Navbar from '../../Components/Navbar/Navbar'
+import LeftSidebar from '../../Components/Sidebars/Left/LeftSidebar'
 import RightSidebar from '../../Components/Sidebars/Right/RightSidebar'
 import Card from '../../Components/Card/Card'
 import "../../Colours.css";
@@ -98,8 +99,6 @@ function Home() {
 
   return (
     <div className="home-container">
-      <Navbar open={openLogin} setOpen={setOpenLogin} setAdmin={setIsAdmin} />
-
       <div className="grid-container">
         {
           displayItems.map((item) => (
@@ -113,6 +112,12 @@ function Home() {
           ))
         }
       </div>
+
+      {isAdmin && (
+        <LeftSidebar
+          setAdmin={setIsAdmin}
+        />
+      )}
       
       <RightSidebar 
         languages={selectedLanguages} 
@@ -122,6 +127,8 @@ function Home() {
         environments={selectedEnvironments} 
         setEnvironments={setSelectedEnvironments}
       />
+
+      <Navbar open={openLogin} setOpen={setOpenLogin} setAdmin={setIsAdmin} />
     </div>
   );
 }
