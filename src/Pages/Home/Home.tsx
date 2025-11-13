@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Navbar from '../../Components/Navbar/Navbar'
 import LeftSidebar from '../../Components/Sidebars/Left/LeftSidebar'
 import RightSidebar from '../../Components/Sidebars/Right/RightSidebar'
 import Card from '../../Components/Card/Card'
+import AlertSnackbar from "../../Components/Snackbar/AlertSnackbar";
 import "../../Colours.css";
 import './Home.css'
 
@@ -76,9 +77,30 @@ const items = [
 function Home() {
   const [openLogin, setOpenLogin] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [event, setEvent] = useState("");
+
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
   const [selectedFrameworks, setSelectedFrameworks] = useState<string[]>([]);
   const [selectedEnvironments, setSelectedEnvironments] = useState<string[]>([]);
+
+  const prevIsAdmin = useRef(isAdmin);
+
+  useEffect(() => {
+    if (prevIsAdmin.current === isAdmin) return;
+
+    if (isAdmin) {
+      setEvent("Login");
+      setOpenAlert(true);
+    }
+    
+    else {
+      setEvent("Logout");
+      setOpenAlert(true);
+    }
+
+    prevIsAdmin.current = isAdmin;
+  }, [isAdmin]);
 
   var displayItems: {
     id: number;
@@ -129,6 +151,8 @@ function Home() {
       />
 
       <Navbar open={openLogin} setOpen={setOpenLogin} setAdmin={setIsAdmin} />
+
+      <AlertSnackbar open={openAlert} setOpen={setOpenAlert} event={event}/>
     </div>
   );
 }
