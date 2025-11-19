@@ -130,6 +130,7 @@ function Home() {
               title={item.title}
               status={item.status}
               date={item.date}
+              id={item.id}
             />
           ))
         }

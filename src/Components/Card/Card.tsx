@@ -1,5 +1,6 @@
 import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
+import { useNavigate } from "react-router-dom";
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper'
@@ -14,9 +15,16 @@ interface ItemCardProps {
   title: string;
   status: string;
   date: string;
+  id: number;
 }
 
-const ItemCard = ({image, title, status, date}: ItemCardProps) => {
+const ItemCard = ({image, title, status, date, id}: ItemCardProps) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/viewitem/${id}`);
+  };
+
   var message: string
   
   if (status === "Green"){
@@ -33,7 +41,7 @@ const ItemCard = ({image, title, status, date}: ItemCardProps) => {
 
   return (
     <Card className="card" >
-      <CardActionArea className="card-action" >
+      <CardActionArea className="card-action" onClick={handleClick} >
         <CardMedia
           component="img"
           height="200"
