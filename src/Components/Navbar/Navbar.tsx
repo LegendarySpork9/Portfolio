@@ -1,5 +1,5 @@
 import IconButton from "@mui/material/IconButton";
-import Dialog from '../Dialog/Dialog';
+import LoginForm from '../Dialogs/LoginForm/LoginForm';
 import "../../Colours.css";
 import './Navbar.css';
 
@@ -24,7 +24,7 @@ function Navbar({open, setOpen, setAdmin}: NavebarProps) {
           <img src="/account.png" alt="Account" />
         </IconButton>
       </div>
-      <Dialog open={open} setOpen={setOpen} setAdmin={setAdmin} />
+      <LoginForm open={open} setOpen={setOpen} setAdmin={setAdmin} />
     </nav>
   );
 };

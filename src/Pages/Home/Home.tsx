@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Navbar from '../../Components/Navbar/Navbar'
 import LeftSidebar from '../../Components/Sidebars/Left/LeftSidebar'
 import RightSidebar from '../../Components/Sidebars/Right/RightSidebar'
-import Card from '../../Components/Card/Card'
+import Card from '../../Components/Cards/ItemCard/ItemCard'
 import AlertSnackbar from "../../Components/Snackbar/AlertSnackbar";
 import "../../Colours.css";
 import './Home.css'

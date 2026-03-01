@@ -1,0 +1,9 @@
+.container {
+    background-color: var(--colour-object) !important;
+    color: var(--colour-text) !important;
+}
+
+.container-title {
+    text-align: center;
+    background-color: #81C784;
+}

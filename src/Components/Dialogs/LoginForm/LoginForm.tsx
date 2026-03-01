@@ -6,16 +6,16 @@ import TextField from '@mui/material/TextField';
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import CircularProgress from '@mui/material/CircularProgress';
-import "../../Colours.css";
-import './Dialog.css'
+import "../../../Colours.css";
+import './LoginForm.css'
 
-interface DialogBoxProps {
-    open: boolean;
-    setOpen: (value: boolean) => void;
-    setAdmin: (value: boolean) => void;
+interface LoginFormProps {
+  open: boolean;
+  setOpen: (value: boolean) => void;
+  setAdmin: (value: boolean) => void;
 }
 
-const DialogBox = ({open, setOpen, setAdmin}: DialogBoxProps) => {
+const LoginForm = ({open, setOpen, setAdmin}: LoginFormProps) => {
   const handleClose = () => {
     setOpen(false);
   };
@@ -84,4 +84,4 @@ const DialogBox = ({open, setOpen, setAdmin}: DialogBoxProps) => {
   )
 }
 
-export default DialogBox;
+export default LoginForm;
