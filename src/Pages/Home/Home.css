@@ -19,6 +19,10 @@
   align-items: start;
 }
 
+.grid-container > * {
+  min-width: 0;
+}
+
 .right-sidebar {
   position: absolute;
   top: 0;
