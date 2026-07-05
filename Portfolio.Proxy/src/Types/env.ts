@@ -1,0 +1,15 @@
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      API_URL: string;
+      API_USERNAME: string;
+      API_PASSWORD: string;
+      API_PHRASE: string;
+      SESSION_SECRET: string;
+      CLIENT_ORIGIN: string;
+      PORT: number;
+    }
+  }
+}
+
+export {};
