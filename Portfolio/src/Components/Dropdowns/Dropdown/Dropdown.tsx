@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Dropdown.css";
+import styles from './Dropdown.module.css';
 
 interface DropdownProps {
   label: string;
@@ -24,25 +24,46 @@ const Dropdown: React.FC<DropdownProps> = ({ label, values }) => {
   };
 
   return (
-    <div className="dropdown-wrapper">
-      <div className="dropdown-label">{label}</div>
-      <div className="dropdown-container">
-        <div className="dropdown-header" onClick={() => setIsOpen(!isOpen)}>
-          <span>{selected.length} selected</span>
-          <span className="dropdown-arrow">{isOpen ? "▲" : "▼"}</span>
+    <div className={styles['dropdown-wrapper']}>
+      <div className={styles['dropdown-label']}>
+        {label}
+      </div>
+      <div className={styles['dropdown-container']}>
+        <div
+          className={styles['dropdown-header']}
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <span>
+            {selected.length} selected
+          </span>
+          <span className={styles['dropdown-arrow']}>
+            {isOpen ? "▲" : "▼"}
+          </span>
         </div>
         {isOpen && (
-          <div className="dropdown-body">
-            <div className="dropdown-buttons">
-              <button className="btn-select-all" onClick={toggleSelectAll} disabled={selected.length === values.length}>
+          <div className={styles['dropdown-body']}>
+            <div className={styles['dropdown-buttons']}>
+              <button
+                className={styles['btn-select-all']}
+                onClick={toggleSelectAll}
+                disabled={selected.length === values.length}
+              >
                 Select All
               </button>
-              <button className="btn-select-none" onClick={toggleSelectNone} disabled={selected.length === 0}>
+              <button
+                className={styles['btn-select-none']}
+                onClick={toggleSelectNone}
+                disabled={selected.length === 0}
+              >
                 Select None
               </button>
             </div>
             {values.map((item: string) => (
-              <div key={item} className={`dropdown-item ${isSelected(item) ? "selected" : ""}`} onClick={() => toggleItem(item)}>
+              <div
+                key={item}
+                className={`${styles['dropdown-item']} ${isSelected(item) ? styles.selected : ""}`}
+                onClick={() => toggleItem(item)}
+              >
                 {item}
               </div>
             ))}

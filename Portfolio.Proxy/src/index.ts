@@ -1,7 +1,13 @@
 import "dotenv/config";
+import https from "https";
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import axios, { AxiosError } from "axios";
+
+if (process.env.NODE_ENV !== "production") {
+  const httpsAgent = new https.Agent({ rejectUnauthorized: false });
+  axios.defaults.httpsAgent = httpsAgent;
+}
 import session from "express-session";
 import crypto from "crypto";
 
@@ -143,9 +149,7 @@ app.post("/auth/login", async (req: Request<{}, {}, LoginModel>, res: Response) 
         });
     }
 
-    const hashedPassword = hasString(password);
-
-    if (hashedPassword !== user.password) {
+    if (password !== user.password) {
       return res.status(401)
         .json({
           message: "Invalid credentials"
@@ -191,7 +195,7 @@ app.post("/auth/login", async (req: Request<{}, {}, LoginModel>, res: Response) 
 
 app.post("/auth/logout", (req: Request, res: Response) => {
   req.session.destroy(() => {
-    res.clearCookie("connect:sid");
+    res.clearCookie("connect.sid");
     res.json({
       message: "Logged out"
     });
@@ -262,7 +266,6 @@ app.get("/filter", async (req: Request, res: Response) => {
 });
 
 // -- Item --
-
 app.get("/item", async (req: Request, res: Response) => {
   try {
     const token = await getServiceToken();
@@ -337,7 +340,6 @@ app.get("/item/:id", async (req: Request<{ id: string }>, res: Response) => {
 });
 
 // -- Media --
-
 app.get("/media/:id", async (req: Request<{ id: string }>, res: Response) => {
   try {
     const token = await getServiceToken();
@@ -380,7 +382,7 @@ app.post("/metric", async (req: Request<{}, {}, MetricRequestModel>, res: Respon
     const token = await getServiceToken();
 
     const { data } = await axios.post<SuccessResponseModel>(
-      `$${API_URL}/portfolio/metric`,
+      `${API_URL}/portfolio/metric`,
       req.body,
       {
         headers: {
@@ -423,7 +425,7 @@ app.post("/filter", requireAuth, async (req: Request<{}, {}, FilterRequestModel>
     const token = await getServiceToken();
 
     const { data } = await axios.post<FilterModel>(
-      `$${API_URL}/portfolio/filter`,
+      `${API_URL}/portfolio/filter`,
       req.body,
       {
         headers: {
@@ -463,7 +465,7 @@ app.patch("/filter/:id", requireAuth, async (req: Request<{ id: string }, {}, Fi
     const token = await getServiceToken();
 
     const { data } = await axios.patch<FilterModel>(
-      `$${API_URL}/portfolio/filter/${req.params.id}`,
+      `${API_URL}/portfolio/filter/${req.params.id}`,
       req.body,
       {
         headers: {
@@ -541,7 +543,7 @@ app.post("/item", requireAuth, async (req: Request<{}, {}, ItemRequestModel>, re
     const token = await getServiceToken();
 
     const { data } = await axios.post<ItemModel>(
-      `$${API_URL}/portfolio`,
+      `${API_URL}/portfolio`,
       req.body,
       {
         headers: {
@@ -581,7 +583,7 @@ app.patch("/item/:id", requireAuth, async (req: Request<{ id: string }, {}, Item
     const token = await getServiceToken();
 
     const { data } = await axios.patch<ItemModel>(
-      `$${API_URL}/portfolio/${req.params.id}`,
+      `${API_URL}/portfolio/${req.params.id}`,
       req.body,
       {
         headers: {
@@ -659,7 +661,7 @@ app.post("/media/:id", requireAuth, async (req: Request<{ id: string }, {}, Medi
     const token = await getServiceToken();
 
     const { data } = await axios.post<MediaModel>(
-      `$${API_URL}/media/Portfolio/${req.query.id}`,
+      `${API_URL}/media/Portfolio/${req.params.id}`,
       req.body,
       {
         headers: {
@@ -699,7 +701,7 @@ app.patch("/media/:id", requireAuth, async (req: Request<{ id: string }, {}, Med
     const token = await getServiceToken();
 
     const { data } = await axios.patch<MediaModel>(
-      `$${API_URL}/media/${req.params.id}`,
+      `${API_URL}/media/${req.params.id}`,
       req.body,
       {
         headers: {

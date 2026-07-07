@@ -1,19 +1,16 @@
-import { useState, useEffect } from "react";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+
+type Severity = 'success' | 'info' | 'warning' | 'error';
 
 interface AlertSnackbarProps {
   open: boolean;
   setOpen: (value: boolean) => void;
-  event: string;
+  severity: Severity;
+  message: string;
 }
 
-type Severity = 'success' | 'info' | 'warning' | 'error';
-
-const AlertSnackbar = ({open, setOpen, event}: AlertSnackbarProps) => {
-  const [severity, setSeverity] = useState<Severity>('success');
-  const [message, setMessage] = useState("");
-
+const AlertSnackbar = ({ open, setOpen, severity, message }: AlertSnackbarProps) => {
   const handleClose = (
     _event?: React.SyntheticEvent | Event,
     reason?: string
@@ -21,20 +18,6 @@ const AlertSnackbar = ({open, setOpen, event}: AlertSnackbarProps) => {
     if (reason === "clickaway") return;
     setOpen(false);
   };
-
-  useEffect(() => {
-    if (event === "Login") {
-      setMessage("Successfully logged in!");
-      setSeverity("success");
-      setOpen(true);
-    }
-    
-    else if (event === "Logout") {
-      setMessage("Successfully logged out!");
-      setSeverity("info");
-      setOpen(true);
-    }
-  }, [event, setOpen]);
 
   return (
     <Snackbar
@@ -47,7 +30,7 @@ const AlertSnackbar = ({open, setOpen, event}: AlertSnackbarProps) => {
         onClose={handleClose}
         severity={severity}
         sx={{ width: '100%' }}
-          variant="filled"
+        variant="filled"
       >
         {message}
       </Alert>

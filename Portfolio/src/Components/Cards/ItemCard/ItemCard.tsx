@@ -9,7 +9,7 @@ import Circle from '@mui/icons-material/Circle';
 import Tooltip from '@mui/material/Tooltip';
 import SummaryBox from '../../Dialogs/SummaryBox/SummaryBox';
 import "../../../Colours.css";
-import './ItemCard.css';
+import styles from './ItemCard.module.css';
 
 interface ItemCardProps {
   image: string;
@@ -38,33 +38,57 @@ const ItemCard = ({image, title, status, date, id}: ItemCardProps) => {
 
   return (
     <div>
-      <Card className="card" >
-        <CardActionArea className="card-action" onClick={() => setOpenSummary(true)} >
+      <Card className={styles.card} >
+        <CardActionArea
+          className={styles['card-action']}
+          onClick={() => setOpenSummary(true)}
+        >
           <CardMedia
             component="img"
             height="200"
             image={image}
             alt="Item Image"
-            className="card-Media"
+            className={styles['card-media']}
+            sx={{ objectFit: 'contain' }}
           />
 
           <CardContent>
-            <Paper className="card-paper" >
-              <Typography variant="subtitle2" color="var(--colour-text)" >
+            <Paper className={styles['card-paper']} >
+              <Typography
+                variant="subtitle2"
+                color="var(--colour-text)"
+              >
                 {title}
               </Typography>
             </Paper>
 
-            <div className="card-div" style={{marginTop: "10px"}} >
-              <Tooltip className="card-tooltip" title={message} arrow placement="top" >
-                <Paper className="card-paper" >
+            <div
+              className={styles['card-div']}
+              style={{marginTop: "10px"}}
+            >
+              <Tooltip
+                title={message}
+                arrow
+                placement="top"
+              >
+                <Paper className={styles['card-paper']} >
                   <Circle style={{color: status, fontSize: 14}} />
                 </Paper>
               </Tooltip>
 
-              <Tooltip className="card-tooltip" title="Last Release Date" arrow placement="top" >
-                <Paper className="card-paper" style={{flex: "1"}} >
-                  <Typography variant="subtitle2" color="var(--colour-text)" >
+              <Tooltip
+                title="Last Release Date"
+                arrow
+                placement="top"
+              >
+                <Paper
+                  className={styles['card-paper']}
+                  style={{flex: "1"}}
+                >
+                  <Typography
+                    variant="subtitle2"
+                    color="var(--colour-text)"
+                  >
                     {date}
                   </Typography>
                 </Paper>
@@ -74,7 +98,11 @@ const ItemCard = ({image, title, status, date, id}: ItemCardProps) => {
         </CardActionArea>
       </Card>
 
-      <SummaryBox itemId={id} open={openSummary} setOpen={setOpenSummary} />
+      <SummaryBox
+        itemId={id}
+        open={openSummary}
+        setOpen={setOpenSummary}
+      />
     </div>
   );
 }

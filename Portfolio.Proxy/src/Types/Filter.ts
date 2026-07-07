@@ -7,5 +7,5 @@ export type FilterModel = {
 
 export type FilterRequestModel = {
   name: string;
-  values: string[];
+  values: string;
 }

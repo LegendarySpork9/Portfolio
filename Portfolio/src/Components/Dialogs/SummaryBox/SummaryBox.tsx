@@ -5,7 +5,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import "../../../Colours.css";
-import './SummaryBox.css';
+import styles from './SummaryBox.module.css';
 
 const items = [
   {
@@ -87,11 +87,11 @@ const SummaryBox = ({itemId, open, setOpen}: SummaryBoxProps) => {
 
   return (
     <Fragment>
-      <Dialog open={open} onClose={handleClose} slotProps={{paper: {className: "container"}}}>
-        <DialogTitle className="container-title">{items.find(i => i.id === itemId)?.title}</DialogTitle>
+      <Dialog open={open} onClose={handleClose} slotProps={{paper: {className: styles.container}}}>
+        <DialogTitle className={styles['container-title']}>{items.find(i => i.id === itemId)?.title}</DialogTitle>
         <DialogContent>
         </DialogContent>
-        <DialogActions className="container-action">
+        <DialogActions className={styles['container-action']}>
           <Button type="submit" form="login-form" variant="contained">View Item</Button>
         </DialogActions>
       </Dialog>

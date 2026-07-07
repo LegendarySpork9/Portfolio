@@ -39,6 +39,6 @@
     white-space: nowrap;
 }
 
-.MuiTooltip-tooltip {
+:global(.MuiTooltip-tooltip) {
     text-align: center;
 }

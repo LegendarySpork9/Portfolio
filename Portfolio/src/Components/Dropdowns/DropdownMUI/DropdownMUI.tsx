@@ -7,11 +7,11 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import ListSubheader from "@mui/material/ListSubheader";
 import Divider from "@mui/material/Divider";
-import "./DropdownMUI.css";
+import styles from './DropdownMUI.module.css';
 
 const MenuProps: any = {
-  PaperProps: { 
-    className: "dropdown-menu-paper", 
+  PaperProps: {
+    className: styles['dropdown-menu-paper'],
     style: { maxHeight: 48 * 4.5 + 8, marginLeft: 8 } 
   },
   MenuListProps: { 
@@ -34,9 +34,11 @@ interface DropdownMUIProps {
   options: string[];
   selected: string[];
   setSelected: (value: string[]) => void;
+  onOpen?: () => void;
+  onClose?: () => void;
 }
 
-const DropdownMUI = ({ label, options, selected, setSelected }: DropdownMUIProps) => {
+const DropdownMUI = ({ label, options, selected, setSelected, onOpen, onClose }: DropdownMUIProps) => {
   const theme = useTheme();
 
   const handleChange = (event: SelectChangeEvent<typeof selected>) => {
@@ -65,8 +67,14 @@ const DropdownMUI = ({ label, options, selected, setSelected }: DropdownMUIProps
   };
 
   return (
-    <FormControl variant="outlined" className="dropdown-container">
-      <InputLabel id={`${label}-label`} className="dropdown-label">
+    <FormControl
+      variant="outlined"
+      className={styles['dropdown-container']}
+    >
+      <InputLabel
+        id={`${label}-label`}
+        className={styles['dropdown-label']}
+      >
         {label}
       </InputLabel>
       <Select
@@ -77,20 +85,40 @@ const DropdownMUI = ({ label, options, selected, setSelected }: DropdownMUIProps
         onChange={handleChange}
         input={<OutlinedInput label={label} />}
         renderValue={(val) => renderValue(val as string[])}
+        onOpen={onOpen}
+        onClose={onClose}
         MenuProps={MenuProps}
-        className="dropdown-select"
+        className={styles['dropdown-select']}
       >
-        <ListSubheader className="dropdown-controls" onMouseDown={(e) => e.preventDefault()} disableSticky>
-          <button type="button" className="btn btn-primary" onClick={selectAll} disabled={allSelected}>
+        <ListSubheader
+          className={styles['dropdown-controls']}
+          onMouseDown={(e) => e.preventDefault()}
+          disableSticky
+        >
+          <button
+            type="button"
+            className={`${styles.btn} ${styles['btn-primary']}`}
+            onClick={selectAll}
+            disabled={allSelected}
+          >
             Select All
           </button>
-          <button type="button" className="btn btn-primary" onClick={selectNone} disabled={noneSelected}>
+          <button
+            type="button"
+            className={`${styles.btn} ${styles['btn-primary']}`}
+            onClick={selectNone}
+            disabled={noneSelected}
+          >
             Select None
           </button>
         </ListSubheader>
-        <Divider className="dropdown-divider" />
+        <Divider className={styles['dropdown-divider']} />
         {options.map((name) => (
-          <MenuItem key={name} value={name} style={GetStyles(name, selected, theme)}>
+          <MenuItem
+            key={name}
+            value={name}
+            style={GetStyles(name, selected, theme)}
+          >
             {name}
           </MenuItem>
         ))}

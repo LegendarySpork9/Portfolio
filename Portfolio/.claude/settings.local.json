@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mv src/Components/Dialogs/SummaryBox/SummaryBox.css src/Components/Dialogs/SummaryBox/SummaryBox.module.css)",
+      "Bash(mv src/Components/Dropdowns/Dropdown/Dropdown.css src/Components/Dropdowns/Dropdown/Dropdown.module.css)",
+      "Bash(mv src/Components/Sidebars/Right/RightSidebar.css src/Components/Sidebars/Right/RightSidebar.module.css)",
+      "Bash(mv src/Components/Cards/ItemCard/ItemCard.css src/Components/Cards/ItemCard/ItemCard.module.css)",
+      "Bash(mv src/Components/Dialogs/LoginForm/LoginForm.css src/Components/Dialogs/LoginForm/LoginForm.module.css)"
+    ]
+  }
+}

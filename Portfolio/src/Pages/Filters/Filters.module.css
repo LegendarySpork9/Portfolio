@@ -1,17 +1,31 @@
-.home-container {
+.filter-container {
   background-color: var(--colour-body);
+  color: var(--colour-text);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
-.grid-container {
+.data-loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.button {
+  margin-top: 88px;
+  margin-left: 80px;
+  margin-right: 64px;
+}
+
+.filter-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1rem;
   padding: 1rem;
-  margin-top: 72px;
   margin-left: 64px;
   margin-right: 64px;
   justify-content: center;
@@ -19,9 +33,6 @@
   align-items: start;
 }
 
-.right-sidebar {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 10;
+.home-icon {
+  color: var(--colour-text);
 }

@@ -30,15 +30,15 @@ export function useNewPortfolioItem() {
   });
 }
 
-export function useUpdatePortfolioItem(id: number) {
+export function useUpdatePortfolioItem() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (request: ItemRequestModel) => updatePortfolioItem(
+    mutationFn: ({ id, request }: { id: number; request: ItemRequestModel }) => updatePortfolioItem(
       id,
       request
     ),
-    onSuccess: () => {
+    onSuccess: (_data, { id }) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.portfolio.detail(id)
       });

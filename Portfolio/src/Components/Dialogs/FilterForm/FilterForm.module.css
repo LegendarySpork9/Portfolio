@@ -1,0 +1,47 @@
+.container {
+    background-color: var(--colour-object) !important;
+    color: var(--colour-text) !important;
+    overflow: hidden !important;
+}
+
+.container-title {
+    text-align: center;
+    background-color: #81C784;
+}
+
+.container-input-label {
+    color: var(--colour-text) !important;
+}
+
+.container-input {
+    width: 400px !important;
+    color: var(--colour-text) !important;
+}
+
+.container-input-wrapper {
+    background-color: var(--colour-object-input) !important;
+}
+
+.container-input:global(.Mui-disabled) {
+    color: var(--colour-text) !important;
+    -webkit-text-fill-color: var(--colour-text) !important;
+}
+
+.container-action {
+    justify-content: center !important;
+}
+
+.container-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.container-error {
+    color: #f44336;
+    font-size: 0.875rem;
+    margin: 8px 0 0 0;
+    text-align: center;
+    max-width: 400px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}

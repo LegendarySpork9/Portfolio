@@ -12,16 +12,16 @@
   color: white !important;
 }
 
-.MuiOutlinedInput-root {
+.dropdown-container :global(.MuiOutlinedInput-root) {
   height: 48px;
 }
 
-.MuiOutlinedInput-notchedOutline { 
-  border-color: #444 !important; 
+:global(.MuiOutlinedInput-notchedOutline) {
+  border-color: #444 !important;
 }
 
-.Mui-focused .MuiOutlinedInput-notchedOutline { 
-  border-color: #00ff66 !important; 
+:global(.Mui-focused) :global(.MuiOutlinedInput-notchedOutline) {
+  border-color: #00ff66 !important;
 }
 
 .dropdown-menu-paper {

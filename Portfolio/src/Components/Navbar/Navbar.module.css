@@ -20,6 +20,9 @@
   display: flex;
   align-items: center;
 }
+.navbar button:disabled {
+  opacity: 1;
+}
 
 .navbar-center {
   flex-grow: 1;

@@ -1,25 +1,29 @@
 import { useState, useEffect, useRef } from "react";
+import { useAuth } from "../../Contexts/AuthContext";
 import { usePortfolio } from "../../Hooks/UsePortfolio";
+import { useFilters } from "../../Hooks/UseFilter";
 import Navbar from '../../Components/Navbar/Navbar'
 import LeftSidebar from '../../Components/Sidebars/Left/LeftSidebar'
 import RightSidebar from '../../Components/Sidebars/Right/RightSidebar'
+import CircularProgress from "@mui/material/CircularProgress";
 import Card from '../../Components/Cards/ItemCard/ItemCard'
 import AlertSnackbar from "../../Components/Snackbar/AlertSnackbar";
 import "../../Colours.css";
-import './Home.css'
-import { ItemModel } from "../../Types/Item";
+import styles from './Home.module.css';
+
+import type { ItemModel } from "../../Types/Item";
 
 function Home() {
+ const { isAdmin } = useAuth();
+
   const { data: items, isLoading, error } = usePortfolio();
+  const { data: filters, isLoading: filtersLoading, error: filtersError } = useFilters();
 
-  const [openLogin, setOpenLogin] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  const [event, setEvent] = useState("");
+  const [alertSeverity, setAlertSeverity] = useState<'success' | 'info' | 'warning' | 'error'>('success');
+  const [alertMessage, setAlertMessage] = useState("");
 
-  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
-  const [selectedFrameworks, setSelectedFrameworks] = useState<string[]>([]);
-  const [selectedEnvironments, setSelectedEnvironments] = useState<string[]>([]);
+  const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({});
 
   const prevIsAdmin = useRef(isAdmin);
 
@@ -27,43 +31,55 @@ function Home() {
     if (prevIsAdmin.current === isAdmin) return;
 
     if (isAdmin) {
-      setEvent("Login");
-      setOpenAlert(true);
-    }
-    
-    else {
-      setEvent("Logout");
-      setOpenAlert(true);
+      setAlertMessage("Successfully logged in!");
+      setAlertSeverity("success");
+    } else {
+      setAlertMessage("Successfully logged out!");
+      setAlertSeverity("info");
     }
 
+    setOpenAlert(true);
     prevIsAdmin.current = isAdmin;
   }, [isAdmin]);
 
-  if (isLoading)
+  if (isLoading || filtersLoading)
     return (
-      <div>Loading...</div>
+      <div className={styles['home-container']}>
+        <div className={styles['data-loading']}>
+          <CircularProgress aria-label="Loading…" />
+        </div>
+      </div>
     );
 
-  if (error)
+  if (error || filtersError)
     return (
-      <div>Failed to load portfolio items.</div>
+      <div className={styles['home-container']}>
+        <div className={styles['data-loading']}>
+          Failed to load portfolio items or filters.
+        </div>
+      </div>
     );
 
   const allItems = items ?? [];
+  const allFilters = filters ?? [];
 
-  let displayItems = allItems;
-/*
-  if (selectedLanguages.length > 0 || selectedFrameworks.length > 0 || selectedEnvironments.length > 0){
-    displayItems = allItems.filter(item => Object.values(item.tags).some(tag => selectedLanguages.includes(tag)) || Object.values(item.tags).some(tag => selectedFrameworks.includes(tag)) || Object.values(item.tags).some(tag => selectedEnvironments.includes(tag)))
-  }
+  const hasActiveFilters = Object.values(selectedFilters).some(v => v.length > 0);
 
-  else {
-    displayItems = items
-  }*/
+  let displayItems = hasActiveFilters ? allItems.filter((item: ItemModel) => 
+    Object.entries(selectedFilters).some(([filterName, values]) => {
+      if (values.length === 0)
+        return true;
+
+      const key = filterName.toLowerCase() as keyof ItemModel;
+      const itemValues = item[key];
+
+      return Array.isArray(itemValues) && itemValues.some(v => typeof v === "string" && values.includes(v));
+    })
+  ) : allItems;
 
   return (
-    <div className="home-container">
-      <div className="grid-container">
+    <div className={styles['home-container']}>
+      <div className={styles['grid-container']}>
         {
           displayItems.map((item: ItemModel) => (
             <Card
@@ -79,23 +95,20 @@ function Home() {
       </div>
 
       {isAdmin && (
-        <LeftSidebar
-          setAdmin={setIsAdmin}
-        />
+        <LeftSidebar/>
       )}
       
-      <RightSidebar 
-        languages={selectedLanguages} 
-        setLanguages={setSelectedLanguages} 
-        frameworks={selectedFrameworks} 
-        setFrameworks={setSelectedFrameworks} 
-        environments={selectedEnvironments} 
-        setEnvironments={setSelectedEnvironments}
-      />
+      {allFilters.length > 0 && (
+        <RightSidebar 
+          filters={allFilters}
+          selectedFilters={selectedFilters}
+          setSelectedFilters={setSelectedFilters}
+        />
+      )}
 
-      <Navbar open={openLogin} setOpen={setOpenLogin} setAdmin={setIsAdmin} />
+      <Navbar />
 
-      <AlertSnackbar open={openAlert} setOpen={setOpenAlert} event={event}/>
+      <AlertSnackbar open={openAlert} setOpen={setOpenAlert} severity={alertSeverity} message={alertMessage}/>
     </div>
   );
 }
