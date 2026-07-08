@@ -7,13 +7,13 @@ import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography';
 import Circle from '@mui/icons-material/Circle';
 import Tooltip from '@mui/material/Tooltip';
-import SummaryBox from '../../Dialogs/SummaryBox/SummaryBox';
-import "../../../Colours.css";
-import styles from './ItemCard.module.css';
+import SummaryBox from '../../../Dialogs/SummaryBox/SummaryBox';
+import "../../../../Colours.css";
+import styles from './PortfolioCard.module.css';
 
-import type { ItemModel } from '../../../Types/Item';
+import type { ItemModel } from '../../../../Types/Item';
 
-const ItemCard = (item: ItemModel) => {
+const PortfolioCard = (item: ItemModel) => {
   const [openSummary, setOpenSummary] = useState(false);
 
   var lastReleaseDateString = new Date(item.buildHistory[item.buildHistory.length - 1].releaseDate).toLocaleString("en-GB", {
@@ -123,4 +123,4 @@ const ItemCard = (item: ItemModel) => {
   );
 }
 
-export default ItemCard;
+export default PortfolioCard;

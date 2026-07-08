@@ -6,7 +6,7 @@ import Navbar from '../../Components/Navbar/Navbar'
 import LeftSidebar from '../../Components/Sidebars/Left/LeftSidebar'
 import RightSidebar from '../../Components/Sidebars/Right/RightSidebar'
 import CircularProgress from "@mui/material/CircularProgress";
-import Card from '../../Components/Cards/ItemCard/ItemCard'
+import Card from '../../Components/Cards/Items/PortfolioCard/PortfolioCard'
 import AlertSnackbar from "../../Components/Snackbar/AlertSnackbar";
 import "../../Colours.css";
 import styles from './Home.module.css';

@@ -4,10 +4,12 @@ import { queryKeys } from "../Lib/QueryKeys";
 
 import type { ItemRequestModel } from "../Types/Item";
 
-export function usePortfolio() {
+export function usePortfolio(includeDeleted?: boolean) {
   return useQuery({
-    queryKey: queryKeys.portfolio.all,
-    queryFn: () => getPortfolio()
+    queryKey: [...queryKeys.portfolio.all, {
+      includeDeleted
+    }],
+    queryFn: () => getPortfolio(includeDeleted)
   });
 }
 

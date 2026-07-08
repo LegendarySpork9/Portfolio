@@ -4,8 +4,10 @@ import { endpoints } from "./Endpoints";
 import type { ItemModel, ItemRequestModel } from "../Types/Item";
 import type { SuccessResponseModel } from "../Types/API Response";
 
-export async function getPortfolio(): Promise<ItemModel[]> {
-  const { data } = await apiClient.get<ItemModel[]>(endpoints.portfolio());
+export async function getPortfolio(includeDeleted?: boolean): Promise<ItemModel[]> {
+  const { data } = await apiClient.get<ItemModel[]>(endpoints.portfolio(), {
+    params: {includeDeleted }
+  });
 
   return data;
 }

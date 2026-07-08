@@ -70,7 +70,7 @@ const SummaryBox = ({name, summary, frameworks, languages, environments, ciStatu
   }
 
   else {
-    unitTestCoverageColour = "purple"
+    unitTestCoverageColour = "var(--colour-text)"
   }
 
   return (
@@ -149,7 +149,10 @@ const SummaryBox = ({name, summary, frameworks, languages, environments, ciStatu
               arrow
               placement="top"
               >
-              <Paper className={styles['card-paper']} >
+              <Paper
+                className={styles['card-paper']}
+                style={{flex: "1"}}
+              >
                 <Typography
                   variant="subtitle2"
                   color="var(--colour-text)"

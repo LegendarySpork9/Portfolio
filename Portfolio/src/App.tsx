@@ -4,6 +4,7 @@ import { queryClient } from "./Lib/QueryClient";
 import { AuthProvider } from "./Contexts/AuthContext";
 import Home from "./Pages/Home/Home";
 import FiltersPage from "./Pages/Filters/Filters";
+import ListItemPage from "./Pages/Items/List/ListItem"
 import ItemPage from "./Pages/Items/View/View";
 
 export default function App() {
@@ -13,7 +14,9 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/filters" element={<FiltersPage />} />
-          <Route path="/viewitem/:id" element={<ItemPage />} />
+          <Route path="/items" element={<ListItemPage />} />
+          <Route path="/item" element={<ItemPage />} />
+          <Route path="/item/:id" element={<ItemPage />} />
         </Routes>
       </AuthProvider>
     </QueryClientProvider>

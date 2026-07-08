@@ -49,6 +49,7 @@ function LeftSidebar() {
         classes={{ root: styles['sidebar-left-button'] }}
         TouchRippleProps={{ style: { color: "var(--colour-text)" } }}
         sx={{ justifyContent: 'flex-start', pl: '0.75rem'}}
+        onClick={() => navigate("/items")}
       >
         <EditDocument className={styles['sidebar-left-icon']} />
         <Typography

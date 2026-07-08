@@ -37,7 +37,7 @@ function FiltersPage() {
     return (
       <div className={styles['filter-container']}>
         <div className={styles['data-loading']}>
-          Failed to load portfolio items or filters.
+          Failed to load filters.
         </div>
       </div>
     );
