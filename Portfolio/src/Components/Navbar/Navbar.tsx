@@ -14,7 +14,7 @@ function Navbar() {
     <nav className={styles.navbar} >
       <a
         href="https://github.com/LegendarySpork9"
-        style={{paddingLeft: "2rem"}}
+        style={{paddingLeft: "10px"}}
       >
         <img
           src="/github.svg"
@@ -24,7 +24,7 @@ function Navbar() {
       <div>
         Toby Hunter's Portfolio
       </div>
-      <div style={{paddingRight: "2rem"}}>
+      <div style={{paddingRight: "14px"}}>
         <IconButton
           onClick={() => setOpen(true)}
           disabled={isAdmin}

@@ -27,12 +27,9 @@
   gap: 12px;
   border-radius: 0px;
   margin-top: 3.2px;
+  width: 100%;
+  height: 64px;
   transition: background-color 0.3s ease;
-}
-
-.sidebar-left-content.expanded {
-  width: 276px;
-  justify-content: left;
 }
 
 .sidebar-left-content:hover {
@@ -51,18 +48,21 @@
   width: 0;
   transition: font-size 0.3s ease, width 0.3s ease, margin-left 0.3s ease;
   text-transform: none;
+  overflow: hidden;
+  text-align: left;
 }
 
 .sidebar-left.expanded .sidebar-left-text {
   font-family: 'Nunito', sans-serif;
   font-size: 22px;
   opacity: 1;
+  width: 200px;
 }
 
 .sidebar-left-icon {
-  font-size: 48px !important;
-  width: 48px;
-  height: 48px;
+  font-size: 36px !important;
+  width: 36px;
+  height: 36px;
   color: var(--colour-text);
 }
 

@@ -28,10 +28,11 @@ function LeftSidebar() {
       onMouseLeave={() => setHovered(false)}
     >
       <Button
-        className={`${styles['sidebar-left-content']} ${hovered ? styles.expanded : ""}`}
+        className={styles['sidebar-left-content']}
         disabled={!hovered}
         classes={{ root: styles['sidebar-left-button'] }}
         TouchRippleProps={{ style: { color: "var(--colour-text)" } }}
+        sx={{ justifyContent: 'flex-start', pl: '0.75rem'}}
         onClick={() => navigate("/")}
       >
         <HomeIcon className={styles['sidebar-left-icon']} />
@@ -47,6 +48,7 @@ function LeftSidebar() {
         disabled={!hovered}
         classes={{ root: styles['sidebar-left-button'] }}
         TouchRippleProps={{ style: { color: "var(--colour-text)" } }}
+        sx={{ justifyContent: 'flex-start', pl: '0.75rem'}}
       >
         <EditDocument className={styles['sidebar-left-icon']} />
         <Typography
@@ -61,6 +63,7 @@ function LeftSidebar() {
         disabled={!hovered}
         classes={{ root: styles['sidebar-left-button'] }}
         TouchRippleProps={{ style: { color: "var(--colour-text)" } }}
+        sx={{ justifyContent: 'flex-start', pl: '0.75rem'}}
         onClick={() => navigate("/filters")}
       >
         <img
@@ -83,6 +86,7 @@ function LeftSidebar() {
           disabled={!hovered}
           classes={{ root: styles['sidebar-left-button'] }}
           TouchRippleProps={{ style: { color: "var(--colour-text)" } }}
+          sx={{ justifyContent: 'flex-start', pl: '0.75rem'}}
           onClick={() => handleLogout()}
         >
           <Logout className={styles['sidebar-left-icon']} />
