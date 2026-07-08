@@ -84,11 +84,7 @@ function Home() {
           displayItems.map((item: ItemModel) => (
             <Card
               key={item.id}
-              image={item.iconURL}
-              title={item.name}
-              status="Green"
-              date={item.dateCreated.toString()}
-              id={item.id}
+              {...item}
             />
           ))
         }
@@ -108,7 +104,11 @@ function Home() {
 
       <Navbar />
 
-      <AlertSnackbar open={openAlert} setOpen={setOpenAlert} severity={alertSeverity} message={alertMessage}/>
+      <AlertSnackbar
+        open={openAlert}
+        setOpen={setOpenAlert}
+        severity={alertSeverity}
+        message={alertMessage}/>
     </div>
   );
 }

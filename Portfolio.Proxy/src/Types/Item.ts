@@ -46,7 +46,7 @@ export type ItemBuildHistoryModel = {
 export type ItemGitHubInformation = {
   url: string;
   ciStatus: ItemGitHubCIStatusModel[];
-  issueBreakdown: ItemGitHubIssueBreakdownModel[];
+  issueBreakdown: ItemGitHubIssueBreakdownModel;
   assigneeBreakdown: ItemGitHubAssigneeBreakdownModel[];
   inProgressBreakdown: ItemGitHubInProgressBreakdownModel[];
 }

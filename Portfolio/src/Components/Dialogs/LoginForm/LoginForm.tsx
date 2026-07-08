@@ -84,6 +84,7 @@ const LoginForm = ({open, setOpen}: LoginFormProps) => {
               required
               margin="dense"
               id="username"
+              label="Username"
               name="username"
               placeholder="Username"
               type="text"
@@ -96,6 +97,7 @@ const LoginForm = ({open, setOpen}: LoginFormProps) => {
               required
               margin="dense"
               id="password"
+              label="Password"
               name="password"
               placeholder="Password"
               type="password"
