@@ -1,0 +1,22 @@
+.container {
+    background-color: var(--colour-body);
+    color: var(--colour-text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 89px 16px 16px 16px;
+    box-sizing: border-box;
+}
+
+.data-loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.home-icon {
+  color: var(--colour-text);
+}

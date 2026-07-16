@@ -14,5 +14,15 @@ export const queryKeys = {
   },
   filter: {
     all: ["filter"] as const
+  },
+  media: {
+    all: ["media"] as const,
+    detail: (id: number) => [
+      "media",
+      id
+    ] as const
+  },
+  github: {
+    upcomingProjects: ["github", "upcomingProjects"] as const
   }
 } as const;

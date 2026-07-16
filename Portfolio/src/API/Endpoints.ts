@@ -7,5 +7,6 @@ export const endpoints = {
   portfolio: () => "/item",
   portfolioItem: (id: number) => `/item/${id}`,
   media: (id: number) => `/media/${id}`,
+  mediaUpload: (id: number) => `/media/upload/${id}`,
   metric: () => "/metric"
 } as const;

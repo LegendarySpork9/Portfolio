@@ -19,6 +19,7 @@
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
     "axios": "^1.18.1",
+    "markdown-to-jsx": "^9.8.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.6",

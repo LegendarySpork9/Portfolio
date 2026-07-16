@@ -8,6 +8,8 @@ declare global {
       SESSION_SECRET: string;
       CLIENT_ORIGIN: string;
       PORT: number;
+      MEDIA_PATH: string;
+      MEDIA_DOMAIN: string;
     }
   }
 }

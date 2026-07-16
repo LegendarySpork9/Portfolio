@@ -1,7 +1,10 @@
 import "dotenv/config";
 import https from "https";
+import fs from "fs";
+import path from "path";
 import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
+import multer from "multer";
 import axios, { AxiosError } from "axios";
 
 if (process.env.NODE_ENV !== "production") {
@@ -47,6 +50,17 @@ app.use(session({
     maxAge: 60 * 60 * 1000
   }
 }));
+
+// ---- Static Files ----
+// Serves uploaded media files from the configured directory.
+const MEDIA_PATH = process.env.MEDIA_PATH;
+const MEDIA_DOMAIN = process.env.MEDIA_DOMAIN;
+
+app.use("/uploads", express.static(MEDIA_PATH));
+
+// ---- File Upload ----
+// Multer stores uploaded files in memory until we write them to the configured path.
+const upload = multer({ storage: multer.memoryStorage() });
 
 // ---- Hashing ----
 function hasString(value: string): string | null {
@@ -656,6 +670,70 @@ app.delete("/item/:id", requireAuth, async (req: Request<{ id: string }, {}, Suc
 
 // -- Media --
 
+app.post("/media/upload/:id", requireAuth, upload.single("file"), async (req: Request<{ id: string }>, res: Response) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "No file provided" });
+    }
+
+    if (!fs.existsSync(MEDIA_PATH)) {
+      fs.mkdirSync(MEDIA_PATH, { recursive: true });
+    }
+
+    const file = req.file;
+    const extension = path.extname(file.originalname);
+    const name = path.basename(file.originalname, extension);
+    const filePath = path.join(MEDIA_PATH, file.originalname);
+
+    fs.writeFileSync(filePath, file.buffer);
+
+    const token = await getServiceToken();
+
+    const mediaRequest: MediaRequestModel = {
+      name: name,
+      extension: extension,
+      mimeType: file.mimetype,
+      size: file.size,
+      path: null,
+      domain: MEDIA_DOMAIN
+    };
+
+    const { data } = await axios.post<MediaModel>(
+      `${API_URL}/media/Portfolio/${req.params.id}`,
+      mediaRequest,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      }
+    );
+
+    res.status(201).json(data);
+  }
+
+  catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error("API Error:", {
+        status: error.response?.status || 500,
+        data: error.response?.data || "Proxy error",
+        url: error.config?.url
+      });
+    }
+
+    else{
+      console.error("Unexpected error:", error);
+    }
+
+    const { status, message } = errorResponse(error);
+
+    res.status(status)
+      .json({
+        message
+      });
+  }
+});
+
 app.post("/media/:id", requireAuth, async (req: Request<{ id: string }, {}, MediaRequestModel>, res: Response) => {
   try {
     const token = await getServiceToken();
@@ -736,10 +814,18 @@ app.patch("/media/:id", requireAuth, async (req: Request<{ id: string }, {}, Med
   }
 });
 
-app.delete("/media/:id", requireAuth, async (req: Request<{ id: string }, {}, SuccessResponseModel>, res: Response) => {
+app.delete("/media/:id", requireAuth, async (req: Request<{ id: string }, {}, { fileName?: string }>, res: Response) => {
   try {
     const token = await getServiceToken();
-    
+
+    if (req.body.fileName) {
+      const filePath = path.join(MEDIA_PATH, req.body.fileName);
+
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
+    }
+
     const { data } = await axios.delete<SuccessResponseModel>(
       `${API_URL}/media/${req.params.id}`, {
       headers: {

@@ -17,7 +17,7 @@ const ItemCard = (item: ItemModel) => {
       <Card className={styles.card} >
         <CardActionArea
           className={styles['card-action']}
-          onClick={() => navigate(`/item/${item.id}`)}
+          onClick={() => navigate(`/item/${item.id}?mode=update`)}
         >
           <CardContent>
             <Paper className={styles['card-paper']} >

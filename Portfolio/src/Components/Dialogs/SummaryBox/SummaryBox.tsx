@@ -1,4 +1,5 @@
 import { Fragment } from "react"; 
+import { useNavigate } from "react-router-dom";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
@@ -30,7 +31,9 @@ interface SummaryBoxProps {
   setOpen: (value: boolean) => void;
 }
 
-const SummaryBox = ({name, summary, frameworks, languages, environments, ciStatuses, issueBreakdown, latestBuildNumber, unitTestCoverage, open, setOpen}: SummaryBoxProps) => {
+const SummaryBox = ({id, name, summary, frameworks, languages, environments, ciStatuses, issueBreakdown, latestBuildNumber, unitTestCoverage, open, setOpen}: SummaryBoxProps) => {
+  const navigate = useNavigate();
+  
   const handleClose = () => {
     setOpen(false);
   };
@@ -49,6 +52,8 @@ const SummaryBox = ({name, summary, frameworks, languages, environments, ciStatu
     { value: bugs, label: 'Bugs', color: 'red' }
   ]
 
+  const hasIssueData = newFeatures + bugs > 0
+
   const pieParams = {
     height: 200
   }
@@ -57,7 +62,7 @@ const SummaryBox = ({name, summary, frameworks, languages, environments, ciStatu
 
   if (unitTestCoverage !== null) {
     if (unitTestCoverage >= 95.0) {
-      unitTestCoverageColour = "green"
+      unitTestCoverageColour = "#ccff90"
     }
 
     else if (unitTestCoverage < 95.0 && unitTestCoverage > 65.0) {
@@ -121,25 +126,31 @@ const SummaryBox = ({name, summary, frameworks, languages, environments, ciStatu
                   />
                 ))}
               </div>
-              <PieChart
-                className={styles['pie-chart']}
-                series={[
-                  {
-                    data: pieData,
-                    arcLabel: (item) => `${Math.round((item.value / (newFeatures + bugs)) * 100)}%`
-                  }
-                ]}
-                slotProps={{
-                  legend: {
-                    direction: 'horizontal' as const,
-                    position: {
-                      vertical: 'bottom' as const,
-                      horizontal: 'center' as const
+              {hasIssueData ? (
+                <PieChart
+                  className={styles['pie-chart']}
+                  series={[
+                    {
+                      data: pieData,
+                      arcLabel: (item) => `${Math.round((item.value / (newFeatures + bugs)) * 100)}%`
                     }
-                  }
-                }}
-                {...pieParams}
-              />
+                  ]}
+                  slotProps={{
+                    legend: {
+                      direction: 'horizontal' as const,
+                      position: {
+                        vertical: 'bottom' as const,
+                        horizontal: 'center' as const
+                      }
+                    }
+                  }}
+                  {...pieParams}
+                />
+              ) : (
+                <Typography variant="body2" color="var(--colour-text)">
+                  No items logged.
+                </Typography>
+              )}
             </div>
           </Paper>
           <br />
@@ -186,6 +197,7 @@ const SummaryBox = ({name, summary, frameworks, languages, environments, ciStatu
             type="submit"
             form="login-form"
             variant="contained"
+            onClick={() => navigate(`/item/${id}?mode=view`)}
           >
             View Item
           </Button>

@@ -7,11 +7,14 @@ import LeftSidebar from '../../Components/Sidebars/Left/LeftSidebar'
 import RightSidebar from '../../Components/Sidebars/Right/RightSidebar'
 import CircularProgress from "@mui/material/CircularProgress";
 import Card from '../../Components/Cards/Items/PortfolioCard/PortfolioCard'
+import UpcomingProjects from '../../Components/Dialogs/UpcomingProjects/UpcomingProjects'
 import AlertSnackbar from "../../Components/Snackbar/AlertSnackbar";
 import "../../Colours.css";
 import styles from './Home.module.css';
 
 import type { ItemModel } from "../../Types/Item";
+
+let hasShownUpcoming = false;
 
 function Home() {
  const { isAdmin } = useAuth();
@@ -23,6 +26,11 @@ function Home() {
   const [alertSeverity, setAlertSeverity] = useState<'success' | 'info' | 'warning' | 'error'>('success');
   const [alertMessage, setAlertMessage] = useState("");
 
+  const [upcomingOpen, setUpcomingOpen] = useState(() => {
+    if (hasShownUpcoming) return false;
+    hasShownUpcoming = true;
+    return true;
+  });
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({});
 
   const prevIsAdmin = useRef(isAdmin);
@@ -103,6 +111,11 @@ function Home() {
       )}
 
       <Navbar />
+
+      <UpcomingProjects
+        open={upcomingOpen}
+        setOpen={setUpcomingOpen}
+      />
 
       <AlertSnackbar
         open={openAlert}

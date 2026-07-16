@@ -1,11 +1,13 @@
+import { useState, useEffect } from "react";
 import { useAuth } from "../../../Contexts/AuthContext";
 import { usePortfolio } from "../../../Hooks/UsePortfolio";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import Button from "@mui/material/Button";
 import Card from "../../../Components/Cards/Items/ItemCard/ItemCard";
 import Navbar from '../../../Components/Navbar/Navbar'
 import LeftSidebar from '../../../Components/Sidebars/Left/LeftSidebar'
+import AlertSnackbar from "../../../Components/Snackbar/AlertSnackbar";
 import IconButton from "@mui/material/IconButton";
 import HomeIcon from '@mui/icons-material/Home';
 import "../../../Colours.css";
@@ -17,6 +19,16 @@ function ListItemPage() {
   const { isAdmin } = useAuth();
   const { data: items, isLoading, error } = usePortfolio(true);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const [openAlert, setOpenAlert] = useState(false);
+
+  useEffect(() => {
+    if (location.state?.created) {
+      setOpenAlert(true);
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, [location.state, navigate, location.pathname]);
 
   if (isLoading)
     return (
@@ -42,7 +54,7 @@ function ListItemPage() {
     return (
       <div className={styles['list-container']}>
         <div className={styles.button}>
-          <Button variant="contained" onClick={ () => navigate("/item")}>
+          <Button variant="contained" onClick={ () => navigate("/item?mode=create")}>
             Create Item
           </Button>
         </div>
@@ -58,6 +70,12 @@ function ListItemPage() {
         <LeftSidebar/>
 
         <Navbar />
+
+        <AlertSnackbar
+          open={openAlert}
+          setOpen={setOpenAlert}
+          severity="success"
+          message="Item created successfully!"/>
       </div>
     )
   }
