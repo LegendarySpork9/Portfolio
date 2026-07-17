@@ -8,6 +8,7 @@ import Card from "../../Components/Cards/Filters/FilterCard";
 import LeftSidebar from '../../Components/Sidebars/Left/LeftSidebar'
 import Navbar from '../../Components/Navbar/Navbar'
 import FilterForm from '../../Components/Dialogs/FilterForm/FilterForm'
+import AlertSnackbar from "../../Components/Snackbar/AlertSnackbar";
 import IconButton from "@mui/material/IconButton";
 import HomeIcon from '@mui/icons-material/Home';
 import "../../Colours.css";
@@ -19,6 +20,8 @@ function FiltersPage() {
   const [open, setOpen] = useState(false);
   const [isUpdate] = useState(false);
   const [selectedFilter] = useState<FilterModel>();
+  const [openAlert, setOpenAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   
   const { isAdmin } = useAuth();
   const { data: filters, isLoading, error } = useFilters(true);
@@ -44,6 +47,11 @@ function FiltersPage() {
   
   const allFilters = filters ?? [];
 
+  const handleSuccess = (message: string) => {
+    setAlertMessage(message);
+    setOpenAlert(true);
+  };
+
   if (isAdmin) {
     return (
       <div className={styles['filter-container']}>
@@ -56,7 +64,7 @@ function FiltersPage() {
         <div className={styles['filter-grid']}>
           {
             allFilters.map((filter: FilterModel) => (
-              <Card {...filter} />
+              <Card {...filter} onSuccess={handleSuccess} />
             ))
           }
         </div>
@@ -69,7 +77,14 @@ function FiltersPage() {
           isUpdate={isUpdate}
           filter={selectedFilter}
           open={open}
-          setOpen={setOpen} />
+          setOpen={setOpen}
+          onSuccess={handleSuccess} />
+
+        <AlertSnackbar
+          open={openAlert}
+          setOpen={setOpenAlert}
+          severity="success"
+          message={alertMessage} />
       </div>
     )
   }

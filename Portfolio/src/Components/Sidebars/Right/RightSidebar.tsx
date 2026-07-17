@@ -1,6 +1,9 @@
 import { useState, useRef } from "react";
 import DropdownMUI from "../../Dropdowns/DropdownMUI/DropdownMUI";
 import Badge from '@mui/material/Badge';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Typography from '@mui/material/Typography';
 import "../../../Colours.css";
 import styles from './RightSidebar.module.css';
 import { FilterModel } from "../../../Types/Filter";
@@ -36,6 +39,86 @@ function RightSidebar({ filters, selectedFilters, setSelectedFilters }: RightSid
     }, 100);
   };
 
+  const getActiveCount = (filter: FilterModel): number => {
+    const values = selectedFilters[filter.name] ?? [];
+    if (filter.type === "tag") return values.length;
+    return values.length > 0 ? 1 : 0;
+  };
+
+  const renderFilterControl = (filter: FilterModel) => {
+    const filterType = filter.type ?? "tag";
+
+    switch (filterType) {
+      case "tag":
+        return (
+          <DropdownMUI
+            label={filter.name}
+            options={filter.values}
+            selected={selectedFilters[filter.name] ?? []}
+            setSelected={(values) => setSelectedFilters(prev => ({ ...prev, [filter.name]: values }))}
+            onOpen={handleDropdownOpen}
+            onClose={handleDropdownClose}
+          />
+        );
+
+      case "numeric":
+      case "text": {
+        const isActive = (selectedFilters[filter.name] ?? []).length > 0;
+        return (
+          <div className={styles['filter-input-group']}>
+            <Typography className={styles['filter-label']}>{filter.name}</Typography>
+            <ToggleButtonGroup
+              value={isActive ? "yes" : null}
+              exclusive
+              onChange={(_, val) => {
+                setSelectedFilters(prev => ({
+                  ...prev,
+                  [filter.name]: val === "yes" ? filter.values : []
+                }));
+              }}
+              size="small"
+              className={styles['filter-toggle-group']}
+            >
+              <ToggleButton value="yes" className={styles['filter-toggle-button']}>
+                On
+              </ToggleButton>
+              <ToggleButton value="off" className={styles['filter-toggle-button']}>
+                Off
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </div>
+        );
+      }
+
+      case "boolean":
+      case "null":
+        return (
+          <div className={styles['filter-input-group']}>
+            <Typography className={styles['filter-label']}>{filter.name}</Typography>
+            <ToggleButtonGroup
+              value={selectedFilters[filter.name]?.[0] ?? null}
+              exclusive
+              onChange={(_, val) => {
+                setSelectedFilters(prev => ({ ...prev, [filter.name]: val ? [val] : [] }));
+              }}
+              size="small"
+              className={styles['filter-toggle-group']}
+            >
+              <ToggleButton value="yes" className={styles['filter-toggle-button']}>
+                Yes
+              </ToggleButton>
+              <ToggleButton value="no" className={styles['filter-toggle-button']}>
+                No
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
   return (
     <div
       ref={sidebarRef}
@@ -44,28 +127,21 @@ function RightSidebar({ filters, selectedFilters, setSelectedFilters }: RightSid
       onMouseLeave={handleMouseLeave}
     >
       {filters.map(filter => (
-        <div className={styles['sidebar-right-content']}>
+        <div key={filter.id} className={styles['sidebar-right-content']}>
           {hovered ? (
-            <DropdownMUI
-              label={filter.name}
-              options={filter.values}
-              selected={selectedFilters[filter.name] ?? []}
-              setSelected={(values) => setSelectedFilters(prev => ({ ...prev, [filter.name]: values }))}
-              onOpen={handleDropdownOpen}
-              onClose={handleDropdownClose}
-            />
+            renderFilterControl(filter)
           ) : (
             <Badge
-              badgeContent={(selectedFilters[filter.name] ?? []).length}
+              badgeContent={getActiveCount(filter)}
               color="error"
               overlap="rectangular"
-              invisible={(selectedFilters[filter.name] ?? []).length === 0}
+              invisible={getActiveCount(filter) === 0}
               anchorOrigin={{ vertical: "top", horizontal: "right"}}
               classes={{ badge: styles['custom-badge'] }}
             >
               <img
                 src="/filter.svg"
-                alt="Language"
+                alt={filter.name}
                 className={styles['sidebar-right-image']}
               />
             </Badge>

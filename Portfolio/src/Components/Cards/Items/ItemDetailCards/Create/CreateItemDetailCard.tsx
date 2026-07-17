@@ -205,7 +205,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
             fullWidth
             InputLabelProps={{className: styles['container-input-label']}}
             InputProps={{className: styles['container-input-wrapper']}}
-            inputProps={{className: styles['container-input']}}
+            inputProps={{className: styles['container-input'], maxLength: 255}}
           />
           <br />
           <br />
@@ -219,7 +219,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
             fullWidth
             InputLabelProps={{className: styles['container-input-label']}}
             InputProps={{className: styles['container-input-wrapper']}}
-            inputProps={{className: styles['container-input']}}
+            inputProps={{className: styles['container-input'], maxLength: 50}}
           />
           <br />
           <br />
@@ -233,7 +233,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
             fullWidth
             InputLabelProps={{className: styles['container-input-label']}}
             InputProps={{className: styles['container-input-wrapper']}}
-            inputProps={{className: styles['container-input']}}
+            inputProps={{className: styles['container-input'], maxLength: 255}}
           />
           <br />
           <br />
@@ -330,7 +330,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
             fullWidth
             InputLabelProps={{className: styles['container-input-label']}}
             InputProps={{className: styles['container-input-wrapper']}}
-            inputProps={{className: styles['container-input']}}
+            inputProps={{className: styles['container-input'], maxLength: 255}}
           />
           <br />
           <br />
@@ -343,7 +343,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
             fullWidth
             InputLabelProps={{className: styles['container-input-label']}}
             InputProps={{className: styles['container-input-wrapper']}}
-            inputProps={{className: styles['container-input']}}
+            inputProps={{className: styles['container-input'], maxLength: 255}}
           />
           <br />
           <br />
@@ -380,7 +380,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
               sx={{ flex: 1 }}
               InputLabelProps={{className: styles['container-input-label']}}
               InputProps={{className: styles['container-input-wrapper']}}
-              inputProps={{className: styles['container-input']}}
+              inputProps={{className: styles['container-input'], maxLength: 255}}
             />
             <TextField
               id="unitTestCoverage"
@@ -412,7 +412,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
               sx={{ flex: 1 }}
               InputLabelProps={{className: styles['sub-section-input-label']}}
               InputProps={{className: styles['sub-section-input-wrapper']}}
-              inputProps={{className: styles['sub-section-input']}}
+              inputProps={{className: styles['sub-section-input'], maxLength: 400}}
             />
           </div>
           {error && (

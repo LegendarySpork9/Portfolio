@@ -50,6 +50,46 @@
     opacity: 1;
   }
 
+.filter-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 260px;
+}
+
+.filter-label {
+  color: var(--colour-text) !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+}
+
+.filter-text-input {
+  background-color: var(--colour-object-input) !important;
+  color: var(--colour-text) !important;
+  height: 36px !important;
+}
+
+.filter-text-input-inner {
+  color: var(--colour-text) !important;
+}
+
+.filter-toggle-group {
+  width: 100%;
+}
+
+.filter-toggle-button {
+  flex: 1;
+  color: var(--colour-text) !important;
+  border-color: var(--colour-object-input) !important;
+  font-size: 0.75rem !important;
+}
+
+.filter-toggle-button:global(.Mui-selected) {
+  background-color: var(--colour-object-input) !important;
+  color: var(--colour-text) !important;
+  font-weight: 600 !important;
+}
+
 .custom-badge {
   right: 2px !important;
   top: 0px !important;

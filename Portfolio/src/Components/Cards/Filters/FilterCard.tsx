@@ -10,7 +10,11 @@ import styles from './FilterCard.module.css';
 
 import type { FilterModel } from '../../../Types/Filter';
 
-const FilterCard = (filter: FilterModel) => {
+interface FilterCardProps extends FilterModel {
+  onSuccess?: (message: string) => void;
+}
+
+const FilterCard = ({ onSuccess, ...filter }: FilterCardProps) => {
   const [openFilterForm, setFilterForm] = useState(false);
 
   return (
@@ -38,6 +42,7 @@ const FilterCard = (filter: FilterModel) => {
         filter={filter}
         open={openFilterForm}
         setOpen={setFilterForm}
+        onSuccess={onSuccess}
       />
     </div>
   );

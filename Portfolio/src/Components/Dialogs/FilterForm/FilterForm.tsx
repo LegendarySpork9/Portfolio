@@ -8,21 +8,49 @@ import TextField from '@mui/material/TextField';
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import CircularProgress from '@mui/material/CircularProgress';
+import MenuItem from '@mui/material/MenuItem';
 import "../../../Colours.css";
 import styles from './FilterForm.module.css';
 
-import type { FilterModel, FilterRequestModel } from "../../../Types/Filter";
+import type { FilterModel, FilterRequestModel, FilterType } from "../../../Types/Filter";
 
 interface FilterFormProps {
   isUpdate: boolean;
   filter?: FilterModel;
   open: boolean;
   setOpen: (value: boolean) => void;
+  onSuccess?: (message: string) => void;
 }
 
-const FilterForm = ({isUpdate, filter, open, setOpen}: FilterFormProps) => {
+const operatorsByType: Record<string, string[]> = {
+  tag: [],
+  numeric: ["equals", "not equals", "greater than", "less than", "between"],
+  text: ["contains", "not contains", "equals", "not equals", "starts with", "ends with"],
+  boolean: ["is true", "is false"],
+  null: ["has value", "has no value"],
+};
+
+const knownPaths = [
+  "name",
+  "type",
+  "summary",
+  "description",
+  "demoLink",
+  "releaseNotes",
+  "unitTestCoverage",
+  "llmUsage",
+  "llmUsageNotes",
+  "isDeleted",
+  "gitHubInformation.issueBreakdown.totalIssues",
+  "gitHubInformation.issueBreakdown.bugs",
+  "gitHubInformation.issueBreakdown.newFeatures",
+];
+
+const FilterForm = ({isUpdate, filter, open, setOpen, onSuccess}: FilterFormProps) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [filterType, setFilterType] = useState<FilterType>(filter?.type ?? "tag");
+  const [selectedOperator, setSelectedOperator] = useState(filter?.operator ?? "");
 
   const newFilter = useNewFilter();
   const updateFilter = useUpdateFilter();
@@ -40,7 +68,20 @@ const FilterForm = ({isUpdate, filter, open, setOpen}: FilterFormProps) => {
 
     const formData = new FormData(event.currentTarget);
     const name = formData.get("name") as string;
-    const values = (formData.get("values") as string).split("\n").filter(v => v.trim() !== "");
+    const type = formData.get("type") as string;
+    const operator = formData.get("operator") as string || null;
+    const path = formData.get("path") as string || null;
+
+    let values = "";
+    if (type === "tag") {
+      values = (formData.get("values") as string ?? "").split("\n").filter(v => v.trim() !== "").join(",");
+    } else if (type === "numeric" || type === "text") {
+      values = formData.get("filterValue") as string ?? "";
+      if (type === "numeric" && operator === "between") {
+        const value2 = formData.get("filterValue2") as string ?? "";
+        values = `${values},${value2}`;
+      }
+    }
 
     try {
       if (isUpdate && filter) {
@@ -49,8 +90,18 @@ const FilterForm = ({isUpdate, filter, open, setOpen}: FilterFormProps) => {
         if (name !== filter.name)
           request.name = name;
 
-        if (JSON.stringify(values) !== JSON.stringify(filter.values))
-          request.values = values.join(",");
+        if (type !== filter.type)
+          request.type = type;
+
+        if (operator !== filter.operator)
+          request.operator = operator;
+
+        if (path !== filter.path)
+          request.path = path;
+
+        const currentValues = filter.values.join(",");
+        if (values !== currentValues)
+          request.values = values;
 
         if (Object.keys(request).length > 0) {
           await updateFilter.mutateAsync({
@@ -58,18 +109,23 @@ const FilterForm = ({isUpdate, filter, open, setOpen}: FilterFormProps) => {
             request: request as FilterRequestModel
           });
         }
-      }
-      
-      else {
-        const requestValues = values.join(",")
 
+        handleClose();
+        onSuccess?.("Filter updated successfully");
+      }
+
+      else {
         await newFilter.mutateAsync({
           name,
-          values: requestValues
+          type,
+          operator,
+          path,
+          values
         });
-      }
 
-      handleClose();
+        handleClose();
+        onSuccess?.("Filter created successfully");
+      }
     }
 
     catch (error) {
@@ -98,8 +154,9 @@ const FilterForm = ({isUpdate, filter, open, setOpen}: FilterFormProps) => {
         await deleteFilter.mutateAsync(filter.id);
 
         handleClose();
+        onSuccess?.("Filter deleted successfully");
       }
-      
+
       else {
         setError("Failed to delete filter.");
       }
@@ -120,6 +177,15 @@ const FilterForm = ({isUpdate, filter, open, setOpen}: FilterFormProps) => {
     finally {
       setLoading(false);
     }
+  };
+
+  const operators = operatorsByType[filterType] ?? [];
+  const showValues = filterType === "tag";
+  const showSingleValue = filterType === "numeric" || filterType === "text";
+  const showSecondValue = filterType === "numeric" && selectedOperator === "between";
+
+  const selectMenuProps = {
+    PaperProps: { className: styles['container-select-paper'] }
   };
 
   return (
@@ -149,24 +215,134 @@ const FilterForm = ({isUpdate, filter, open, setOpen}: FilterFormProps) => {
               disabled={filter?.isDeleted}
               InputLabelProps={{className: styles['container-input-label']}}
               InputProps={{className: styles['container-input-wrapper']}}
-              inputProps={{className: styles['container-input']}}
+              inputProps={{className: styles['container-input'], maxLength: 50}}
             />
             <br />
             <TextField
               required
+              select
               margin="dense"
-              id="outlined-multiline-flexible"
-              name="values"
-              defaultValue={filter?.values.join("\n")}
-              placeholder="C#"
+              id="type"
+              name="type"
+              defaultValue={filter?.type ?? "tag"}
               variant="outlined"
-              multiline
-              maxRows={4}
               disabled={filter?.isDeleted}
+              onChange={(e) => setFilterType(e.target.value as FilterType)}
               InputLabelProps={{className: styles['container-input-label']}}
               InputProps={{className: styles['container-input-wrapper']}}
               inputProps={{className: styles['container-input']}}
-            />
+              SelectProps={{MenuProps: selectMenuProps}}
+              className={styles['container-select']}
+            >
+              <MenuItem value="tag">Tag</MenuItem>
+              <MenuItem value="numeric">Numeric</MenuItem>
+              <MenuItem value="text">Text</MenuItem>
+              <MenuItem value="boolean">Boolean</MenuItem>
+              <MenuItem value="null">Null Check</MenuItem>
+            </TextField>
+            <br />
+            {operators.length > 0 && (
+              <>
+                <TextField
+                  required
+                  select
+                  margin="dense"
+                  id="operator"
+                  name="operator"
+                  defaultValue={filter?.operator ?? ""}
+                  variant="outlined"
+                  disabled={filter?.isDeleted}
+                  onChange={(e) => setSelectedOperator(e.target.value)}
+                  InputLabelProps={{className: styles['container-input-label']}}
+                  InputProps={{className: styles['container-input-wrapper']}}
+                  inputProps={{className: styles['container-input']}}
+                  SelectProps={{MenuProps: selectMenuProps}}
+                  className={styles['container-select']}
+                >
+                  {operators.map(op => (
+                    <MenuItem key={op} value={op}>{op}</MenuItem>
+                  ))}
+                </TextField>
+                <br />
+              </>
+            )}
+            {filterType !== "tag" && (
+              <>
+                <TextField
+                  required
+                  select
+                  margin="dense"
+                  id="path"
+                  name="path"
+                  defaultValue={filter?.path ?? ""}
+                  variant="outlined"
+                  disabled={filter?.isDeleted}
+                  InputLabelProps={{className: styles['container-input-label']}}
+                  InputProps={{className: styles['container-input-wrapper']}}
+                  inputProps={{className: styles['container-input']}}
+                  SelectProps={{MenuProps: selectMenuProps}}
+                  className={styles['container-select']}
+                >
+                  {knownPaths.map(p => (
+                    <MenuItem key={p} value={p}>{p}</MenuItem>
+                  ))}
+                </TextField>
+                <br />
+              </>
+            )}
+            {showValues && (
+              <>
+                <TextField
+                  required
+                  margin="dense"
+                  id="outlined-multiline-flexible"
+                  name="values"
+                  defaultValue={filter?.values.join("\n")}
+                  placeholder="C#"
+                  variant="outlined"
+                  multiline
+                  maxRows={4}
+                  disabled={filter?.isDeleted}
+                  InputLabelProps={{className: styles['container-input-label']}}
+                  InputProps={{className: styles['container-input-wrapper']}}
+                  inputProps={{className: styles['container-input']}}
+                />
+              </>
+            )}
+            {showSingleValue && (
+              <>
+                <TextField
+                  required
+                  margin="dense"
+                  id="filterValue"
+                  name="filterValue"
+                  defaultValue={filter?.values[0] ?? ""}
+                  placeholder={filterType === "numeric" ? "0" : "Search text"}
+                  type={filterType === "numeric" ? "number" : "text"}
+                  variant="outlined"
+                  disabled={filter?.isDeleted}
+                  InputLabelProps={{className: styles['container-input-label']}}
+                  InputProps={{className: styles['container-input-wrapper']}}
+                  inputProps={{className: styles['container-input']}}
+                />
+                {showSecondValue && (
+                  <TextField
+                    required
+                    margin="dense"
+                    id="filterValue2"
+                    name="filterValue2"
+                    defaultValue={filter?.values[1] ?? ""}
+                    placeholder="0"
+                    type="number"
+                    variant="outlined"
+                    disabled={filter?.isDeleted}
+                    InputLabelProps={{className: styles['container-input-label']}}
+                    InputProps={{className: styles['container-input-wrapper']}}
+                    inputProps={{className: styles['container-input']}}
+                  />
+                )}
+              </>
+            )}
             {error && (
               <p className={styles['container-error']}>{error}</p>
             )}
