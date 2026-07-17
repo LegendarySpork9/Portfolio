@@ -25,6 +25,7 @@
 
 # variables
 *.env
+*.env.production
 
 # debug
 chrome-debug
