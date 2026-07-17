@@ -18,7 +18,9 @@ const Dropdown: React.FC<DropdownProps> = ({ label, values }) => {
   const toggleItem = (item: string) => {
     if (isSelected(item)) {
       setSelected(selected.filter((i) => i !== item));
-    } else {
+    }
+    
+    else {
       setSelected([...selected, item]);
     }
   };

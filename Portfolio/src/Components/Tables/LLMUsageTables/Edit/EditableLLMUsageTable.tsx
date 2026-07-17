@@ -1,27 +1,27 @@
-import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
+import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import SaveIcon from '@mui/icons-material/Save';
-import CancelIcon from '@mui/icons-material/Cancel';
 import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
+import SaveIcon from '@mui/icons-material/Save';
+import styles from './EditableLLMUsageTable.module.css';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
+import { useState } from 'react';
 import "../../../../Colours.css";
-import styles from './EditableLLMUsageTable.module.css';
 
 import type { ItemLLMUsageModel } from '../../../../Types/Item';
 
 interface EditableLLMUsageTableProps {
   llmUsage: ItemLLMUsageModel | null;
   setLLMUsage: React.Dispatch<React.SetStateAction<ItemLLMUsageModel | null>>;
-}
+};
 
 const EditableLLMUsageTable = ({ llmUsage, setLLMUsage }: EditableLLMUsageTableProps) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -140,6 +140,6 @@ const EditableLLMUsageTable = ({ llmUsage, setLLMUsage }: EditableLLMUsageTableP
       </Table>
     </TableContainer>
   );
-}
+};
 
 export default EditableLLMUsageTable;

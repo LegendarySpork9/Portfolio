@@ -1,20 +1,20 @@
 .container {
     background-color: var(--colour-body);
+    box-sizing: border-box;
     color: var(--colour-text);
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    position: relative;
+    min-height: 100vh;
     padding: 89px 16px 16px 16px;
-    box-sizing: border-box;
+    position: relative;
 }
 
 .data-loading {
+  align-items: center;
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  flex: 1;
 }
 
 .home-icon {

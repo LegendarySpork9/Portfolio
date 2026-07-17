@@ -8,7 +8,7 @@
 }
 
 .card-media {
+    background-color: var(--colour-object-input);
     border-radius: 4px;
     object-fit: contain;
-    background-color: var(--colour-object-input);
 }

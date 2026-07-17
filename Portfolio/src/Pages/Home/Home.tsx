@@ -1,35 +1,38 @@
-import { useState, useEffect, useRef } from "react";
-import { useAuth } from "../../Contexts/AuthContext";
-import { usePortfolio } from "../../Hooks/UsePortfolio";
-import { useFilters } from "../../Hooks/UseFilter";
-import Navbar from '../../Components/Navbar/Navbar'
-import LeftSidebar from '../../Components/Sidebars/Left/LeftSidebar'
-import RightSidebar from '../../Components/Sidebars/Right/RightSidebar'
-import CircularProgress from "@mui/material/CircularProgress";
-import Card from '../../Components/Cards/Items/PortfolioCard/PortfolioCard'
-import UpcomingProjects from '../../Components/Dialogs/UpcomingProjects/UpcomingProjects'
 import AlertSnackbar from "../../Components/Snackbar/AlertSnackbar";
-import "../../Colours.css";
+import Card from '../../Components/Cards/Items/PortfolioCard/PortfolioCard';
+import CircularProgress from "@mui/material/CircularProgress";
+import LeftSidebar from '../../Components/Sidebars/Left/LeftSidebar';
+import Navbar from '../../Components/Navbar/Navbar';
+import RightSidebar from '../../Components/Sidebars/Right/RightSidebar';
 import styles from './Home.module.css';
+import UpcomingProjects from '../../Components/Dialogs/UpcomingProjects/UpcomingProjects';
+import { useAuth } from "../../Contexts/AuthContext";
+import { useFilters } from "../../Hooks/UseFilter";
+import { usePortfolio } from "../../Hooks/UsePortfolio";
+import { useState, useEffect, useRef } from "react";
+import "../../Colours.css";
 
-import type { ItemModel } from "../../Types/Item";
 import type { FilterModel } from "../../Types/Filter";
+import type { ItemModel } from "../../Types/Item";
 
 function resolvePath(obj: Record<string, unknown>, path: string): unknown {
   return path.split(".").reduce<unknown>((current, key) => {
     if (current == null || typeof current !== "object") return undefined;
     return (current as Record<string, unknown>)[key];
   }, obj);
-}
+};
 
 function matchesFilter(item: ItemModel, filter: FilterModel, selectedValues: string[]): boolean {
-  if (selectedValues.length === 0) return true;
+  if (selectedValues.length === 0) {
+    return true;
+  }
 
   const filterType = filter.type ?? "tag";
 
   if (filterType === "tag") {
     const key = filter.name.toLowerCase() as keyof ItemModel;
     const itemValues = item[key];
+
     return Array.isArray(itemValues) && itemValues.some(v => typeof v === "string" && selectedValues.includes(v));
   }
 
@@ -38,7 +41,10 @@ function matchesFilter(item: ItemModel, filter: FilterModel, selectedValues: str
 
   switch (filterType) {
     case "numeric": {
-      if (itemValue == null || typeof itemValue !== "number") return false;
+      if (itemValue == null || typeof itemValue !== "number") {
+        return false;
+      }
+
       const num = parseFloat(selectedValues[0]);
 
       switch (operator) {
@@ -49,13 +55,16 @@ function matchesFilter(item: ItemModel, filter: FilterModel, selectedValues: str
         case "between": {
           const num2 = parseFloat(selectedValues[1] ?? "0");
           return itemValue >= Math.min(num, num2) && itemValue <= Math.max(num, num2);
-        }
+        };
         default: return false;
       }
-    }
+    };
 
     case "text": {
-      if (itemValue == null || typeof itemValue !== "string") return false;
+      if (itemValue == null || typeof itemValue !== "string") {
+        return false;
+      }
+
       const itemStr = itemValue.toLowerCase();
       const filterStr = selectedValues[0]?.toLowerCase() ?? "";
 
@@ -68,37 +77,59 @@ function matchesFilter(item: ItemModel, filter: FilterModel, selectedValues: str
         case "ends with": return itemStr.endsWith(filterStr);
         default: return false;
       }
-    }
+    };
 
     case "boolean": {
       const wantsTrue = selectedValues[0] === "yes";
+
       switch (operator) {
         case "is true": return wantsTrue ? itemValue === true : itemValue === false;
         case "is false": return wantsTrue ? itemValue === false : itemValue === true;
         default: return false;
       }
-    }
+    };
 
     case "null": {
       const wantsMatch = selectedValues[0] === "yes";
       const hasValue = itemValue !== null && itemValue !== undefined;
+
       switch (operator) {
         case "has value": return wantsMatch ? hasValue : !hasValue;
         case "has no value": return wantsMatch ? !hasValue : hasValue;
         default: return false;
       }
-    }
+    };
+
+    case "comparison": {
+      const leftValue = itemValue;
+      const rightValue = resolvePath(item as unknown as Record<string, unknown>, selectedValues[0] ?? "");
+
+      if (leftValue == null || typeof leftValue !== "number") {
+        return false;
+      }
+
+      if (rightValue == null || typeof rightValue !== "number") {
+        return false;
+      }
+
+      switch (operator) {
+        case "equals": return leftValue === rightValue;
+        case "not equals": return leftValue !== rightValue;
+        case "greater than": return leftValue > rightValue;
+        case "less than": return leftValue < rightValue;
+        default: return false;
+      }
+    };
 
     default:
       return true;
-  }
-}
+  };
+};
 
 let hasShownUpcoming = false;
 
 function Home() {
- const { isAdmin } = useAuth();
-
+  const { isAdmin } = useAuth();
   const { data: items, isLoading, error } = usePortfolio();
   const { data: filters, isLoading: filtersLoading, error: filtersError } = useFilters();
 
@@ -155,10 +186,15 @@ function Home() {
 
   let displayItems = hasActiveFilters ? allItems.filter((item: ItemModel) =>
     Object.entries(selectedFilters).every(([filterName, values]) => {
-      if (values.length === 0) return true;
+      if (values.length === 0) {
+        return true;
+      }
 
       const filter = allFilters.find((f: FilterModel) => f.name === filterName);
-      if (!filter) return true;
+
+      if (!filter) {
+        return true;
+      }
 
       return matchesFilter(item, filter, values);
     })
@@ -166,16 +202,22 @@ function Home() {
 
   return (
     <div className={styles['home-container']}>
-      <div className={styles['grid-container']}>
-        {
-          displayItems.map((item: ItemModel) => (
-            <Card
-              key={item.id}
-              {...item}
-            />
-          ))
-        }
-      </div>
+      {displayItems.length !== 0 ? (
+        <div className={styles['grid-container']}>
+          {
+            displayItems.map((item: ItemModel) => (
+              <Card
+                key={item.id}
+                {...item}
+              />
+            ))
+          }
+        </div>
+      ) : (
+        <div className={styles['data-loading']}>
+          There are no portfolio items registered in the API.
+        </div>
+      )}
 
       {isAdmin && (
         <LeftSidebar/>
@@ -203,6 +245,6 @@ function Home() {
         message={alertMessage}/>
     </div>
   );
-}
+};
 
 export default Home;

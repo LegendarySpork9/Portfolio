@@ -1,31 +1,31 @@
-import { useState } from "react";
+import AlertSnackbar from "../../Components/Snackbar/AlertSnackbar";
+import Button from "@mui/material/Button";
+import Card from "../../Components/Cards/Filters/FilterCard";
+import CircularProgress from "@mui/material/CircularProgress";
+import FilterForm from '../../Components/Dialogs/FilterForm/FilterForm';
+import HomeIcon from '@mui/icons-material/Home';
+import IconButton from "@mui/material/IconButton";
+import LeftSidebar from '../../Components/Sidebars/Left/LeftSidebar';
+import Navbar from '../../Components/Navbar/Navbar';
+import styles from './Filters.module.css';
 import { useAuth } from "../../Contexts/AuthContext";
 import { useFilters } from "../../Hooks/UseFilter";
 import { useNavigate } from "react-router-dom";
-import CircularProgress from "@mui/material/CircularProgress";
-import Button from "@mui/material/Button";
-import Card from "../../Components/Cards/Filters/FilterCard";
-import LeftSidebar from '../../Components/Sidebars/Left/LeftSidebar'
-import Navbar from '../../Components/Navbar/Navbar'
-import FilterForm from '../../Components/Dialogs/FilterForm/FilterForm'
-import AlertSnackbar from "../../Components/Snackbar/AlertSnackbar";
-import IconButton from "@mui/material/IconButton";
-import HomeIcon from '@mui/icons-material/Home';
+import { useState } from "react";
 import "../../Colours.css";
-import styles from './Filters.module.css';
 
 import type { FilterModel } from "../../Types/Filter";
 
 function FiltersPage() {
+  const { isAdmin } = useAuth();
+  const { data: filters, isLoading, error } = useFilters(true);
+  const navigate = useNavigate();
+
   const [open, setOpen] = useState(false);
   const [isUpdate] = useState(false);
   const [selectedFilter] = useState<FilterModel>();
   const [openAlert, setOpenAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  
-  const { isAdmin } = useAuth();
-  const { data: filters, isLoading, error } = useFilters(true);
-  const navigate = useNavigate();
 
   if (isLoading)
     return (
@@ -86,7 +86,7 @@ function FiltersPage() {
           severity="success"
           message={alertMessage} />
       </div>
-    )
+    );
   }
 
   else {
@@ -106,8 +106,8 @@ function FiltersPage() {
           </IconButton>
         </div>
       </div>
-    )
-  }
-}
+    );
+  };
+};
 
 export default FiltersPage;

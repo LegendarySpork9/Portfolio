@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import CardMedia from '@mui/material/CardMedia';
-import MobileStepper from "@mui/material/MobileStepper";
 import Button from "@mui/material/Button";
+import CardMedia from '@mui/material/CardMedia';
 import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import "../../Colours.css";
+import MobileStepper from "@mui/material/MobileStepper";
 import styles from './Carousel.module.css';
+import { useEffect, useState } from "react";
+import "../../Colours.css";
 
 interface ImageCarouselProps {
     images: { src: string, alt: string }[];
@@ -66,7 +66,7 @@ const ImageCarousel = ({images}: ImageCarouselProps) => {
         }
       />
     </div>
-  )
-}
+  );
+};
 
 export default ImageCarousel;

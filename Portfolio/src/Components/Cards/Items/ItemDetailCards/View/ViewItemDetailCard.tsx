@@ -1,22 +1,22 @@
-import { useNavigate } from "react-router-dom";
-import { useMedia } from "../../../../../Hooks/UseMedia";
+import BuildTable from "../../../../Tables/BuildHistoryTables/View/BuildHistoryTable";
+import Button from "@mui/material/Button";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Paper from '@mui/material/Paper'
 import Chip from "@mui/material/Chip";
+import ImageCarousel from "../../../../Carousel/Carousel";
+import InProgressTable from "../../../../Tables/GitHubInProgressTable/GitHubInProgressTable";
+import LLMTable from "../../../../Tables/LLMUsageTables/View/LLMUsageTable";
+import Paper from '@mui/material/Paper';
+import styles from './ViewItemDetailCard.module.css';
+import TextField from "@mui/material/TextField";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import ImageCarousel from "../../../../Carousel/Carousel";
-import TextField from "@mui/material/TextField";
-import BuildTable from "../../../../Tables/BuildHistoryTables/View/BuildHistoryTable";
-import { PieChart } from '@mui/x-charts/PieChart';
-import InProgressTable from "../../../../Tables/GitHubInProgressTable/GitHubInProgressTable";
 import { BarChart } from '@mui/x-charts/BarChart';
-import LLMTable from "../../../../Tables/LLMUsageTables/View/LLMUsageTable";
-import Button from "@mui/material/Button";
+import { PieChart } from '@mui/x-charts/PieChart';
+import { useMedia } from "../../../../../Hooks/UseMedia";
+import { useNavigate } from "react-router-dom";
 import "../../../../../Colours.css";
-import styles from './ViewItemDetailCard.module.css';
 
 import type { ItemModel  } from "../../../../../Types/Item";
 import type { MediaModel } from "../../../../../Types/Media";
@@ -30,29 +30,29 @@ const ItemDetail = ({item}: ItemDetailProps) => {
   const navigate = useNavigate();
   const isMobile = useMediaQuery('(max-width: 768px)');
 
-  var testCoverage: string
-  var unitTestCoverageColour: string
+  var testCoverage: string;
+  var unitTestCoverageColour: string;
 
   if (item.unitTestCoverage !== null) {
     if (item.unitTestCoverage >= 95.0) {
-      testCoverage = `${item.unitTestCoverage}%`
-      unitTestCoverageColour = "#ccff90"
+      testCoverage = `${item.unitTestCoverage}%`;
+      unitTestCoverageColour = "#ccff90";
     }
 
     else if (item.unitTestCoverage < 95.0 && item.unitTestCoverage > 65.0) {
-      testCoverage = `${item.unitTestCoverage}%`
-      unitTestCoverageColour = "orange"
+      testCoverage = `${item.unitTestCoverage}%`;
+      unitTestCoverageColour = "orange";
     }
 
     else {
-      testCoverage = `${item.unitTestCoverage}%`
-      unitTestCoverageColour = "red"
+      testCoverage = `${item.unitTestCoverage}%`;
+      unitTestCoverageColour = "red";
     }
   }
 
   else {
-    testCoverage = "No Unit Tests"
-    unitTestCoverageColour = "var(--colour-text)"
+    testCoverage = "No Unit Tests";
+    unitTestCoverageColour = "var(--colour-text)";
   }
 
   const tags = [
@@ -66,21 +66,21 @@ const ItemDetail = ({item}: ItemDetailProps) => {
 
   const images = [
     ...media.map((mediaItem) => ({ src: mediaItem.url, alt: String(mediaItem.id) }))
-  ]
-  const buildData = item.buildHistory ?? {}
-  const newFeatures = item.gitHubInformation.issueBreakdown.newFeatures
-  const bugs = item.gitHubInformation.issueBreakdown.bugs
+  ];
+  const buildData = item.buildHistory ?? {};
+  const newFeatures = item.gitHubInformation.issueBreakdown.newFeatures;
+  const bugs = item.gitHubInformation.issueBreakdown.bugs;
 
   const pieData = [
     { value: newFeatures, label: 'New Features', color: 'blue' },
     { value: bugs, label: 'Bugs', color: 'red' }
-  ]
+  ];
 
-  const hasIssueData = newFeatures + bugs > 0
+  const hasIssueData = newFeatures + bugs > 0;
 
   const pieParams = {
     height: 200
-  }
+  };
 
   return (
       <Card className={styles['container']}>
@@ -257,7 +257,7 @@ const ItemDetail = ({item}: ItemDetailProps) => {
           </Button>
         </div>
       </Card>
-  )
-}
+  );
+};
 
 export default ItemDetail;

@@ -12,6 +12,6 @@ declare global {
       MEDIA_DOMAIN: string;
     }
   }
-}
+};
 
 export {};

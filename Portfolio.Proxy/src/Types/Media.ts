@@ -10,7 +10,7 @@ export type MediaModel = {
   dateUploaded: Date;
   dateUpdated: Date;
   isDeleted: boolean;
-}
+};
 
 export type MediaRequestModel = {
   name: string;
@@ -19,16 +19,16 @@ export type MediaRequestModel = {
   size: number;
   path: string | null;
   domain: string;
-}
+};
 
 export type MediaUpdateRequestModel = {
   name: string | null;
   size: number | null;
   path: string | null;
   clearPath: boolean | false;
-}
+};
 
 export type TypeModel = {
   extension: string;
   mimeType: string;
-}
+};

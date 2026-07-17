@@ -4,7 +4,10 @@ import { endpoints } from "./Endpoints";
 import type { MediaModel, MediaRequestModel, MediaUpdateRequestModel } from "../Types/Media";
 import type { SuccessResponseModel } from "../Types/API Response";
 
-export async function uploadMedia(id: number, file: File): Promise<MediaModel> {
+export async function uploadMedia(
+  id: number,
+  file: File
+): Promise<MediaModel> {
   const formData = new FormData();
   formData.append("file", file);
 
@@ -51,7 +54,10 @@ export async function updateMedia(
   return data;
 }
 
-export async function deleteMedia(id: number, fileName?: string): Promise<SuccessResponseModel> {
+export async function deleteMedia(
+  id: number,
+  fileName?: string
+): Promise<SuccessResponseModel> {
   const { data } = await apiClient.delete<SuccessResponseModel>(endpoints.media(id), {
     data: { fileName }
   });

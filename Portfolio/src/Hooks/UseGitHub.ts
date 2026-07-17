@@ -8,4 +8,4 @@ export function useUpcomingProjects() {
     queryFn: getUpcomingProjects,
     staleTime: 10 * 60 * 1000
   });
-}
+};

@@ -1,30 +1,17 @@
 .container {
     background-color: var(--colour-object) !important;
     color: var(--colour-text) !important;
-    flex: 1;
     display: flex;
+    flex: 1;
     flex-direction: column;
 }
-
-.container-title {
-    text-align: center;
-    background-color: #81C784;
-    height: 64px;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 1.6;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .container-input-label {
     color: var(--colour-text) !important;
 }
 
 .container-input {
-    width: 100% !important;
     color: var(--colour-text) !important;
+    width: 100% !important;
 }
 
 .container-input-wrapper {
@@ -32,27 +19,27 @@
 }
 
 .container-input:global(.Mui-disabled) {
-    color: var(--colour-text) !important;
     -webkit-text-fill-color: var(--colour-text) !important;
+    color: var(--colour-text) !important;
 }
 
 .container-action {
-    display: flex !important;
     align-items: center !important;
+    display: flex !important;
     justify-content: center !important;
     padding: 8px;
 }
 
 .container-error {
-    color: #f44336;
-    font-size: 0.875rem;
-    margin: 8px 0 0 0;
-    display: flex;
     align-items: center;
+    color: #f44336;
+    display: flex;
+    font-size: 0.875rem;
     justify-content: center;
+    margin: 8px 0 0 0;
+    overflow-wrap: break-word;
     text-align: center;
     word-wrap: break-word;
-    overflow-wrap: break-word;
 }
 
 .grid-container {
@@ -63,15 +50,9 @@
 }
 
 .sub-container {
+    align-items: flex-start;
     display: flex;
     gap: 16px;
-    align-items: flex-start;
-}
-
-.sub-section {
-    display: flex;
-    gap: 16px;
-    align-items: flex-start;
 }
 
 .sub-section-input {
@@ -87,96 +68,28 @@
 }
 
 .sub-section-input:global(.Mui-disabled) {
-    color: var(--colour-text) !important;
     -webkit-text-fill-color: var(--colour-text) !important;
-}
-
-.github-section {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    width: 100%;
-}
-
-.ci-chips {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.pie-chart {
-    color: var(--colour-text) !important;
-}
-
-.pie-chart :global(.MuiChartsLegend-root) {
-    color: var(--colour-text) !important;
-}
-
-.pie-chart :global(.MuiChartsLegend-root) :global(.MuiChartsLegend-series) text {
-    fill: var(--colour-text) !important;
-}
-
-.pie-chart :global(.MuiPieChart-arc) {
-    stroke: #81C784 !important;
-}
-
-.pie-chart :global(.MuiPieChart-arcLabel) {
-    fill: var(--colour-text) !important;
-}
-
-.pie-chart :global(.MuiChartsTooltip-paper) {
-    background-color: var(--colour-object) !important;
-    color: var(--colour-text) !important;
-}
-
-.pie-chart :global(.MuiChartsTooltip-cell) {
     color: var(--colour-text) !important;
 }
 
 .card-paper {
-    display: flex;
-    padding: 8px;
-    background-color: var(--colour-object-child) !important;
     align-items: center;
-    justify-content: center;
-    text-align: center;
+    background-color: var(--colour-object-child) !important;
     color: var(--colour-text) !important;
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+    text-align: center;
 }
 
 .card-paper-container {
-    display: flex;
-    padding: 8px;
-    gap: 16px;
-    background-color: var(--colour-object-child) !important;
     align-items: center;
-    justify-content: center;
-    text-align: center;
+    background-color: var(--colour-object-child) !important;
     color: var(--colour-text) !important;
-}
-
-.card-div {
     display: flex;
-    gap: 10px
+    gap: 16px;
+    justify-content: center;
+    padding: 8px;
+    text-align: center;
 }
 
-.bar-chart :global(.MuiChartsAxis-tickLabel) {
-    fill: var(--colour-text) !important;
-}
-
-.bar-chart :global(.MuiChartsAxis-label) {
-    fill: var(--colour-text) !important;
-}
-
-.bar-chart :global(.MuiChartsLabel-root) {
-    fill: var(--colour-text) !important;
-    color: var(--colour-text) !important;
-}
-
-.bar-chart :global(.MuiChartsTooltip-paper) {
-    background-color: var(--colour-object) !important;
-    color: var(--colour-text) !important;
-}
-
-.bar-chart :global(.MuiChartsTooltip-cell) {
-    color: var(--colour-text) !important;
-}

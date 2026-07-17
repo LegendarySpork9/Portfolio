@@ -11,7 +11,7 @@ export function useFilters(includeDeleted?: boolean) {
     }],
     queryFn: () => getFilters(includeDeleted)
   });
-}
+};
 
 export function useNewFilter() {
   const queryClient = useQueryClient();
@@ -24,7 +24,7 @@ export function useNewFilter() {
       });
     }
   });
-}
+};
 
 export function useUpdateFilter() {
   const queryClient = useQueryClient();
@@ -40,7 +40,7 @@ export function useUpdateFilter() {
       });
     }
   });
-}
+};
 
 export function useDeleteFilter() {
   const queryClient = useQueryClient();
@@ -53,4 +53,4 @@ export function useDeleteFilter() {
       });
     }
   });
-}
+};

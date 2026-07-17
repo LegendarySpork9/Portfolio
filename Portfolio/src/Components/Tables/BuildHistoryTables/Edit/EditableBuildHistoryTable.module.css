@@ -3,8 +3,8 @@
 }
 
 .table :global(.MuiTableCell-root) {
-    color: var(--colour-text);
     border-bottom: 1px solid var(--colour-sidebar-border);
+    color: var(--colour-text);
 }
 
 .edit-input {

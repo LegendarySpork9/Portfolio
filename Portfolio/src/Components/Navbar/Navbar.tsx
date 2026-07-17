@@ -1,20 +1,20 @@
-import { useState } from "react";
-import { useAuth } from "../../Contexts/AuthContext";
 import IconButton from "@mui/material/IconButton";
-import NewReleasesOutlinedIcon from "@mui/icons-material/NewReleasesOutlined";
 import LoginForm from '../Dialogs/LoginForm/LoginForm';
-import UpcomingProjects from '../Dialogs/UpcomingProjects/UpcomingProjects';
-import "../../Colours.css";
+import NewReleasesOutlinedIcon from "@mui/icons-material/NewReleasesOutlined";
 import styles from './Navbar.module.css';
+import UpcomingProjects from '../Dialogs/UpcomingProjects/UpcomingProjects';
+import { useAuth } from "../../Contexts/AuthContext";
+import { useState } from "react";
+import "../../Colours.css";
 
 function Navbar() {
+  const { isAdmin } = useAuth();
+
   const [open, setOpen] = useState(false);
   const [upcomingOpen, setUpcomingOpen] = useState(false);
 
-  const { isAdmin } = useAuth();
-
   return (
-    <nav className={styles.navbar} >
+    <nav className={styles.navbar}>
       <a
         href="https://github.com/LegendarySpork9"
         style={{paddingLeft: "10px"}}

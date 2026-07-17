@@ -1,21 +1,21 @@
 .container {
     background-color: var(--colour-object) !important;
     color: var(--colour-text) !important;
-    flex: 1;
     display: flex;
+    flex: 1;
     flex-direction: column;
 }
 
 .container-title {
-    text-align: center;
+    align-items: center;
     background-color: #81C784;
-    height: 64px;
+    display: flex;
     font-size: 20px;
     font-weight: 500;
-    line-height: 1.6;
-    display: flex;
-    align-items: center;
+    height: 64px;
     justify-content: center;
+    line-height: 1.6;
+    text-align: center;
 }
 
 .container-input-label {
@@ -23,8 +23,8 @@
 }
 
 .container-input {
-    width: 100% !important;
     color: var(--colour-text) !important;
+    width: 100% !important;
 }
 
 .container-input-wrapper {
@@ -32,35 +32,29 @@
 }
 
 .container-input:global(.Mui-disabled) {
-    color: var(--colour-text) !important;
     -webkit-text-fill-color: var(--colour-text) !important;
+    color: var(--colour-text) !important;
 }
 
 .container-action {
-    display: flex !important;
     align-items: center !important;
+    display: flex !important;
     justify-content: center !important;
     padding: 8px;
 }
 
 .grid-container {
+    background-color: var(--colour-object-child) !important;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
     padding: 8px;
-    background-color: var(--colour-object-child) !important;
 }
 
 .sub-container {
+    align-items: flex-start;
     display: flex;
     gap: 16px;
-    align-items: flex-start;
-}
-
-.sub-section {
-    display: flex;
-    gap: 16px;
-    align-items: flex-start;
 }
 
 .sub-section-input {
@@ -76,13 +70,13 @@
 }
 
 .sub-section-input:global(.Mui-disabled) {
-    color: var(--colour-text) !important;
     -webkit-text-fill-color: var(--colour-text) !important;
+    color: var(--colour-text) !important;
 }
 
 .github-section {
-    display: flex;
     align-items: center;
+    display: flex;
     gap: 16px;
     width: 100%;
 }
@@ -123,22 +117,17 @@
 }
 
 .card-paper {
-    display: flex;
-    padding: 8px;
-    background-color: var(--colour-object-child) !important;
     align-items: center;
-    justify-content: center;
-    text-align: center;
+    background-color: var(--colour-object-child) !important;
     color: var(--colour-text) !important;
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+    text-align: center;
 }
 
 .card-paper a {
     color: var(--colour-text) !important;
-}
-
-.card-div {
-    display: flex;
-    gap: 10px
 }
 
 .bar-chart :global(.MuiChartsAxis-tickLabel) {
@@ -150,8 +139,8 @@
 }
 
 .bar-chart :global(.MuiChartsLabel-root) {
-    fill: var(--colour-text) !important;
     color: var(--colour-text) !important;
+    fill: var(--colour-text) !important;
 }
 
 .bar-chart :global(.MuiChartsTooltip-paper) {

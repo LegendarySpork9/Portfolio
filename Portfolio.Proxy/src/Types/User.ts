@@ -4,4 +4,4 @@ export type UserModel = {
   password: string;
   scopes: string[];
   isDeleted: boolean;
-}
+};

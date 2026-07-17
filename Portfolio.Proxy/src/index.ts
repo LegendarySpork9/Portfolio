@@ -1,18 +1,15 @@
-import "dotenv/config";
-import https from "https";
-import fs from "fs";
-import path from "path";
-import express, { Request, Response, NextFunction } from "express";
-import cors from "cors";
-import multer from "multer";
 import axios, { AxiosError } from "axios";
-
-if (process.env.NODE_ENV !== "production") {
-  const httpsAgent = new https.Agent({ rejectUnauthorized: false });
-  axios.defaults.httpsAgent = httpsAgent;
-}
-import session from "express-session";
+import cors from "cors";
 import crypto from "crypto";
+import express, { Request, Response, NextFunction } from "express";
+import fs from "fs";
+import https from "https";
+import multer from "multer";
+import path from "path";
+import session from "express-session";
+import "dotenv/config";
+import "./Types/env";
+import "./Types/Session";
 
 import type { AuthenticationModel, AuthoriseModel, LoginModel } from "./Types/Authentication";
 import type { UserModel } from "./Types/User";
@@ -21,8 +18,11 @@ import type { MetricRequestModel } from "./Types/Metric";
 import type { ItemModel, ItemRequestModel } from "./Types/Item";
 import type { MediaModel, MediaRequestModel, MediaUpdateRequestModel } from "./Types/Media";
 import type { SuccessResponseModel } from "./Types/API Response";
-import "./Types/Session";
-import "./Types/env";
+
+if (process.env.NODE_ENV !== "production") {
+  const httpsAgent = new https.Agent({ rejectUnauthorized: false });
+  axios.defaults.httpsAgent = httpsAgent;
+}
 
 const app = express();
 app.use(express.json());
@@ -61,14 +61,6 @@ app.use("/uploads", express.static(MEDIA_PATH));
 // ---- File Upload ----
 // Multer stores uploaded files in memory until we write them to the configured path.
 const upload = multer({ storage: multer.memoryStorage() });
-
-// ---- Hashing ----
-function hasString(value: string): string | null {
-  if (!value || !value.trim()) return null;
-  return crypto.createHash("sha512")
-    .update(value, "utf8")
-    .digest("hex");
-}
 
 // ---- Service Account Token ----
 // Token shared across all visitors.
@@ -194,7 +186,7 @@ app.post("/auth/login", async (req: Request<{}, {}, LoginModel>, res: Response) 
       });
     }
 
-    else{
+    else {
       console.error("Unexpected error:", error);
     }
 
@@ -266,7 +258,7 @@ app.get("/filter", async (req: Request, res: Response) => {
       });
     }
 
-    else{
+    else {
       console.error("Unexpected error:", error);
     }
 
@@ -304,7 +296,7 @@ app.get("/item", async (req: Request, res: Response) => {
       });
     }
 
-    else{
+    else {
       console.error("Unexpected error:", error);
     }
 
@@ -340,7 +332,7 @@ app.get("/item/:id", async (req: Request<{ id: string }>, res: Response) => {
       });
     }
 
-    else{
+    else {
       console.error("Unexpected error:", error);
     }
 
@@ -377,7 +369,7 @@ app.get("/media/:id", async (req: Request<{ id: string }>, res: Response) => {
       });
     }
 
-    else{
+    else {
       console.error("Unexpected error:", error);
     }
 
@@ -418,7 +410,7 @@ app.post("/metric", async (req: Request<{}, {}, MetricRequestModel>, res: Respon
       });
     }
 
-    else{
+    else {
       console.error("Unexpected error:", error);
     }
 
@@ -461,7 +453,7 @@ app.post("/filter", requireAuth, async (req: Request<{}, {}, FilterRequestModel>
       });
     }
 
-    else{
+    else {
       console.error("Unexpected error:", error);
     }
 
@@ -501,7 +493,7 @@ app.patch("/filter/:id", requireAuth, async (req: Request<{ id: string }, {}, Fi
       });
     }
 
-    else{
+    else {
       console.error("Unexpected error:", error);
     }
 
@@ -537,7 +529,7 @@ app.delete("/filter/:id", requireAuth, async (req: Request<{ id: string }, {}, S
       });
     }
 
-    else{
+    else {
       console.error("Unexpected error:", error);
     }
 
@@ -579,7 +571,7 @@ app.post("/item", requireAuth, async (req: Request<{}, {}, ItemRequestModel>, re
       });
     }
 
-    else{
+    else {
       console.error("Unexpected error:", error);
     }
 
@@ -619,7 +611,7 @@ app.patch("/item/:id", requireAuth, async (req: Request<{ id: string }, {}, Item
       });
     }
 
-    else{
+    else {
       console.error("Unexpected error:", error);
     }
 
@@ -655,7 +647,7 @@ app.delete("/item/:id", requireAuth, async (req: Request<{ id: string }, {}, Suc
       });
     }
 
-    else{
+    else {
       console.error("Unexpected error:", error);
     }
 
@@ -721,7 +713,7 @@ app.post("/media/upload/:id", requireAuth, upload.single("file"), async (req: Re
       });
     }
 
-    else{
+    else {
       console.error("Unexpected error:", error);
     }
 
@@ -761,7 +753,7 @@ app.post("/media/:id", requireAuth, async (req: Request<{ id: string }, {}, Medi
       });
     }
 
-    else{
+    else {
       console.error("Unexpected error:", error);
     }
 
@@ -801,7 +793,7 @@ app.patch("/media/:id", requireAuth, async (req: Request<{ id: string }, {}, Med
       });
     }
 
-    else{
+    else {
       console.error("Unexpected error:", error);
     }
 
@@ -845,7 +837,7 @@ app.delete("/media/:id", requireAuth, async (req: Request<{ id: string }, {}, { 
       });
     }
 
-    else{
+    else {
       console.error("Unexpected error:", error);
     }
 

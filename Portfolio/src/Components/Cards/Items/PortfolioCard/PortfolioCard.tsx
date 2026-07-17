@@ -1,19 +1,22 @@
-import { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import Paper from '@mui/material/Paper'
-import Typography from '@mui/material/Typography';
+import CardMedia from '@mui/material/CardMedia';
 import Circle from '@mui/icons-material/Circle';
-import Tooltip from '@mui/material/Tooltip';
-import SummaryBox from '../../../Dialogs/SummaryBox/SummaryBox';
-import "../../../../Colours.css";
+import Paper from '@mui/material/Paper';
 import styles from './PortfolioCard.module.css';
+import SummaryBox from '../../../Dialogs/SummaryBox/SummaryBox';
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
+import { usePostMetric } from '../../../../Hooks/UseMetric';
+import { useState } from 'react';
+import "../../../../Colours.css";
 
 import type { ItemModel } from '../../../../Types/Item';
 
 const PortfolioCard = (item: ItemModel) => {
+  const { mutate: postMetric } = usePostMetric();
+
   const [openSummary, setOpenSummary] = useState(false);
 
   var lastReleaseDateString = new Date(item.buildHistory[item.buildHistory.length - 1].releaseDate).toLocaleString("en-GB", {
@@ -24,23 +27,23 @@ const PortfolioCard = (item: ItemModel) => {
     minute: "2-digit",
     second: "2-digit",
     hour12: false
-  }).replace(",", "")
-  var status: string
-  var message: string
+  }).replace(",", "");
+  var status: string;
+  var message: string;
 
   if (item.gitHubInformation.issueBreakdown.totalIssues === 0) {
     status = "Green";
-    message = "There are no GitHub issues for this item."
+    message = "There are no GitHub issues for this item.";
   }
 
   else if (item.gitHubInformation.issueBreakdown.newFeatures > item.gitHubInformation.issueBreakdown.bugs) {
     status = "Yellow";
-    message = "There are more GitHub issues that are new features than bugs for this item."
+    message = "There are more GitHub issues that are new features than bugs for this item.";
   }
 
   else {
-    status = "Red"
-    message = "There are more GitHub issues that are bugs than new features for this item."
+    status = "Red";
+    message = "There are more GitHub issues that are bugs than new features for this item.";
   }
 
   return (
@@ -48,7 +51,10 @@ const PortfolioCard = (item: ItemModel) => {
       <Card className={styles.card} >
         <CardActionArea
           className={styles['card-action']}
-          onClick={() => setOpenSummary(true)}
+          onClick={() => {
+            setOpenSummary(true);
+            postMetric({ id: item.id, metric: "summary" });
+          }}
         >
           <CardMedia
             component="img"
@@ -121,6 +127,6 @@ const PortfolioCard = (item: ItemModel) => {
       />
     </div>
   );
-}
+};
 
 export default PortfolioCard;

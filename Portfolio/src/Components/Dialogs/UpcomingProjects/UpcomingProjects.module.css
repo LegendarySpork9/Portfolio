@@ -5,8 +5,8 @@
 }
 
 .container-title {
-    text-align: center;
     background-color: #81C784;
+    text-align: center;
 }
 
 .container-action {
@@ -23,21 +23,21 @@
 .markdown-content h3,
 .markdown-content h4 {
     color: var(--colour-text);
-    margin-top: 16px;
     margin-bottom: 8px;
+    margin-top: 16px;
 }
 
 .markdown-content h1 {
-    font-size: 1.5rem;
     border-bottom: 1px solid var(--colour-object-child);
+    font-size: 1.5rem;
     padding-bottom: 8px;
 }
 
 .markdown-content h2 {
-    font-size: 1.25rem;
     border-top: 1px solid var(--colour-object-child);
-    padding-top: 16px;
+    font-size: 1.25rem;
     margin-top: 24px;
+    padding-top: 16px;
 }
 
 .markdown-content h3 {
@@ -50,8 +50,8 @@
 
 .markdown-content ul,
 .markdown-content ol {
-    padding-left: 24px;
     margin: 8px 0;
+    padding-left: 24px;
 }
 
 .markdown-content li {
@@ -60,16 +60,16 @@
 
 .markdown-content code {
     background-color: var(--colour-object-child);
-    padding: 2px 6px;
     border-radius: 4px;
     font-size: 0.9em;
+    padding: 2px 6px;
 }
 
 .markdown-content pre {
     background-color: var(--colour-object-child);
-    padding: 12px;
     border-radius: 4px;
     overflow-x: auto;
+    padding: 12px;
 }
 
 .markdown-content a {
@@ -78,10 +78,10 @@
 
 .markdown-content blockquote {
     border-left: 3px solid #81C784;
-    margin: 8px 0;
-    padding-left: 12px;
     color: var(--colour-text);
+    margin: 8px 0;
     opacity: 0.85;
+    padding-left: 12px;
 }
 
 .loading {
@@ -91,7 +91,7 @@
 }
 
 .error {
-    text-align: center;
     color: red;
     padding: 16px;
+    text-align: center;
 }

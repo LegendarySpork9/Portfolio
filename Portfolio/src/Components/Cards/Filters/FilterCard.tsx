@@ -1,12 +1,12 @@
-import { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
-import Paper from '@mui/material/Paper'
-import Typography from '@mui/material/Typography';
 import FilterForm from '../../Dialogs/FilterForm/FilterForm';
-import "../../../Colours.css";
+import Paper from '@mui/material/Paper';
 import styles from './FilterCard.module.css';
+import Typography from '@mui/material/Typography';
+import { useState } from 'react';
+import "../../../Colours.css";
 
 import type { FilterModel } from '../../../Types/Filter';
 
@@ -46,6 +46,6 @@ const FilterCard = ({ onSuccess, ...filter }: FilterCardProps) => {
       />
     </div>
   );
-}
+};
 
 export default FilterCard;

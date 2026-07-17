@@ -5,8 +5,8 @@
 }
 
 .container-title {
-    text-align: center;
     background-color: #81C784;
+    text-align: center;
 }
 
 .container-input-label {
@@ -14,8 +14,8 @@
 }
 
 .container-input {
-    width: 400px !important;
     color: var(--colour-text) !important;
+    width: 400px !important;
 }
 
 .container-input-wrapper {
@@ -23,8 +23,8 @@
 }
 
 .container-input:global(.Mui-disabled) {
-    color: var(--colour-text) !important;
     -webkit-text-fill-color: var(--colour-text) !important;
+    color: var(--colour-text) !important;
 }
 
 .container-action {
@@ -53,8 +53,8 @@
     color: #f44336;
     font-size: 0.875rem;
     margin: 8px 0 0 0;
-    text-align: center;
     max-width: 400px;
-    word-wrap: break-word;
     overflow-wrap: break-word;
+    text-align: center;
+    word-wrap: break-word;
 }

@@ -6,7 +6,7 @@ export type FilterModel = {
   path: string | null;
   values: string[];
   isDeleted: boolean;
-}
+};
 
 export type FilterRequestModel = {
   name: string;
@@ -14,4 +14,4 @@ export type FilterRequestModel = {
   operator: string | null;
   path: string | null;
   values: string;
-}
+};

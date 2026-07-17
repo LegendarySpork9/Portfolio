@@ -4,8 +4,8 @@
 }
 
 .container-title {
-    text-align: center;
     background-color: #81C784;
+    text-align: center;
 }
 
 .container-input-label {
@@ -13,9 +13,9 @@
 }
 
 .container-input {
-    width: 100% !important;
-    max-width: 500px !important;
     color: var(--colour-text) !important;
+    max-width: 500px !important;
+    width: 100% !important;
 }
 
 .container-input-wrapper {
@@ -23,8 +23,8 @@
 }
 
 .container-input:global(.Mui-disabled) {
-    color: var(--colour-text) !important;
     -webkit-text-fill-color: var(--colour-text) !important;
+    color: var(--colour-text) !important;
 }
 
 .container-action {
@@ -32,16 +32,16 @@
 }
 
 .grid-container {
+    background-color: var(--colour-object-child) !important;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
     padding: 8px;
-    background-color: var(--colour-object-child) !important;
 }
 
 .github-section {
-    display: flex;
     align-items: center;
+    display: flex;
     gap: 16px;
 }
 
@@ -81,11 +81,11 @@
 }
 
 .card-paper {
-    display: flex;
-    padding: 8px;
-    background-color: var(--colour-object-child) !important;
     align-items: center;
+    background-color: var(--colour-object-child) !important;
+    display: flex;
     justify-content: center;
+    padding: 8px;
     text-align: center;
 }
 

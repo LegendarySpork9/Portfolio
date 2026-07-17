@@ -6,7 +6,7 @@ import type { SuccessResponseModel } from "../Types/API Response";
 
 export async function getFilters(includeDeleted?: boolean): Promise<FilterModel[]> {
   const { data } = await apiClient.get<FilterModel[]>(endpoints.filters(), {
-    params: {includeDeleted }
+    params: { includeDeleted }
   });
 
   return Array.isArray(data) ? data : [];

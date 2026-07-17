@@ -5,9 +5,13 @@ import type { ItemModel, ItemRequestModel } from "../Types/Item";
 import type { SuccessResponseModel } from "../Types/API Response";
 
 export async function getPortfolio(includeDeleted?: boolean): Promise<ItemModel[]> {
-  const { data } = await apiClient.get<ItemModel[]>(endpoints.portfolio(), {
-    params: {includeDeleted }
+  const { data } = await apiClient.get<ItemModel[] | { information: string }>(endpoints.portfolio(), {
+    params: { includeDeleted }
   });
+
+  if (!Array.isArray(data)) {
+    return [];
+  }
 
   return data;
 }

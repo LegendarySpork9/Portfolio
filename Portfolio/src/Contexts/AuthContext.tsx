@@ -8,15 +8,16 @@ interface AuthContextType {
   isLoading: boolean;
   login: (credentials: LoginModel) => Promise<void>;
   logout: () => Promise<void>;
-}
+};
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [isAdmin, setIsAdmin] = useState(false);
   const { data: authStatus, isLoading } = useAuthStatus();
   const loginMutation = useLogin();
   const logoutMutation = useLogout();
+
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect (() => {
     if (authStatus) {
@@ -39,7 +40,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
 export function useAuth() {
   const context = useContext(AuthContext);
@@ -48,4 +49,4 @@ export function useAuth() {
     throw new Error("useAuth must be used within AuthProvider");
 
   return context;
-}
+};

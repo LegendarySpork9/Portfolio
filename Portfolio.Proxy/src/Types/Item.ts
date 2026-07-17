@@ -18,7 +18,7 @@ export type ItemModel = {
   dateCreated: Date;
   dateUpdated: Date;
   isDeleted: boolean;
-}
+};
 
 export type ItemRequestModel = {
   name: string | null;
@@ -36,12 +36,12 @@ export type ItemRequestModel = {
   gitHubLink: string | null;
   llmUsage: ItemLLMUsageModel | null;
   llmUsageNotes: string | null;
-}
+};
 
 export type ItemBuildHistoryModel = {
   version: string;
   releaseDate: Date;
-}
+};
 
 export type ItemGitHubInformation = {
   url: string;
@@ -49,32 +49,32 @@ export type ItemGitHubInformation = {
   issueBreakdown: ItemGitHubIssueBreakdownModel;
   assigneeBreakdown: ItemGitHubAssigneeBreakdownModel[];
   inProgressBreakdown: ItemGitHubInProgressBreakdownModel[];
-}
+};
 
 export type ItemGitHubCIStatusModel = {
   workflow: string;
   status: string;
-}
+};
 
 export type ItemGitHubIssueBreakdownModel = {
   totalIssues: number;
   bugs: number;
   newFeatures: number;
-}
+};
 
 export type ItemGitHubAssigneeBreakdownModel = {
   name: string;
   issues: number;
-}
+};
 
 export type ItemGitHubInProgressBreakdownModel = {
   id: number;
   assignee: string;
   title: string;
   type: string;
-}
+};
 
 export type ItemLLMUsageModel = {
   company: string;
   model: string;
-}
+};

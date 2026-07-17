@@ -10,7 +10,7 @@ export function useMedia(id: number, enabled: boolean = true) {
     queryFn: () => getMedia(id),
     enabled
   });
-}
+};
 
 export function useNewMedia() {
   const queryClient = useQueryClient();
@@ -26,7 +26,7 @@ export function useNewMedia() {
       });
     }
   });
-}
+};
 
 export function useUpdateMedia() {
   const queryClient = useQueryClient();
@@ -42,7 +42,7 @@ export function useUpdateMedia() {
       });
     }
   });
-}
+};
 
 export function useDeleteMedia(id: number) {
   const queryClient = useQueryClient();
@@ -55,4 +55,4 @@ export function useDeleteMedia(id: number) {
       });
     }
   });
-}
+};

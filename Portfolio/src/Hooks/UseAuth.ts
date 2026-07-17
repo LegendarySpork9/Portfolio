@@ -9,7 +9,7 @@ export function useAuthStatus() {
     queryKey: queryKeys.auth.status,
     queryFn: () => getAuthStatus()
   });
-}
+};
 
 export function useLogin() {
   const queryClient = useQueryClient();
@@ -22,7 +22,7 @@ export function useLogin() {
       });
     }
   });
-}
+};
 
 export function useLogout() {
   const queryClient = useQueryClient();
@@ -35,4 +35,4 @@ export function useLogout() {
       });
     }
   });
-}
+};

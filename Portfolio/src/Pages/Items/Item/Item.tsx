@@ -1,26 +1,29 @@
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { useAuth } from "../../../Contexts/AuthContext";
-import { usePortfolioItem } from "../../../Hooks/UsePortfolio";
-import { useParams, useSearchParams } from "react-router-dom";
+import AlertSnackbar from "../../../Components/Snackbar/AlertSnackbar";
 import CircularProgress from "@mui/material/CircularProgress";
-import ViewCard from "../../../Components/Cards/Items/ItemDetailCards/View/ViewItemDetailCard"
-import CreateCard from "../../../Components/Cards/Items/ItemDetailCards/Create/CreateItemDetailCard"
-import AlertSnackbar from "../../../Components/Snackbar/AlertSnackbar"
-import Navbar from '../../../Components/Navbar/Navbar'
-import IconButton from "@mui/material/IconButton";
+import CreateCard from "../../../Components/Cards/Items/ItemDetailCards/Create/CreateItemDetailCard";
 import HomeIcon from '@mui/icons-material/Home';
-import "../../../Colours.css";
+import IconButton from "@mui/material/IconButton";
+import Navbar from '../../../Components/Navbar/Navbar';
 import styles from './Item.module.css';
+import ViewCard from "../../../Components/Cards/Items/ItemDetailCards/View/ViewItemDetailCard";
+import { useAuth } from "../../../Contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
+import { usePortfolioItem } from "../../../Hooks/UsePortfolio";
+import { useState, useEffect } from "react";
+import "../../../Colours.css";
 
 const ItemPage = () => {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
-  const mode = searchParams.get("mode");
+
   const { isAdmin } = useAuth();
   const navigate = useNavigate();
   const { mutate, data: item, error, isPending: isLoading } = usePortfolioItem();
+
   const [openAlert, setOpenAlert] = useState(false);
+
+  const mode = searchParams.get("mode");
 
   useEffect(() => {
     if ((mode === "view" || mode === "update") && id) {
@@ -48,7 +51,7 @@ const ItemPage = () => {
           </div>
         );
 
-  if (!isAdmin && (mode === "create" || mode === "update")){
+  if (!isAdmin && (mode === "create" || mode === "update")) {
     return (
       <div className={styles['container']}>
         <div className={styles['data-loading']}>
@@ -65,7 +68,7 @@ const ItemPage = () => {
           </IconButton>
         </div>
       </div>
-    )
+    );
   }
   
   return (

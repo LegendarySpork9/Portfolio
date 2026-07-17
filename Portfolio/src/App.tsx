@@ -1,11 +1,11 @@
-import { Routes, Route } from "react-router-dom";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "./Lib/QueryClient";
-import { AuthProvider } from "./Contexts/AuthContext";
-import HomePage from "./Pages/Home/Home";
 import FiltersPage from "./Pages/Filters/Filters";
-import ListItemPage from "./Pages/Items/List/ListItem"
+import HomePage from "./Pages/Home/Home";
 import ItemPage from "./Pages/Items/Item/Item";
+import ListItemPage from "./Pages/Items/List/ListItem";
+import { AuthProvider } from "./Contexts/AuthContext";
+import { queryClient } from "./Lib/QueryClient";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { Routes, Route } from "react-router-dom";
 
 export default function App() {
   return (
@@ -21,4 +21,4 @@ export default function App() {
       </AuthProvider>
     </QueryClientProvider>
   );
-}
+};

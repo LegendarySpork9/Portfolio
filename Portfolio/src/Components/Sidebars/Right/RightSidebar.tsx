@@ -1,18 +1,18 @@
-import { useState, useRef } from "react";
-import DropdownMUI from "../../Dropdowns/DropdownMUI/DropdownMUI";
 import Badge from '@mui/material/Badge';
+import DropdownMUI from "../../Dropdowns/DropdownMUI/DropdownMUI";
+import styles from './RightSidebar.module.css';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
-import "../../../Colours.css";
-import styles from './RightSidebar.module.css';
 import { FilterModel } from "../../../Types/Filter";
+import { useState, useRef } from "react";
+import "../../../Colours.css";
 
 interface RightSidebarProps {
   filters: FilterModel[];
   selectedFilters: Record<string, string[]>;
   setSelectedFilters: React.Dispatch<React.SetStateAction<Record<string, string[]>>>;
-}
+};
 
 function RightSidebar({ filters, selectedFilters, setSelectedFilters }: RightSidebarProps) {
   const [hovered, setHovered] = useState(false);
@@ -41,7 +41,11 @@ function RightSidebar({ filters, selectedFilters, setSelectedFilters }: RightSid
 
   const getActiveCount = (filter: FilterModel): number => {
     const values = selectedFilters[filter.name] ?? [];
-    if (filter.type === "tag") return values.length;
+
+    if (filter.type === "tag") {
+      return values.length;
+    }
+
     return values.length > 0 ? 1 : 0;
   };
 
@@ -62,8 +66,10 @@ function RightSidebar({ filters, selectedFilters, setSelectedFilters }: RightSid
         );
 
       case "numeric":
-      case "text": {
+      case "text":
+      case "comparison": {
         const isActive = (selectedFilters[filter.name] ?? []).length > 0;
+
         return (
           <div className={styles['filter-input-group']}>
             <Typography className={styles['filter-label']}>{filter.name}</Typography>
@@ -88,7 +94,7 @@ function RightSidebar({ filters, selectedFilters, setSelectedFilters }: RightSid
             </ToggleButtonGroup>
           </div>
         );
-      }
+      };
 
       case "boolean":
       case "null":
@@ -116,7 +122,7 @@ function RightSidebar({ filters, selectedFilters, setSelectedFilters }: RightSid
 
       default:
         return null;
-    }
+    };
   };
 
   return (
@@ -150,6 +156,6 @@ function RightSidebar({ filters, selectedFilters, setSelectedFilters }: RightSid
       ))}
     </div>
   );
-}
+};
 
 export default RightSidebar;

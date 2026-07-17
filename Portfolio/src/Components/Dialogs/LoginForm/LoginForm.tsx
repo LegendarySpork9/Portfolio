@@ -1,26 +1,26 @@
-import { useState, FormEvent, Fragment } from "react";
 import axios from "axios";
-import { useAuth } from "../../../Contexts/AuthContext";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import TextField from '@mui/material/TextField';
-import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import CircularProgress from '@mui/material/CircularProgress';
-import "../../../Colours.css";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import styles from './LoginForm.module.css';
+import TextField from '@mui/material/TextField';
+import { useAuth } from "../../../Contexts/AuthContext";
+import { useState, FormEvent, Fragment } from "react";
+import "../../../Colours.css";
 
 interface LoginFormProps {
   open: boolean;
   setOpen: (value: boolean) => void;
-}
+};
 
 const LoginForm = ({open, setOpen}: LoginFormProps) => {
+  const { login } = useAuth();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
-  const { login } = useAuth();
   
   const handleClose = () => {
     setOpen(false);
@@ -125,7 +125,7 @@ const LoginForm = ({open, setOpen}: LoginFormProps) => {
         </DialogActions>
       </Dialog>
     </Fragment>
-  )
-}
+  );
+};
 
 export default LoginForm;

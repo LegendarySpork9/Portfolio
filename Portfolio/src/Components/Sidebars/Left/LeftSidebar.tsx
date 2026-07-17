@@ -1,25 +1,25 @@
-import { useState } from "react";
+import Button from "@mui/material/Button";
+import Divider from '@mui/material/Divider';
+import EditDocument from '@mui/icons-material/EditDocument';
+import HomeIcon from '@mui/icons-material/Home';
+import Logout from '@mui/icons-material/Logout';
+import styles from './LeftSidebar.module.css';
+import Typography from "@mui/material/Typography";
 import { useAuth } from "../../../Contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import Button from "@mui/material/Button";
-import HomeIcon from '@mui/icons-material/Home';
-import EditDocument from '@mui/icons-material/EditDocument';
-import Logout from '@mui/icons-material/Logout';
-import Typography from "@mui/material/Typography";
-import Divider from '@mui/material/Divider';
+import { useState } from "react";
 import "../../../Colours.css";
-import styles from './LeftSidebar.module.css';
 
 function LeftSidebar() {
-  const [hovered, setHovered] = useState(false);
-
   const { logout } = useAuth();
   const navigate = useNavigate();
+
+  const [hovered, setHovered] = useState(false);
 
   const handleLogout = () => {
     logout();
     navigate("/");
-  }
+  };
 
   return (
     <div
@@ -101,6 +101,6 @@ function LeftSidebar() {
       </div>
     </div>
   );
-}
+};
 
 export default LeftSidebar;

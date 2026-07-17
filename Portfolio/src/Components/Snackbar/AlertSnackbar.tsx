@@ -1,5 +1,5 @@
-import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 type Severity = 'success' | 'info' | 'warning' | 'error';
 
@@ -8,7 +8,7 @@ interface AlertSnackbarProps {
   setOpen: (value: boolean) => void;
   severity: Severity;
   message: string;
-}
+};
 
 const AlertSnackbar = ({ open, setOpen, severity, message }: AlertSnackbarProps) => {
   const handleClose = (
@@ -36,6 +36,6 @@ const AlertSnackbar = ({ open, setOpen, severity, message }: AlertSnackbarProps)
       </Alert>
     </Snackbar>
   );
-}
+};
 
 export default AlertSnackbar;

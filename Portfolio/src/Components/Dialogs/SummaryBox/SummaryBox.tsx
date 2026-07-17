@@ -1,18 +1,19 @@
-import { Fragment } from "react"; 
-import { useNavigate } from "react-router-dom";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import Chip from "@mui/material/Chip";
-import TextField from "@mui/material/TextField";
-import { PieChart } from '@mui/x-charts/PieChart';
-import Tooltip from "@mui/material/Tooltip";
-import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
-import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
-import "../../../Colours.css";
+import Chip from "@mui/material/Chip";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import Paper from "@mui/material/Paper";
 import styles from './SummaryBox.module.css';
+import TextField from "@mui/material/TextField";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import { Fragment } from "react";
+import { PieChart } from '@mui/x-charts/PieChart';
+import { useNavigate } from "react-router-dom";
+import { usePostMetric } from '../../../Hooks/UseMetric';
+import "../../../Colours.css";
 
 import type { ItemGitHubCIStatusModel, ItemGitHubIssueBreakdownModel } from "../../../Types/Item";
 
@@ -29,11 +30,12 @@ interface SummaryBoxProps {
   unitTestCoverage: number | null;
   open: boolean;
   setOpen: (value: boolean) => void;
-}
+};
 
 const SummaryBox = ({id, name, summary, frameworks, languages, environments, ciStatuses, issueBreakdown, latestBuildNumber, unitTestCoverage, open, setOpen}: SummaryBoxProps) => {
   const navigate = useNavigate();
-  
+  const { mutate: postMetric } = usePostMetric();
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -44,38 +46,38 @@ const SummaryBox = ({id, name, summary, frameworks, languages, environments, ciS
     ...environments.map((label) => ({ label, color: "secondary" as const })),
   ];
 
-  const newFeatures = issueBreakdown.newFeatures
-  const bugs = issueBreakdown.bugs
+  const newFeatures = issueBreakdown.newFeatures;
+  const bugs = issueBreakdown.bugs;
 
   const pieData = [
     { value: newFeatures, label: 'New Features', color: 'blue' },
     { value: bugs, label: 'Bugs', color: 'red' }
-  ]
+  ];
 
-  const hasIssueData = newFeatures + bugs > 0
+  const hasIssueData = newFeatures + bugs > 0;
 
   const pieParams = {
     height: 200
-  }
+  };
 
-  var unitTestCoverageColour: string
+  var unitTestCoverageColour: string;
 
   if (unitTestCoverage !== null) {
     if (unitTestCoverage >= 95.0) {
-      unitTestCoverageColour = "#ccff90"
+      unitTestCoverageColour = "#ccff90";
     }
 
     else if (unitTestCoverage < 95.0 && unitTestCoverage > 65.0) {
-      unitTestCoverageColour = "orange"
+      unitTestCoverageColour = "orange";
     }
 
     else {
-      unitTestCoverageColour = "red"
+      unitTestCoverageColour = "red";
     }
   }
 
   else {
-    unitTestCoverageColour = "var(--colour-text)"
+    unitTestCoverageColour = "var(--colour-text)";
   }
 
   return (
@@ -197,14 +199,17 @@ const SummaryBox = ({id, name, summary, frameworks, languages, environments, ciS
             type="submit"
             form="login-form"
             variant="contained"
-            onClick={() => navigate(`/item/${id}?mode=view`)}
+            onClick={() => {
+              postMetric({ id, metric: "full" });
+              navigate(`/item/${id}?mode=view`);
+            }}
           >
             View Item
           </Button>
         </DialogActions>
       </Dialog>
     </Fragment>
-  )
-}
+  );
+};
 
 export default SummaryBox;

@@ -1,36 +1,36 @@
 .list-container {
   background-color: var(--colour-body);
   color: var(--colour-text);
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
   position: relative;
 }
 
 .data-loading {
+  align-items: center;
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  flex: 1;
 }
 
 .button {
-  margin-top: 88px;
   margin-left: 80px;
   margin-right: 64px;
+  margin-top: 88px;
 }
 
 .list-grid {
+  align-items: start;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1rem;
-  padding: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  justify-content: center;
   margin-left: 64px;
   margin-right: 64px;
-  justify-content: center;
+  padding: 1rem;
   z-index: 0;
-  align-items: start;
 }
 
 .home-icon {

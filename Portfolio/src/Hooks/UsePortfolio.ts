@@ -11,13 +11,13 @@ export function usePortfolio(includeDeleted?: boolean) {
     }],
     queryFn: () => getPortfolio(includeDeleted)
   });
-}
+};
 
 export function usePortfolioItem() {
   return useMutation({
     mutationFn: (id: number) => getPortfolioItem(id)
   });
-}
+};
 
 export function useNewPortfolioItem() {
   const queryClient = useQueryClient();
@@ -30,7 +30,7 @@ export function useNewPortfolioItem() {
       });
     }
   });
-}
+};
 
 export function useUpdatePortfolioItem() {
   const queryClient = useQueryClient();
@@ -46,7 +46,7 @@ export function useUpdatePortfolioItem() {
       });
     }
   });
-}
+};
 
 export function useDeletePortfolioItem(id: number) {
   const queryClient = useQueryClient();
@@ -59,4 +59,4 @@ export function useDeletePortfolioItem(id: number) {
       });
     }
   });
-}
+};

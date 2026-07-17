@@ -1,4 +1,4 @@
-export type FilterType = "tag" | "numeric" | "text" | "boolean" | "null";
+export type FilterType = "tag" | "numeric" | "text" | "boolean" | "null" | "comparison";
 
 export type FilterModel = {
   id: number;
@@ -8,7 +8,7 @@ export type FilterModel = {
   path: string | null;
   values: string[];
   isDeleted: boolean;
-}
+};
 
 export type FilterRequestModel = {
   name: string;
@@ -16,4 +16,4 @@ export type FilterRequestModel = {
   operator: string | null;
   path: string | null;
   values: string;
-}
+};

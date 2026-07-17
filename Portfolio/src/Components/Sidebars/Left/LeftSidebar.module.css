@@ -1,14 +1,14 @@
 .sidebar-left {
-  position: fixed;
-  top: 73px;
-  left: 0;
-  height: calc(100vh - 73px);
+  align-items: flex-start;
   background-color: var(--colour-sidebar);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  transition: width 0.3s ease;
+  height: calc(100vh - 73px);
+  left: 0;
   overflow: hidden;
+  position: fixed;
+  top: 73px;
+  transition: width 0.3s ease;
 }
 
 .sidebar-left.collapsed {
@@ -20,16 +20,16 @@
 }
 
 .sidebar-left-content {
-  display: flex;
   align-items: center;
   background-color: var(--colour-body);
-  padding: 8px;
-  gap: 12px;
   border-radius: 0px;
-  margin-top: 3.2px;
-  width: 100%;
+  display: flex;
+  gap: 12px;
   height: 64px;
+  margin-top: 3.2px;
+  padding: 8px;
   transition: background-color 0.3s ease;
+  width: 100%;
 }
 
 .sidebar-left-content:hover {
@@ -43,13 +43,13 @@
 
 .sidebar-left-text {
   color: var(--colour-text);
-  white-space: nowrap;
   font-size: 0;
-  width: 0;
-  transition: font-size 0.3s ease, width 0.3s ease, margin-left 0.3s ease;
-  text-transform: none;
   overflow: hidden;
   text-align: left;
+  text-transform: none;
+  transition: font-size 0.3s ease, width 0.3s ease, margin-left 0.3s ease;
+  white-space: nowrap;
+  width: 0;
 }
 
 .sidebar-left.expanded .sidebar-left-text {
@@ -60,14 +60,14 @@
 }
 
 .sidebar-left-icon {
-  font-size: 36px !important;
-  width: 36px;
-  height: 36px;
   color: var(--colour-text);
+  font-size: 36px !important;
+  height: 36px;
+  width: 36px;
 }
 
 .sidebar-left-bottom {
-  position: absolute;
   bottom: 0;
+  position: absolute;
   width: 100%;
 }

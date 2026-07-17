@@ -1,29 +1,29 @@
-import { useNavigate } from "react-router-dom";
-import { useState, FormEvent } from "react";
-import { useNewPortfolioItem, useUpdatePortfolioItem } from "../../../../../Hooks/UsePortfolio";
-import { useMedia } from "../../../../../Hooks/UseMedia";
-import { uploadMedia, deleteMedia } from "../../../../../API/Media.api";
+import BuildTable from "../../../../Tables/BuildHistoryTables/Edit/EditableBuildHistoryTable";
+import Button from "@mui/material/Button";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Paper from '@mui/material/Paper'
-import TextField from "@mui/material/TextField";
-import BuildTable from "../../../../Tables/BuildHistoryTables/Edit/EditableBuildHistoryTable";
-import LLMTable from "../../../../Tables/LLMUsageTables/Edit/EditableLLMUsageTable";
-import Button from "@mui/material/Button";
-import ImageTable from "../../../../Tables/ImageTable/ImageTable";
 import CircularProgress from '@mui/material/CircularProgress';
-import "../../../../../Colours.css";
+import ImageTable from "../../../../Tables/ImageTable/ImageTable";
+import LLMTable from "../../../../Tables/LLMUsageTables/Edit/EditableLLMUsageTable";
+import Paper from '@mui/material/Paper';
+import React from "react";
 import styles from './CreateItemDetailCard.module.css';
+import TextField from "@mui/material/TextField";
+import { uploadMedia, deleteMedia } from "../../../../../API/Media.api";
+import { useMedia } from "../../../../../Hooks/UseMedia";
+import { useNavigate } from "react-router-dom";
+import { useNewPortfolioItem, useUpdatePortfolioItem } from "../../../../../Hooks/UsePortfolio";
+import { useState, FormEvent } from "react";
+import "../../../../../Colours.css";
 
 import type { ItemModel, ItemBuildHistoryModel, ItemLLMUsageModel, ItemRequestModel } from "../../../../../Types/Item";
 import type { MediaModel } from "../../../../../Types/Media";
-import React from "react";
 
 interface ItemDetailProps {
   isUpdate: boolean;
   item?: ItemModel;
   onUpdateSuccess?: () => void;
-}
+};
 
 const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
   const navigate = useNavigate();
@@ -45,9 +45,13 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
   const handleDeleteMedia = async (media: MediaModel) => {
     try {
       const fileName = media.name + media.type.extension;
+
       await deleteMedia(media.id, fileName);
+
       setDeletedMediaIds((prev) => [...prev, media.id]);
-    } catch {
+    }
+    
+    catch {
       setError("Failed to delete media.");
     }
   };
@@ -79,57 +83,74 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
       if (isUpdate && item) {
         const request: Partial<ItemRequestModel> = {};
 
-        if (getValue("name") !== item.name)
+        if (getValue("name") !== item.name) {
           request.name = getValue("name");
+        }
 
-        if (getValue("type") !== item.type)
+        if (getValue("type") !== item.type) {
           request.type = getValue("type");
+        }
 
-        if (getValue("iconURL") !== item.iconURL)
+        if (getValue("iconURL") !== item.iconURL) {
           request.iconURL = getValue("iconURL");
+        }
 
-        if (getValue("summary") !== item.summary)
+        if (getValue("summary") !== item.summary) {
           request.summary = getValue("summary");
+        }
 
-        if (getValue("description") !== item.description)
+        if (getValue("description") !== item.description) {
           request.description = getValue("description");
+        }
 
-        if (JSON.stringify(parseLines("frameworks")) !== JSON.stringify(item.frameworks))
+        if (JSON.stringify(parseLines("frameworks")) !== JSON.stringify(item.frameworks)) {
           request.frameworks = parseLines("frameworks");
+        }
 
-        if (JSON.stringify(parseLines("languages")) !== JSON.stringify(item.languages))
+        if (JSON.stringify(parseLines("languages")) !== JSON.stringify(item.languages)) {
           request.languages = parseLines("languages");
+        }
 
-        if (JSON.stringify(parseLines("environments")) !== JSON.stringify(item.environments))
+        if (JSON.stringify(parseLines("environments")) !== JSON.stringify(item.environments)) {
           request.environments = parseLines("environments");
+        }
 
-        if (getValue("demoLink") !== (item.demoLink ?? null))
+        if (getValue("demoLink") !== (item.demoLink ?? null)) {
           request.demoLink = getValue("demoLink");
+        }
 
-        if (getValue("releaseNotes") !== item.releaseNotes)
+        if (getValue("releaseNotes") !== item.releaseNotes) {
           request.releaseNotes = getValue("releaseNotes");
+        }
 
-        if (JSON.stringify(buildHistory) !== JSON.stringify(item.buildHistory))
+        if (JSON.stringify(buildHistory) !== JSON.stringify(item.buildHistory)) {
           request.buildHistory = buildHistory.length > 0 ? buildHistory : null;
+        }
 
         const unitTestCoverage = getValue("unitTestCoverage") ? Number(getValue("unitTestCoverage")) : null;
-        if (unitTestCoverage !== (item.unitTestCoverage ?? null))
+
+        if (unitTestCoverage !== (item.unitTestCoverage ?? null)) {
           request.unitTestCoverage = unitTestCoverage;
+        }
 
-        if (getValue("gitHubLink") !== item.gitHubInformation?.url)
+        if (getValue("gitHubLink") !== item.gitHubInformation?.url) {
           request.gitHubLink = getValue("gitHubLink");
+        }
 
-        if (JSON.stringify(llmUsage) !== JSON.stringify(item.llmUsage))
+        if (JSON.stringify(llmUsage) !== JSON.stringify(item.llmUsage)) {
           request.llmUsage = llmUsage;
+        }
 
-        if (getValue("llmUsageNotes") !== (item.llmUsageNotes ?? null))
+        if (getValue("llmUsageNotes") !== (item.llmUsageNotes ?? null)) {
           request.llmUsageNotes = getValue("llmUsageNotes");
+        }
 
         if (Object.keys(request).length > 0) {
           const result = await updateItem.mutateAsync({ id: item.id, request: request as ItemRequestModel });
 
           if (!result.id) {
             const info = (result as Record<string, unknown>).information;
+
             setError(typeof info === "string" ? info : "Failed to update item.");
             setLoading(false);
             return;
@@ -143,7 +164,9 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
 
         setLoading(false);
         onUpdateSuccess?.();
-      } else {
+      }
+      
+      else {
         const request: ItemRequestModel = {
           name: getValue("name"),
           type: getValue("type"),
@@ -166,6 +189,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
 
         if (!result.id) {
           const info = (result as Record<string, unknown>).information;
+
           setError(typeof info === "string" ? info : "Failed to create item.");
           setLoading(false);
           return;
@@ -177,10 +201,14 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
 
         navigate("/items", { state: { created: true } });
       }
-    } catch (err: unknown) {
+    }
+    
+    catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
-      } else {
+      }
+      
+      else {
         setError(isUpdate ? "Failed to update item." : "Failed to create item.");
       }
 
@@ -442,7 +470,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
         </div>
       </Card>
     </form>
-  )
-}
+  );
+};
 
 export default ItemDetail;

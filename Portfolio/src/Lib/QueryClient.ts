@@ -9,16 +9,18 @@ function shouldRetry(
   failureCount: number,
   error: unknown
 ): boolean {
-  if (failureCount >= MAX_RETRIES)
+  if (failureCount >= MAX_RETRIES) {
     return false;
+  }
   
   const status = (error as AxiosError | undefined)?.response?.status;
 
-  if (status && status >= 400 && status < 500)
+  if (status && status >= 400 && status < 500) {
     return false;
+  }
 
   return true;
-}
+};
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,13 +38,15 @@ export const queryClient = new QueryClient({
           failureCount,
           error
         ) => {
-        if (failureCount >= 1)
+        if (failureCount >= 1) {
           return false;
+        }
 
         const status = (error as AxiosError | undefined)?.response?.status;
 
-        if (status && status >= 400 && status < 500)
+        if (status && status >= 400 && status < 500) {
           return false;
+        }
 
         return true;
       },

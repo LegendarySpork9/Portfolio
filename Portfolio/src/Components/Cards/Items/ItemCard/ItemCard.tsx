@@ -1,11 +1,11 @@
-import { useNavigate } from "react-router-dom";
 import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
-import Paper from '@mui/material/Paper'
-import Typography from '@mui/material/Typography';
-import "../../../../Colours.css";
+import Paper from '@mui/material/Paper';
 import styles from './ItemCard.module.css';
+import Typography from '@mui/material/Typography';
+import { useNavigate } from "react-router-dom";
+import "../../../../Colours.css";
 
 import type { ItemModel } from '../../../../Types/Item';
 
@@ -33,6 +33,6 @@ const ItemCard = (item: ItemModel) => {
       </Card>
     </div>
   );
-}
+};
 
 export default ItemCard;

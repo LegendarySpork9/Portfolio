@@ -4,14 +4,14 @@
 }
 
 .container-title {
-    text-align: center;
     background-color: #81C784;
+    text-align: center;
 }
 
 .container-input {
-    width: 400px !important;
-    color: var(--colour-text) !important;
     background-color: var(--colour-object-input) !important;
+    color: var(--colour-text) !important;
+    width: 400px !important;
 }
 
 .container-input-label {

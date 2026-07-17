@@ -5,4 +5,4 @@ declare module "express-session" {
     authenticated: boolean;
     username: string;
   }
-}
+};

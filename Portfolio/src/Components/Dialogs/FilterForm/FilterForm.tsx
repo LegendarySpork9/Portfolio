@@ -1,26 +1,18 @@
-import { useState, FormEvent, Fragment } from "react";
 import axios from "axios";
-import { useNewFilter, useUpdateFilter, useDeleteFilter } from "../../../Hooks/UseFilter";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import TextField from '@mui/material/TextField';
-import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import CircularProgress from '@mui/material/CircularProgress';
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import MenuItem from '@mui/material/MenuItem';
-import "../../../Colours.css";
 import styles from './FilterForm.module.css';
+import TextField from '@mui/material/TextField';
+import { useNewFilter, useUpdateFilter, useDeleteFilter } from "../../../Hooks/UseFilter";
+import { useState, FormEvent, Fragment } from "react";
+import "../../../Colours.css";
 
 import type { FilterModel, FilterRequestModel, FilterType } from "../../../Types/Filter";
-
-interface FilterFormProps {
-  isUpdate: boolean;
-  filter?: FilterModel;
-  open: boolean;
-  setOpen: (value: boolean) => void;
-  onSuccess?: (message: string) => void;
-}
 
 const operatorsByType: Record<string, string[]> = {
   tag: [],
@@ -28,6 +20,7 @@ const operatorsByType: Record<string, string[]> = {
   text: ["contains", "not contains", "equals", "not equals", "starts with", "ends with"],
   boolean: ["is true", "is false"],
   null: ["has value", "has no value"],
+  comparison: ["equals", "not equals", "greater than", "less than"],
 };
 
 const knownPaths = [
@@ -46,15 +39,30 @@ const knownPaths = [
   "gitHubInformation.issueBreakdown.newFeatures",
 ];
 
+const numericPaths = [
+  "unitTestCoverage",
+  "gitHubInformation.issueBreakdown.totalIssues",
+  "gitHubInformation.issueBreakdown.bugs",
+  "gitHubInformation.issueBreakdown.newFeatures",
+];
+
+interface FilterFormProps {
+  isUpdate: boolean;
+  filter?: FilterModel;
+  open: boolean;
+  setOpen: (value: boolean) => void;
+  onSuccess?: (message: string) => void;
+};
+
 const FilterForm = ({isUpdate, filter, open, setOpen, onSuccess}: FilterFormProps) => {
+  const newFilter = useNewFilter();
+  const updateFilter = useUpdateFilter();
+  const deleteFilter = useDeleteFilter();
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [filterType, setFilterType] = useState<FilterType>(filter?.type ?? "tag");
   const [selectedOperator, setSelectedOperator] = useState(filter?.operator ?? "");
-
-  const newFilter = useNewFilter();
-  const updateFilter = useUpdateFilter();
-  const deleteFilter = useDeleteFilter();
 
   const handleClose = () => {
     setOpen(false);
@@ -73,10 +81,18 @@ const FilterForm = ({isUpdate, filter, open, setOpen, onSuccess}: FilterFormProp
     const path = formData.get("path") as string || null;
 
     let values = "";
+
     if (type === "tag") {
       values = (formData.get("values") as string ?? "").split("\n").filter(v => v.trim() !== "").join(",");
-    } else if (type === "numeric" || type === "text") {
+    }
+    
+    else if (type === "comparison") {
+      values = formData.get("comparePath") as string ?? "";
+    }
+    
+    else if (type === "numeric" || type === "text") {
       values = formData.get("filterValue") as string ?? "";
+
       if (type === "numeric" && operator === "between") {
         const value2 = formData.get("filterValue2") as string ?? "";
         values = `${values},${value2}`;
@@ -87,21 +103,27 @@ const FilterForm = ({isUpdate, filter, open, setOpen, onSuccess}: FilterFormProp
       if (isUpdate && filter) {
         const request: Partial<FilterRequestModel> = {};
 
-        if (name !== filter.name)
+        if (name !== filter.name) {
           request.name = name;
+        }
 
-        if (type !== filter.type)
+        if (type !== filter.type) {
           request.type = type;
+        }
 
-        if (operator !== filter.operator)
+        if (operator !== filter.operator) {
           request.operator = operator;
+        }
 
-        if (path !== filter.path)
+        if (path !== filter.path) {
           request.path = path;
+        }
 
         const currentValues = filter.values.join(",");
-        if (values !== currentValues)
+
+        if (values !== currentValues) {
           request.values = values;
+        }
 
         if (Object.keys(request).length > 0) {
           await updateFilter.mutateAsync({
@@ -208,6 +230,7 @@ const FilterForm = ({isUpdate, filter, open, setOpen, onSuccess}: FilterFormProp
               margin="dense"
               id="name"
               name="name"
+              label="Name"
               defaultValue={filter?.name}
               placeholder="Languages"
               type="text"
@@ -224,6 +247,7 @@ const FilterForm = ({isUpdate, filter, open, setOpen, onSuccess}: FilterFormProp
               margin="dense"
               id="type"
               name="type"
+              label="Type"
               defaultValue={filter?.type ?? "tag"}
               variant="outlined"
               disabled={filter?.isDeleted}
@@ -239,6 +263,7 @@ const FilterForm = ({isUpdate, filter, open, setOpen, onSuccess}: FilterFormProp
               <MenuItem value="text">Text</MenuItem>
               <MenuItem value="boolean">Boolean</MenuItem>
               <MenuItem value="null">Null Check</MenuItem>
+              <MenuItem value="comparison">Comparison</MenuItem>
             </TextField>
             <br />
             {operators.length > 0 && (
@@ -249,6 +274,7 @@ const FilterForm = ({isUpdate, filter, open, setOpen, onSuccess}: FilterFormProp
                   margin="dense"
                   id="operator"
                   name="operator"
+                  label="Operator"
                   defaultValue={filter?.operator ?? ""}
                   variant="outlined"
                   disabled={filter?.isDeleted}
@@ -266,7 +292,7 @@ const FilterForm = ({isUpdate, filter, open, setOpen, onSuccess}: FilterFormProp
                 <br />
               </>
             )}
-            {filterType !== "tag" && (
+            {filterType !== "tag" && filterType !== "comparison" && (
               <>
                 <TextField
                   required
@@ -274,6 +300,7 @@ const FilterForm = ({isUpdate, filter, open, setOpen, onSuccess}: FilterFormProp
                   margin="dense"
                   id="path"
                   name="path"
+                  label="Path"
                   defaultValue={filter?.path ?? ""}
                   variant="outlined"
                   disabled={filter?.isDeleted}
@@ -290,6 +317,52 @@ const FilterForm = ({isUpdate, filter, open, setOpen, onSuccess}: FilterFormProp
                 <br />
               </>
             )}
+            {filterType === "comparison" && (
+              <>
+                <TextField
+                  required
+                  select
+                  margin="dense"
+                  id="path"
+                  name="path"
+                  label="Path"
+                  defaultValue={filter?.path ?? ""}
+                  variant="outlined"
+                  disabled={filter?.isDeleted}
+                  InputLabelProps={{className: styles['container-input-label']}}
+                  InputProps={{className: styles['container-input-wrapper']}}
+                  inputProps={{className: styles['container-input']}}
+                  SelectProps={{MenuProps: selectMenuProps}}
+                  className={styles['container-select']}
+                >
+                  {numericPaths.map(p => (
+                    <MenuItem key={p} value={p}>{p}</MenuItem>
+                  ))}
+                </TextField>
+                <br />
+                <TextField
+                  required
+                  select
+                  margin="dense"
+                  id="comparePath"
+                  name="comparePath"
+                  label="Compare Path"
+                  defaultValue={filter?.values[0] ?? ""}
+                  variant="outlined"
+                  disabled={filter?.isDeleted}
+                  InputLabelProps={{className: styles['container-input-label']}}
+                  InputProps={{className: styles['container-input-wrapper']}}
+                  inputProps={{className: styles['container-input']}}
+                  SelectProps={{MenuProps: selectMenuProps}}
+                  className={styles['container-select']}
+                >
+                  {numericPaths.map(p => (
+                    <MenuItem key={p} value={p}>{p}</MenuItem>
+                  ))}
+                </TextField>
+                <br />
+              </>
+            )}
             {showValues && (
               <>
                 <TextField
@@ -297,6 +370,7 @@ const FilterForm = ({isUpdate, filter, open, setOpen, onSuccess}: FilterFormProp
                   margin="dense"
                   id="outlined-multiline-flexible"
                   name="values"
+                  label="Values"
                   defaultValue={filter?.values.join("\n")}
                   placeholder="C#"
                   variant="outlined"
@@ -316,6 +390,7 @@ const FilterForm = ({isUpdate, filter, open, setOpen, onSuccess}: FilterFormProp
                   margin="dense"
                   id="filterValue"
                   name="filterValue"
+                  label="Value One"
                   defaultValue={filter?.values[0] ?? ""}
                   placeholder={filterType === "numeric" ? "0" : "Search text"}
                   type={filterType === "numeric" ? "number" : "text"}
@@ -326,11 +401,14 @@ const FilterForm = ({isUpdate, filter, open, setOpen, onSuccess}: FilterFormProp
                   inputProps={{className: styles['container-input']}}
                 />
                 {showSecondValue && (
+                  <>
+                  <br />
                   <TextField
                     required
                     margin="dense"
                     id="filterValue2"
                     name="filterValue2"
+                    label="Value Two"
                     defaultValue={filter?.values[1] ?? ""}
                     placeholder="0"
                     type="number"
@@ -340,6 +418,7 @@ const FilterForm = ({isUpdate, filter, open, setOpen, onSuccess}: FilterFormProp
                     InputProps={{className: styles['container-input-wrapper']}}
                     inputProps={{className: styles['container-input']}}
                   />
+                  </>
                 )}
               </>
             )}
@@ -378,7 +457,7 @@ const FilterForm = ({isUpdate, filter, open, setOpen, onSuccess}: FilterFormProp
         )}
       </Dialog>
     </Fragment>
-  )
-}
+  );
+};
 
 export default FilterForm;

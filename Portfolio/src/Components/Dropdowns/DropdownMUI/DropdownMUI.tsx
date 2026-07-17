@@ -1,13 +1,13 @@
-import React from "react";
-import { Theme, useTheme } from "@mui/material/styles";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import ListSubheader from "@mui/material/ListSubheader";
 import Divider from "@mui/material/Divider";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import ListSubheader from "@mui/material/ListSubheader";
+import MenuItem from "@mui/material/MenuItem";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import React from "react";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import styles from './DropdownMUI.module.css';
+import { Theme, useTheme } from "@mui/material/styles";
 
 const MenuProps: any = {
   PaperProps: {
@@ -27,7 +27,7 @@ function GetStyles(name: string, selected: string[], theme: Theme) {
       ? theme.typography.fontWeightMedium
       : theme.typography.fontWeightRegular,
   };
-}
+};
 
 interface DropdownMUIProps {
   label: string;
@@ -36,7 +36,7 @@ interface DropdownMUIProps {
   setSelected: (value: string[]) => void;
   onOpen?: () => void;
   onClose?: () => void;
-}
+};
 
 const DropdownMUI = ({ label, options, selected, setSelected, onOpen, onClose }: DropdownMUIProps) => {
   const theme = useTheme();
@@ -125,6 +125,6 @@ const DropdownMUI = ({ label, options, selected, setSelected, onOpen, onClose }:
       </Select>
     </FormControl>
   );
-}
+};
 
 export default DropdownMUI;

@@ -1,17 +1,17 @@
-import { useState, useEffect } from "react";
-import { useAuth } from "../../../Contexts/AuthContext";
-import { usePortfolio } from "../../../Hooks/UsePortfolio";
-import { useNavigate, useLocation } from "react-router-dom";
-import CircularProgress from "@mui/material/CircularProgress";
+import AlertSnackbar from "../../../Components/Snackbar/AlertSnackbar";
 import Button from "@mui/material/Button";
 import Card from "../../../Components/Cards/Items/ItemCard/ItemCard";
-import Navbar from '../../../Components/Navbar/Navbar'
-import LeftSidebar from '../../../Components/Sidebars/Left/LeftSidebar'
-import AlertSnackbar from "../../../Components/Snackbar/AlertSnackbar";
-import IconButton from "@mui/material/IconButton";
+import CircularProgress from "@mui/material/CircularProgress";
 import HomeIcon from '@mui/icons-material/Home';
-import "../../../Colours.css";
+import IconButton from "@mui/material/IconButton";
+import LeftSidebar from '../../../Components/Sidebars/Left/LeftSidebar';
+import Navbar from '../../../Components/Navbar/Navbar';
 import styles from './ListItem.module.css';
+import { useAuth } from "../../../Contexts/AuthContext";
+import { useNavigate, useLocation } from "react-router-dom";
+import { usePortfolio } from "../../../Hooks/UsePortfolio";
+import { useState, useEffect } from "react";
+import "../../../Colours.css";
 
 import type { ItemModel } from "../../../Types/Item";
 
@@ -77,7 +77,7 @@ function ListItemPage() {
           severity="success"
           message="Item created successfully!"/>
       </div>
-    )
+    );
   }
 
   else {
@@ -97,8 +97,8 @@ function ListItemPage() {
           </IconButton>
         </div>
       </div>
-    )
-  }
-}
+    );
+  };
+};
 
 export default ListItemPage;

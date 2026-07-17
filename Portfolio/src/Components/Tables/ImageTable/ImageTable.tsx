@@ -1,13 +1,13 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
+import styles from './ImageTable.module.css';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import styles from './ImageTable.module.css';
 import "../../../Colours.css";
 
 import type { MediaModel } from "../../../Types/Media";
@@ -30,14 +30,14 @@ function formatSize(size: number) {
   var finalSize = (Math.round(size * 100) / 100).toFixed(2);
 
   return `${finalSize} ${sizes[order]}`;
-}
+};
 
 interface ImageTableProps {
   selectedFiles: File[];
   setSelectedFiles: React.Dispatch<React.SetStateAction<File[]>>;
   existingMedia?: MediaModel[];
   onDeleteMedia?: (media: MediaModel) => void;
-}
+};
 
 const ImageTable = ({selectedFiles, setSelectedFiles, existingMedia, onDeleteMedia}: ImageTableProps) => {
   const handleRemove = (index: number) => {
@@ -123,6 +123,6 @@ const ImageTable = ({selectedFiles, setSelectedFiles, existingMedia, onDeleteMed
       </Table>
     </TableContainer>
   );
-}
+};
 
 export default ImageTable;

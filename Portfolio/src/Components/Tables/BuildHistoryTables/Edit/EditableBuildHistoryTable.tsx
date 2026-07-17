@@ -1,27 +1,27 @@
-import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
+import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import SaveIcon from '@mui/icons-material/Save';
-import CancelIcon from '@mui/icons-material/Cancel';
 import IconButton from '@mui/material/IconButton';
+import Paper from '@mui/material/Paper';
+import SaveIcon from '@mui/icons-material/Save';
+import styles from './EditableBuildHistoryTable.module.css';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
+import { useState } from 'react';
 import "../../../../Colours.css";
-import styles from './EditableBuildHistoryTable.module.css';
 
 import type { ItemBuildHistoryModel } from '../../../../Types/Item';
 
 interface EditableBuildHistoryTableProps {
   buildHistory: ItemBuildHistoryModel[];
   setBuildHistory: React.Dispatch<React.SetStateAction<ItemBuildHistoryModel[]>>;
-}
+};
 
 const EditableBuildHistoryTable = ({ buildHistory, setBuildHistory }: EditableBuildHistoryTableProps) => {
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
@@ -45,8 +45,13 @@ const EditableBuildHistoryTable = ({ buildHistory, setBuildHistory }: EditableBu
   };
 
   const handleSave = () => {
-    if (editingIndex === null) return;
-    if (!editValues.version.trim() || !editValues.releaseDate) return;
+    if (editingIndex === null) {
+      return;
+    }
+
+    if (!editValues.version.trim() || !editValues.releaseDate) {
+      return;
+    }
 
     setBuildHistory((prev) =>
       prev.map((build, i) =>
@@ -174,6 +179,6 @@ const EditableBuildHistoryTable = ({ buildHistory, setBuildHistory }: EditableBu
       </Table>
     </TableContainer>
   );
-}
+};
 
 export default EditableBuildHistoryTable;
