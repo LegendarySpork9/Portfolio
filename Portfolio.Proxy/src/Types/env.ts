@@ -10,6 +10,7 @@ declare global {
       PORT: number;
       MEDIA_PATH: string;
       MEDIA_DOMAIN: string;
+      MEDIA_SITE_PATH: string;
     }
   }
 };

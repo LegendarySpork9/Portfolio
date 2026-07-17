@@ -13,7 +13,9 @@ import { uploadMedia, deleteMedia } from "../../../../../API/Media.api";
 import { useMedia } from "../../../../../Hooks/UseMedia";
 import { useNavigate } from "react-router-dom";
 import { useNewPortfolioItem, useUpdatePortfolioItem } from "../../../../../Hooks/UsePortfolio";
+import { useQueryClient } from "@tanstack/react-query";
 import { useState, FormEvent } from "react";
+import { queryKeys } from "../../../../../Lib/QueryKeys";
 import "../../../../../Colours.css";
 
 import type { ItemModel, ItemBuildHistoryModel, ItemLLMUsageModel, ItemRequestModel } from "../../../../../Types/Item";
@@ -27,6 +29,7 @@ interface ItemDetailProps {
 
 const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const newItem = useNewPortfolioItem();
   const updateItem = useUpdatePortfolioItem();
   const { data: mediaData } = useMedia(item?.id ?? 0, isUpdate && !!item);
@@ -49,6 +52,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
       await deleteMedia(media.id, fileName);
 
       setDeletedMediaIds((prev) => [...prev, media.id]);
+      await queryClient.invalidateQueries({ queryKey: queryKeys.media.detail(item!.id) });
     }
     
     catch {
@@ -160,6 +164,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
         if (selectedFiles.length > 0) {
           await Promise.all(selectedFiles.map(file => uploadMedia(item.id, file)));
           setSelectedFiles([]);
+          await queryClient.invalidateQueries({ queryKey: queryKeys.media.detail(item.id) });
         }
 
         setLoading(false);

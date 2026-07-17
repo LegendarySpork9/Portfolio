@@ -55,6 +55,7 @@ app.use(session({
 // Serves uploaded media files from the configured directory.
 const MEDIA_PATH = process.env.MEDIA_PATH;
 const MEDIA_DOMAIN = process.env.MEDIA_DOMAIN;
+const MEDIA_SITE_PATH = process.env.MEDIA_SITE_PATH;
 
 app.use("/uploads", express.static(MEDIA_PATH));
 
@@ -686,7 +687,7 @@ app.post("/media/upload/:id", requireAuth, upload.single("file"), async (req: Re
       extension: extension,
       mimeType: file.mimetype,
       size: file.size,
-      path: null,
+      path: MEDIA_SITE_PATH || null,
       domain: MEDIA_DOMAIN
     };
 
