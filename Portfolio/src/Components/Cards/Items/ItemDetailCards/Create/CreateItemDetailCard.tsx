@@ -12,7 +12,7 @@ import TextField from "@mui/material/TextField";
 import { uploadMedia, deleteMedia } from "../../../../../API/Media.api";
 import { useMedia } from "../../../../../Hooks/UseMedia";
 import { useNavigate } from "react-router-dom";
-import { useNewPortfolioItem, useUpdatePortfolioItem } from "../../../../../Hooks/UsePortfolio";
+import { useNewPortfolioItem, useUpdatePortfolioItem, useDeletePortfolioItem } from "../../../../../Hooks/UsePortfolio";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState, FormEvent } from "react";
 import { queryKeys } from "../../../../../Lib/QueryKeys";
@@ -32,6 +32,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
   const queryClient = useQueryClient();
   const newItem = useNewPortfolioItem();
   const updateItem = useUpdatePortfolioItem();
+  const deleteItem = useDeletePortfolioItem(item?.id ?? 0);
   const { data: mediaData } = useMedia(item?.id ?? 0, isUpdate && !!item);
 
   const [loading, setLoading] = useState(false);
@@ -212,11 +213,42 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
       if (err instanceof Error) {
         setError(err.message);
       }
-      
+
       else {
         setError(isUpdate ? "Failed to update item." : "Failed to create item.");
       }
 
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    setLoading(true);
+    setError("");
+
+    try {
+      if (isUpdate && item) {
+        await deleteItem.mutateAsync();
+
+        navigate("/items", { state: { deleted: true } });
+      }
+
+      else {
+        setError("Failed to delete item.");
+      }
+    }
+
+    catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      }
+
+      else {
+        setError("Failed to delete item.");
+      }
+    }
+
+    finally {
       setLoading(false);
     }
   };
@@ -236,6 +268,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
             placeholder="Portfolio"
             variant="outlined"
             fullWidth
+            disabled={item?.isDeleted}
             InputLabelProps={{className: styles['container-input-label']}}
             InputProps={{className: styles['container-input-wrapper']}}
             inputProps={{className: styles['container-input'], maxLength: 255}}
@@ -250,6 +283,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
             placeholder="Website"
             variant="outlined"
             fullWidth
+            disabled={item?.isDeleted}
             InputLabelProps={{className: styles['container-input-label']}}
             InputProps={{className: styles['container-input-wrapper']}}
             inputProps={{className: styles['container-input'], maxLength: 50}}
@@ -264,6 +298,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
             placeholder="http://localhost/icon.png"
             variant="outlined"
             fullWidth
+            disabled={item?.isDeleted}
             InputLabelProps={{className: styles['container-input-label']}}
             InputProps={{className: styles['container-input-wrapper']}}
             inputProps={{className: styles['container-input'], maxLength: 255}}
@@ -281,6 +316,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
               multiline
               rows={4}
               maxRows={4}
+              disabled={item?.isDeleted}
               InputLabelProps={{className: styles['container-input-label']}}
               InputProps={{className: styles['container-input-wrapper']}}
               inputProps={{className: styles['container-input']}}
@@ -295,6 +331,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
               multiline
               rows={4}
               maxRows={4}
+              disabled={item?.isDeleted}
               InputLabelProps={{className: styles['container-input-label']}}
               InputProps={{className: styles['container-input-wrapper']}}
               inputProps={{className: styles['container-input']}}
@@ -309,6 +346,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
               multiline
               rows={4}
               maxRows={4}
+              disabled={item?.isDeleted}
               InputLabelProps={{className: styles['container-input-label']}}
               InputProps={{className: styles['container-input-wrapper']}}
               inputProps={{className: styles['container-input']}}
@@ -319,6 +357,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
             <Button
               component="label"
               variant="contained"
+              disabled={item?.isDeleted}
             >
               Select Images
               <input
@@ -334,6 +373,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
               setSelectedFiles={setSelectedFiles}
               existingMedia={isUpdate ? existingMedia : undefined}
               onDeleteMedia={isUpdate ? handleDeleteMedia : undefined}
+              disabled={item?.isDeleted}
             />
           </Paper>
           <br />
@@ -346,6 +386,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
             variant="outlined"
             multiline
             fullWidth
+            disabled={item?.isDeleted}
             InputLabelProps={{className: styles['container-input-label']}}
             InputProps={{className: styles['container-input-wrapper']}}
             inputProps={{className: styles['container-input']}}
@@ -361,6 +402,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
             variant="outlined"
             multiline
             fullWidth
+            disabled={item?.isDeleted}
             InputLabelProps={{className: styles['container-input-label']}}
             InputProps={{className: styles['container-input-wrapper']}}
             inputProps={{className: styles['container-input'], maxLength: 255}}
@@ -374,6 +416,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
             placeholder="https://demo.portfolio.co.uk"
             variant="outlined"
             fullWidth
+            disabled={item?.isDeleted}
             InputLabelProps={{className: styles['container-input-label']}}
             InputProps={{className: styles['container-input-wrapper']}}
             inputProps={{className: styles['container-input'], maxLength: 255}}
@@ -385,6 +428,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
               <BuildTable
                 buildHistory={buildHistory}
                 setBuildHistory={setBuildHistory}
+                disabled={item?.isDeleted}
               />
             </Paper>
             <TextField
@@ -395,6 +439,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
               placeholder="Release Notes"
               variant="outlined"
               multiline
+              disabled={item?.isDeleted}
               sx={{ flex: 1 }}
               InputLabelProps={{className: styles['sub-section-input-label']}}
               InputProps={{className: styles['sub-section-input-wrapper']}}
@@ -410,6 +455,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
               defaultValue={item?.gitHubInformation?.url}
               placeholder="https://github.com/LegendarySpork9/Portfolio"
               variant="outlined"
+              disabled={item?.isDeleted}
               sx={{ flex: 1 }}
               InputLabelProps={{className: styles['container-input-label']}}
               InputProps={{className: styles['container-input-wrapper']}}
@@ -421,6 +467,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
               defaultValue={item?.unitTestCoverage}
               placeholder="0.00"
               variant="outlined"
+              disabled={item?.isDeleted}
               sx={{ flex: 1 }}
               InputLabelProps={{className: styles['container-input-label']}}
               InputProps={{className: styles['container-input-wrapper']}}
@@ -433,6 +480,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
               <LLMTable
                 llmUsage={llmUsage}
                 setLLMUsage={setLLMUsage}
+                disabled={item?.isDeleted}
               />
             </Paper>
             <TextField
@@ -442,6 +490,7 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
               placeholder="LLM Usage Notes"
               variant="outlined"
               multiline
+              disabled={item?.isDeleted}
               sx={{ flex: 1 }}
               InputLabelProps={{className: styles['sub-section-input-label']}}
               InputProps={{className: styles['sub-section-input-wrapper']}}
@@ -457,13 +506,25 @@ const ItemDetail = ({ isUpdate, item, onUpdateSuccess }: ItemDetailProps) => {
             <CircularProgress size={36.5} />
           ) : (
             <div style={{ display: 'flex', gap: '16px' }}>
-              <Button
-                type="submit"
-                form="CreatePortfolioItem"
-                variant="contained"
-              >
-                {isUpdate ? "Update" : "Create"}
-              </Button>
+              {!item?.isDeleted && (
+                <Button
+                  type="submit"
+                  form="CreatePortfolioItem"
+                  variant="contained"
+                >
+                  {isUpdate ? "Update" : "Create"}
+                </Button>
+              )}
+              {isUpdate && !item?.isDeleted && (
+                <Button
+                  type="button"
+                  onClick={() => handleDelete()}
+                  variant="contained"
+                  color="error"
+                >
+                  Delete
+                </Button>
+              )}
               <Button
                 variant="contained"
                 onClick={() => navigate("/items")}

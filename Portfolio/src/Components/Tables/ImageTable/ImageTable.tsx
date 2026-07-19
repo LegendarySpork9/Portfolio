@@ -37,9 +37,10 @@ interface ImageTableProps {
   setSelectedFiles: React.Dispatch<React.SetStateAction<File[]>>;
   existingMedia?: MediaModel[];
   onDeleteMedia?: (media: MediaModel) => void;
+  disabled?: boolean;
 };
 
-const ImageTable = ({selectedFiles, setSelectedFiles, existingMedia, onDeleteMedia}: ImageTableProps) => {
+const ImageTable = ({selectedFiles, setSelectedFiles, existingMedia, onDeleteMedia, disabled}: ImageTableProps) => {
   const handleRemove = (index: number) => {
     setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
   };
@@ -85,8 +86,8 @@ const ImageTable = ({selectedFiles, setSelectedFiles, existingMedia, onDeleteMed
                 {media.type.mimeType}
               </TableCell>
               <TableCell component="th" scope="row">
-                <IconButton onClick={() => onDeleteMedia?.(media)}>
-                  <DeleteIcon color='error' />
+                <IconButton onClick={() => onDeleteMedia?.(media)} disabled={disabled}>
+                  <DeleteIcon color={disabled ? 'disabled' : 'error'} />
                 </IconButton>
               </TableCell>
             </TableRow>
@@ -113,8 +114,8 @@ const ImageTable = ({selectedFiles, setSelectedFiles, existingMedia, onDeleteMed
                 {file.type}
               </TableCell>
               <TableCell component="th" scope="row">
-                <IconButton onClick={() => handleRemove(index)}>
-                  <DeleteIcon color='error' />
+                <IconButton onClick={() => handleRemove(index)} disabled={disabled}>
+                  <DeleteIcon color={disabled ? 'disabled' : 'error'} />
                 </IconButton>
               </TableCell>
             </TableRow>

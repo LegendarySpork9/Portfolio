@@ -22,9 +22,17 @@ function ListItemPage() {
   const location = useLocation();
 
   const [openAlert, setOpenAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("Item created successfully!");
 
   useEffect(() => {
     if (location.state?.created) {
+      setAlertMessage("Item created successfully!");
+      setOpenAlert(true);
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+
+    if (location.state?.deleted) {
+      setAlertMessage("Item deleted successfully!");
       setOpenAlert(true);
       navigate(location.pathname, { replace: true, state: {} });
     }
@@ -75,7 +83,7 @@ function ListItemPage() {
           open={openAlert}
           setOpen={setOpenAlert}
           severity="success"
-          message="Item created successfully!"/>
+          message={alertMessage}/>
       </div>
     );
   }

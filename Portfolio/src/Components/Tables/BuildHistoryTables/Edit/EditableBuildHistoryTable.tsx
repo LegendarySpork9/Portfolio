@@ -21,9 +21,10 @@ import type { ItemBuildHistoryModel } from '../../../../Types/Item';
 interface EditableBuildHistoryTableProps {
   buildHistory: ItemBuildHistoryModel[];
   setBuildHistory: React.Dispatch<React.SetStateAction<ItemBuildHistoryModel[]>>;
+  disabled?: boolean;
 };
 
-const EditableBuildHistoryTable = ({ buildHistory, setBuildHistory }: EditableBuildHistoryTableProps) => {
+const EditableBuildHistoryTable = ({ buildHistory, setBuildHistory, disabled }: EditableBuildHistoryTableProps) => {
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editValues, setEditValues] = useState<{ version: string; releaseDate: string }>({ version: '', releaseDate: '' });
 
@@ -108,8 +109,8 @@ const EditableBuildHistoryTable = ({ buildHistory, setBuildHistory }: EditableBu
             <TableCell>Version</TableCell>
             <TableCell>Release Date</TableCell>
             <TableCell>
-              <IconButton onClick={handleAdd} disabled={editingIndex !== null} size="small">
-                <AddIcon color={editingIndex !== null ? 'disabled' : 'success'} />
+              <IconButton onClick={handleAdd} disabled={disabled || editingIndex !== null} size="small">
+                <AddIcon color={disabled || editingIndex !== null ? 'disabled' : 'success'} />
               </IconButton>
             </TableCell>
           </TableRow>
@@ -164,11 +165,11 @@ const EditableBuildHistoryTable = ({ buildHistory, setBuildHistory }: EditableBu
                   </>
                 ) : (
                   <>
-                    <IconButton onClick={() => handleEdit(index)} disabled={editingIndex !== null} size="small">
-                      <EditIcon color={editingIndex !== null ? 'disabled' : 'primary'} />
+                    <IconButton onClick={() => handleEdit(index)} disabled={disabled || editingIndex !== null} size="small">
+                      <EditIcon color={disabled || editingIndex !== null ? 'disabled' : 'primary'} />
                     </IconButton>
-                    <IconButton onClick={() => handleDelete(index)} disabled={editingIndex !== null} size="small">
-                      <DeleteIcon color={editingIndex !== null ? 'disabled' : 'error'} />
+                    <IconButton onClick={() => handleDelete(index)} disabled={disabled || editingIndex !== null} size="small">
+                      <DeleteIcon color={disabled || editingIndex !== null ? 'disabled' : 'error'} />
                     </IconButton>
                   </>
                 )}

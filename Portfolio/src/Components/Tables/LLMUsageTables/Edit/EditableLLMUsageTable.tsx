@@ -21,9 +21,10 @@ import type { ItemLLMUsageModel } from '../../../../Types/Item';
 interface EditableLLMUsageTableProps {
   llmUsage: ItemLLMUsageModel | null;
   setLLMUsage: React.Dispatch<React.SetStateAction<ItemLLMUsageModel | null>>;
+  disabled?: boolean;
 };
 
-const EditableLLMUsageTable = ({ llmUsage, setLLMUsage }: EditableLLMUsageTableProps) => {
+const EditableLLMUsageTable = ({ llmUsage, setLLMUsage, disabled }: EditableLLMUsageTableProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editValues, setEditValues] = useState<{ company: string; model: string }>({ company: '', model: '' });
 
@@ -71,8 +72,8 @@ const EditableLLMUsageTable = ({ llmUsage, setLLMUsage }: EditableLLMUsageTableP
             <TableCell>Model</TableCell>
             <TableCell>
               {!llmUsage && (
-                <IconButton onClick={handleAdd} size="small">
-                  <AddIcon color="success" />
+                <IconButton onClick={handleAdd} disabled={disabled} size="small">
+                  <AddIcon color={disabled ? 'disabled' : 'success'} />
                 </IconButton>
               )}
             </TableCell>
@@ -125,11 +126,11 @@ const EditableLLMUsageTable = ({ llmUsage, setLLMUsage }: EditableLLMUsageTableP
                   </>
                 ) : (
                   <>
-                    <IconButton onClick={handleEdit} size="small">
-                      <EditIcon color="primary" />
+                    <IconButton onClick={handleEdit} disabled={disabled} size="small">
+                      <EditIcon color={disabled ? 'disabled' : 'primary'} />
                     </IconButton>
-                    <IconButton onClick={handleDelete} size="small">
-                      <DeleteIcon color="error" />
+                    <IconButton onClick={handleDelete} disabled={disabled} size="small">
+                      <DeleteIcon color={disabled ? 'disabled' : 'error'} />
                     </IconButton>
                   </>
                 )}
