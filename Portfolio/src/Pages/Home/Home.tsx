@@ -17,7 +17,10 @@ import type { ItemModel } from "../../Types/Item";
 
 function resolvePath(obj: Record<string, unknown>, path: string): unknown {
   return path.split(".").reduce<unknown>((current, key) => {
-    if (current == null || typeof current !== "object") return undefined;
+    if (current == null || typeof current !== "object") {
+      return undefined;
+    }
+
     return (current as Record<string, unknown>)[key];
   }, obj);
 };
@@ -126,8 +129,6 @@ function matchesFilter(item: ItemModel, filter: FilterModel, selectedValues: str
   };
 };
 
-let hasShownUpcoming = false;
-
 function Home() {
   const { isAdmin } = useAuth();
   const { data: items, isLoading, error } = usePortfolio();
@@ -138,8 +139,11 @@ function Home() {
   const [alertMessage, setAlertMessage] = useState("");
 
   const [upcomingOpen, setUpcomingOpen] = useState(() => {
-    if (hasShownUpcoming) return false;
-    hasShownUpcoming = true;
+    if (sessionStorage.getItem('hasShownUpcoming')) {
+      return false;
+    }
+
+    sessionStorage.setItem('hasShownUpcoming', 'true');
     return true;
   });
   const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({});
@@ -152,7 +156,9 @@ function Home() {
     if (isAdmin) {
       setAlertMessage("Successfully logged in!");
       setAlertSeverity("success");
-    } else {
+    }
+    
+    else {
       setAlertMessage("Successfully logged out!");
       setAlertSeverity("info");
     }
