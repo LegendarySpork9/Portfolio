@@ -1,0 +1,78 @@
+.dropdown-container { 
+  margin-top: 8px; 
+  width: 260px; 
+}
+
+.dropdown-label { 
+  color: white !important; 
+}
+
+.dropdown-select { 
+  background-color: #1e2430 !important; 
+  color: white !important;
+}
+
+.dropdown-container :global(.MuiOutlinedInput-root) {
+  height: 48px;
+}
+
+:global(.MuiOutlinedInput-notchedOutline) {
+  border-color: #444 !important;
+}
+
+:global(.Mui-focused) :global(.MuiOutlinedInput-notchedOutline) {
+  border-color: #00ff66 !important;
+}
+
+.dropdown-menu-paper {
+  background-color: #1e2430 !important;
+  color: white !important;
+  max-height: 90vh;
+  overflow: auto;
+}
+
+.dropdown-controls {
+  background: #1e2430;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  z-index: 1;
+}
+
+.btn {
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  flex: 1;
+  font-size: 12px;
+  padding: 6px 8px;
+}
+
+.btn:disabled { 
+  cursor: default; 
+  opacity: 0.5; 
+}
+
+.btn-primary { 
+  background: #3e7abe; 
+  color: #ffffff; 
+}
+
+.dropdown-divider { 
+  background-color: #555 !important; 
+  margin: 4px 0 !important; 
+}
+
+.dropdown-menu-paper::-webkit-scrollbar { 
+  width: 12px; 
+}
+
+.dropdown-menu-paper::-webkit-scrollbar-track { 
+  background: #1e2430; 
+}
+
+.dropdown-menu-paper::-webkit-scrollbar-thumb {
+  background-color: #3e7abe;
+  border: 3px solid #1e2430;
+  border-radius: 6px;
+}

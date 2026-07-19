@@ -1,0 +1,95 @@
+.container {
+    background-color: var(--colour-object) !important;
+    color: var(--colour-text) !important;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+.container-input-label {
+    color: var(--colour-text) !important;
+}
+
+.container-input {
+    color: var(--colour-text) !important;
+    width: 100% !important;
+}
+
+.container-input-wrapper {
+    background-color: var(--colour-object-child) !important;
+}
+
+.container-input:global(.Mui-disabled) {
+    -webkit-text-fill-color: var(--colour-text) !important;
+    color: var(--colour-text) !important;
+}
+
+.container-action {
+    align-items: center !important;
+    display: flex !important;
+    justify-content: center !important;
+    padding: 8px;
+}
+
+.container-error {
+    align-items: center;
+    color: #f44336;
+    display: flex;
+    font-size: 0.875rem;
+    justify-content: center;
+    margin: 8px 0 0 0;
+    overflow-wrap: break-word;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 8px;
+}
+
+.sub-container {
+    align-items: flex-start;
+    display: flex;
+    gap: 16px;
+}
+
+.sub-section-input {
+    color: var(--colour-text) !important;
+}
+
+.sub-section-input-label {
+    color: var(--colour-text) !important;
+}
+
+.sub-section-input-wrapper {
+    background-color: var(--colour-object-child) !important;
+}
+
+.sub-section-input:global(.Mui-disabled) {
+    -webkit-text-fill-color: var(--colour-text) !important;
+    color: var(--colour-text) !important;
+}
+
+.card-paper {
+    align-items: center;
+    background-color: var(--colour-object-child) !important;
+    color: var(--colour-text) !important;
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+    text-align: center;
+}
+
+.card-paper-container {
+    align-items: center;
+    background-color: var(--colour-object-child) !important;
+    color: var(--colour-text) !important;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    padding: 8px;
+    text-align: center;
+}
+

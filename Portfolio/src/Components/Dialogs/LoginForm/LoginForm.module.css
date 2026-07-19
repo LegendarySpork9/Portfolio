@@ -1,0 +1,30 @@
+.container {
+    background-color: var(--colour-object) !important;
+    color: var(--colour-text) !important;
+}
+
+.container-title {
+    background-color: #81C784;
+    text-align: center;
+}
+
+.container-input {
+    background-color: var(--colour-object-input) !important;
+    color: var(--colour-text) !important;
+    width: 400px !important;
+}
+
+.container-input-label {
+    color: var(--colour-text) !important;
+}
+
+.container-error {
+    color: #f44336;
+    font-size: 0.875rem;
+    margin: 8px 0 0 0;
+    text-align: center;
+}
+
+.container-action {
+    justify-content: center !important;
+}

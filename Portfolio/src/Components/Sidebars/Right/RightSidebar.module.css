@@ -1,0 +1,79 @@
+.sidebar-right {
+    align-items: flex-start;
+    background-color: var(--colour-sidebar);
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 73px);
+    overflow: hidden;
+    position: fixed;
+    right: 0;
+    top: 73px;
+    transition: width 0.3s ease;
+  }
+  
+  .sidebar-right.collapsed {
+    width: 64px;
+  }
+  
+  .sidebar-right.expanded {
+    width: 276px;
+  }
+  
+  .sidebar-right-content {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+    padding: 8px;
+  }
+
+  .sidebar-right-image {
+    border-radius: 4px;
+    height: 48px;
+    width: 48px;
+  }
+  
+.filter-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 260px;
+}
+
+.filter-label {
+  color: var(--colour-text) !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+}
+
+.filter-toggle-group {
+  width: 100%;
+}
+
+.filter-toggle-button {
+  border-color: var(--colour-object-input) !important;
+  color: var(--colour-text) !important;
+  flex: 1;
+  font-size: 0.75rem !important;
+}
+
+.filter-toggle-button:global(.Mui-selected) {
+  background-color: var(--colour-object-input) !important;
+  color: var(--colour-text) !important;
+  font-weight: 600 !important;
+}
+
+.custom-badge {
+  align-items: center;
+  border: 2px solid var(--colour-sidebar-border) !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4) !important;
+  display: flex;
+  font-size: 0.625rem !important;
+  font-weight: 600 !important;
+  height: 18px !important;
+  justify-content: center;
+  min-width: 18px !important;
+  padding: 0 !important;
+  right: 2px !important;
+  top: 0px !important;
+}

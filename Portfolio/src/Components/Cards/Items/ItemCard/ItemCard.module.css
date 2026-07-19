@@ -1,0 +1,26 @@
+.card {
+    background-color: var(--colour-object) !important;
+    border-radius: 5px;
+    box-shadow: 0px 0px 6px 1px rgba(0,0,0,0.10);
+    transition: 0.3s !important;
+}
+
+.card:hover {
+    transform: scale(1.025);
+}
+
+.card-action {
+    display: block;
+    margin: auto;
+    padding: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.card-paper {
+    align-items: center;
+    background-color: var(--colour-object-child) !important;
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+    text-align: center;
+}

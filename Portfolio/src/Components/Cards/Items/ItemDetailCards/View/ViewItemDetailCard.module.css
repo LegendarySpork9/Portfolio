@@ -1,0 +1,163 @@
+.container {
+    background-color: var(--colour-object) !important;
+    color: var(--colour-text) !important;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+.container-title {
+    align-items: center;
+    background-color: #81C784;
+    display: flex;
+    font-size: 20px;
+    font-weight: 500;
+    height: 64px;
+    justify-content: center;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.container-input-label {
+    color: var(--colour-text) !important;
+}
+
+.container-input {
+    color: var(--colour-text) !important;
+    width: 100% !important;
+}
+
+.container-input-wrapper {
+    background-color: var(--colour-object-child) !important;
+}
+
+.container-input:global(.Mui-disabled) {
+    -webkit-text-fill-color: var(--colour-text) !important;
+    color: var(--colour-text) !important;
+}
+
+.container-action {
+    align-items: center !important;
+    display: flex !important;
+    justify-content: center !important;
+    padding: 8px;
+}
+
+.grid-container {
+    background-color: var(--colour-object-child) !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 8px;
+}
+
+.sub-container {
+    align-items: flex-start;
+    display: flex;
+    gap: 16px;
+}
+
+.sub-section-input {
+    color: var(--colour-text) !important;
+}
+
+.sub-section-input-label {
+    color: var(--colour-text) !important;
+}
+
+.sub-section-input-wrapper {
+    background-color: var(--colour-object-child) !important;
+}
+
+.sub-section-input:global(.Mui-disabled) {
+    -webkit-text-fill-color: var(--colour-text) !important;
+    color: var(--colour-text) !important;
+}
+
+.github-section {
+    align-items: center;
+    display: flex;
+    gap: 16px;
+    width: 100%;
+}
+
+.ci-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pie-chart {
+    color: var(--colour-text) !important;
+}
+
+.pie-chart :global(.MuiChartsLegend-root) {
+    color: var(--colour-text) !important;
+}
+
+.pie-chart :global(.MuiChartsLegend-root) :global(.MuiChartsLegend-series) text {
+    fill: var(--colour-text) !important;
+}
+
+.pie-chart :global(.MuiPieChart-arc) {
+    stroke: #81C784 !important;
+}
+
+.pie-chart :global(.MuiPieChart-arcLabel) {
+    fill: var(--colour-text) !important;
+}
+
+.pie-chart :global(.MuiChartsTooltip-paper) {
+    background-color: var(--colour-object) !important;
+    color: var(--colour-text) !important;
+}
+
+.pie-chart :global(.MuiChartsTooltip-cell) {
+    color: var(--colour-text) !important;
+}
+
+.card-paper {
+    align-items: center;
+    background-color: var(--colour-object-child) !important;
+    color: var(--colour-text) !important;
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+    text-align: center;
+}
+
+.card-paper a {
+    color: var(--colour-text) !important;
+}
+
+.bar-chart :global(.MuiChartsAxis-tickLabel) {
+    fill: var(--colour-text) !important;
+}
+
+.bar-chart :global(.MuiChartsAxis-label) {
+    fill: var(--colour-text) !important;
+}
+
+.bar-chart :global(.MuiChartsLabel-root) {
+    color: var(--colour-text) !important;
+    fill: var(--colour-text) !important;
+}
+
+.bar-chart :global(.MuiChartsTooltip-paper) {
+    background-color: var(--colour-object) !important;
+    color: var(--colour-text) !important;
+}
+
+.bar-chart :global(.MuiChartsTooltip-cell) {
+    color: var(--colour-text) !important;
+}
+
+@media (max-width: 768px) {
+    .github-section {
+        flex-direction: column;
+    }
+
+    .sub-container {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,105 @@
+.container {
+    background-color: var(--colour-object) !important;
+    color: var(--colour-text) !important;
+}
+
+.container-title {
+    background-color: #81C784;
+    text-align: center;
+}
+
+.container-input-label {
+    color: var(--colour-text) !important;
+}
+
+.container-input {
+    color: var(--colour-text) !important;
+    max-width: 500px !important;
+    width: 100% !important;
+}
+
+.container-input-wrapper {
+    background-color: var(--colour-object-child) !important;
+}
+
+.container-input:global(.Mui-disabled) {
+    -webkit-text-fill-color: var(--colour-text) !important;
+    color: var(--colour-text) !important;
+}
+
+.container-action {
+    justify-content: center !important;
+}
+
+.grid-container {
+    background-color: var(--colour-object-child) !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 8px;
+}
+
+.github-section {
+    align-items: center;
+    display: flex;
+    gap: 16px;
+}
+
+.ci-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.pie-chart {
+    color: var(--colour-text) !important;
+}
+
+.pie-chart :global(.MuiChartsLegend-root) {
+    color: var(--colour-text) !important;
+}
+
+.pie-chart :global(.MuiChartsLegend-root) :global(.MuiChartsLegend-series) text {
+    fill: var(--colour-text) !important;
+}
+
+.pie-chart :global(.MuiPieChart-arc) {
+    stroke: #81C784 !important;
+}
+
+.pie-chart :global(.MuiPieChart-arcLabel) {
+    fill: var(--colour-text) !important;
+}
+
+.pie-chart :global(.MuiChartsTooltip-paper) {
+    background-color: var(--colour-object) !important;
+    color: var(--colour-text) !important;
+}
+
+.pie-chart :global(.MuiChartsTooltip-cell) {
+    color: var(--colour-text) !important;
+}
+
+.card-paper {
+    align-items: center;
+    background-color: var(--colour-object-child) !important;
+    display: flex;
+    justify-content: center;
+    padding: 8px;
+    text-align: center;
+}
+
+.card-div {
+    display: flex;
+    gap: 10px
+}
+
+@media (max-width: 768px) {
+    .github-section {
+        flex-direction: column;
+    }
+
+    .card-div {
+        flex-direction: column;
+    }
+}

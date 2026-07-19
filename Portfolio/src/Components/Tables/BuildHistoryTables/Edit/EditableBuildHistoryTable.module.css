@@ -1,0 +1,16 @@
+.table {
+    background-color: var(--colour-object-input) !important;
+}
+
+.table :global(.MuiTableCell-root) {
+    border-bottom: 1px solid var(--colour-sidebar-border);
+    color: var(--colour-text);
+}
+
+.edit-input {
+    background-color: var(--colour-object-child) !important;
+}
+
+.edit-input-text {
+    color: var(--colour-text) !important;
+}

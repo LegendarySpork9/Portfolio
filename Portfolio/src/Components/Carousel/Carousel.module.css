@@ -1,0 +1,14 @@
+.container {
+    background-color: var(--colour-object-child) !important;
+    width: 600px;
+}
+
+.stepper {
+    background-color: var(--colour-object-input) !important;
+}
+
+.card-media {
+    background-color: var(--colour-object-input);
+    border-radius: 4px;
+    object-fit: contain;
+}

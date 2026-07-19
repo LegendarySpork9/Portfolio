@@ -1,0 +1,28 @@
+.home-container {
+  background-color: var(--colour-body);
+  color: var(--colour-text);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+}
+
+.data-loading {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.grid-container {
+  align-items: start;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  justify-content: center;
+  margin-left: 64px;
+  margin-right: 64px;
+  margin-top: 72px;
+  padding: 1rem;
+  z-index: 0;
+}

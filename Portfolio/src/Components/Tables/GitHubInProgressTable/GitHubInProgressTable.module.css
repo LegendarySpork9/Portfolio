@@ -1,0 +1,9 @@
+.table {
+    background-color: var(--colour-object-input) !important;
+    max-width: 600px;
+}
+
+.table :global(.MuiTableCell-root) {
+    border-bottom: 1px solid var(--colour-sidebar-border);
+    color: var(--colour-text);
+}
