@@ -111,6 +111,7 @@ const SummaryBox = ({id, name, summary, frameworks, languages, environments, ciS
             defaultValue={summary}
             variant="outlined"
             multiline
+            fullWidth
             InputLabelProps={{className: styles['container-input-label']}}
             InputProps={{className: styles['container-input-wrapper']}}
             inputProps={{className: styles['container-input']}}
