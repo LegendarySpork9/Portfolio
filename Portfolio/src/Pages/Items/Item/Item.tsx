@@ -17,7 +17,7 @@ const ItemPage = () => {
   const { id } = useParams();
   const [searchParams] = useSearchParams();
 
-  const { isAdmin } = useAuth();
+  const { isAdmin, loginDialogOpen } = useAuth();
   const navigate = useNavigate();
   const { mutate, data: item, error, isPending: isLoading } = usePortfolioItem();
 
@@ -51,7 +51,7 @@ const ItemPage = () => {
           </div>
         );
 
-  if (!isAdmin && (mode === "create" || mode === "update")) {
+  if (!isAdmin && !loginDialogOpen && (mode === "create" || mode === "update")) {
     return (
       <div className={styles['container']}>
         <div className={styles['data-loading']}>
@@ -85,11 +85,11 @@ const ItemPage = () => {
         </div>
       )}
 
-      {mode === "create" && isAdmin && (
+      {mode === "create" && (isAdmin || loginDialogOpen) && (
         <CreateCard isUpdate={false} />
       )}
 
-      {mode === "update" && isAdmin && (
+      {mode === "update" && (isAdmin || loginDialogOpen) && (
         <div>
           {itemDetail !== null ? (
             <CreateCard isUpdate={true} item={itemDetail} onUpdateSuccess={() => setOpenAlert(true)} />

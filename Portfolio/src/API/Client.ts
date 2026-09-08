@@ -1,5 +1,11 @@
 import axios from "axios";
 
+let onAuthExpired: (() => void) | null = null;
+
+export function setAuthExpiredHandler(handler: () => void) {
+  onAuthExpired = handler;
+}
+
 export const apiClient = axios.create({
   baseURL: process.env.REACT_APP_API_URL || "",
   headers: {
@@ -15,7 +21,11 @@ apiClient.interceptors.response.use(
       const status = error.response?.status;
 
       if (status === 401) {
+        const url = error.config?.url || "";
 
+        if (!url.startsWith("/auth/")) {
+          onAuthExpired?.();
+        }
       }
 
       else if (status && status >= 500) {
