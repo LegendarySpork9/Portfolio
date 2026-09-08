@@ -17,7 +17,7 @@ import "../../Colours.css";
 import type { FilterModel } from "../../Types/Filter";
 
 function FiltersPage() {
-  const { isAdmin } = useAuth();
+  const { isAdmin, loginDialogOpen } = useAuth();
   const { data: filters, isLoading, error } = useFilters(true);
   const navigate = useNavigate();
 
@@ -52,7 +52,7 @@ function FiltersPage() {
     setOpenAlert(true);
   };
 
-  if (isAdmin) {
+  if (isAdmin || loginDialogOpen) {
     return (
       <div className={styles['filter-container']}>
         <div className={styles.button}>

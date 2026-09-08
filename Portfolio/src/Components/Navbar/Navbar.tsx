@@ -1,5 +1,4 @@
 import IconButton from "@mui/material/IconButton";
-import LoginForm from '../Dialogs/LoginForm/LoginForm';
 import NewReleasesOutlinedIcon from "@mui/icons-material/NewReleasesOutlined";
 import styles from './Navbar.module.css';
 import UpcomingProjects from '../Dialogs/UpcomingProjects/UpcomingProjects';
@@ -8,9 +7,8 @@ import { useState } from "react";
 import "../../Colours.css";
 
 function Navbar() {
-  const { isAdmin } = useAuth();
+  const { isAdmin, setLoginDialogOpen } = useAuth();
 
-  const [open, setOpen] = useState(false);
   const [upcomingOpen, setUpcomingOpen] = useState(false);
 
   return (
@@ -35,7 +33,7 @@ function Navbar() {
           <NewReleasesOutlinedIcon />
         </IconButton>
         <IconButton
-          onClick={() => setOpen(true)}
+          onClick={() => setLoginDialogOpen(true)}
           disabled={isAdmin}
           style={{width: 36, height: 36}}
         >
@@ -45,12 +43,6 @@ function Navbar() {
           />
         </IconButton>
       </div>
-      {!isAdmin && (
-        <LoginForm
-          open={open}
-          setOpen={setOpen}
-        />
-      )}
       <UpcomingProjects
         open={upcomingOpen}
         setOpen={setUpcomingOpen}

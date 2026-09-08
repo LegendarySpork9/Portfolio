@@ -130,7 +130,7 @@ app.post("/auth/login", async (req: Request<{}, {}, LoginModel>, res: Response) 
   try {
     const token = await getServiceToken();
 
-    const { data: users } = await axios.get<UserModel[]>(
+    const { data } = await axios.get<{ entries: UserModel[] }>(
       `${API_URL}/user`, {
       headers: {
         Authorization: `Bearer ${token}`
@@ -140,7 +140,9 @@ app.post("/auth/login", async (req: Request<{}, {}, LoginModel>, res: Response) 
       }
     });
 
-    if (!users || users.length === 0) {
+    const users = data.entries;
+
+    if (!Array.isArray(users) || users.length === 0) {
       return res.status(401)
         .json({
           message: "Invalid credentials"

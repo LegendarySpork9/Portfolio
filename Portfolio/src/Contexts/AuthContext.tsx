@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { setAuthExpiredHandler } from "../API/Client";
 import { useAuthStatus, useLogin, useLogout } from "../Hooks/UseAuth";
 
 import type { LoginModel } from "../Types/Authentication";
@@ -6,6 +7,8 @@ import type { LoginModel } from "../Types/Authentication";
 interface AuthContextType {
   isAdmin: boolean;
   isLoading: boolean;
+  loginDialogOpen: boolean;
+  setLoginDialogOpen: (value: boolean) => void;
   login: (credentials: LoginModel) => Promise<void>;
   logout: () => Promise<void>;
 };
@@ -18,12 +21,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logoutMutation = useLogout();
 
   const [isAdmin, setIsAdmin] = useState(false);
+  const [loginDialogOpen, setLoginDialogOpen] = useState(false);
 
   useEffect (() => {
     if (authStatus) {
         setIsAdmin(authStatus);
     }
   }, [authStatus]);
+
+  useEffect(() => {
+    setAuthExpiredHandler(() => {
+      setIsAdmin(false);
+      setLoginDialogOpen(true);
+    });
+  }, []);
 
   const login = async (credentials: LoginModel) => {
     await loginMutation.mutateAsync(credentials);
@@ -36,7 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ isAdmin, isLoading, login, logout }}>
+    <AuthContext.Provider value={{ isAdmin, isLoading, loginDialogOpen, setLoginDialogOpen, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

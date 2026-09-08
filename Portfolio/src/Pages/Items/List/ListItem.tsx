@@ -16,7 +16,7 @@ import "../../../Colours.css";
 import type { ItemModel } from "../../../Types/Item";
 
 function ListItemPage() {
-  const { isAdmin } = useAuth();
+  const { isAdmin, loginDialogOpen } = useAuth();
   const { data: items, isLoading, error } = usePortfolio(true);
   const navigate = useNavigate();
   const location = useLocation();
@@ -58,7 +58,7 @@ function ListItemPage() {
 
   const allItems = items ?? [];
 
-  if (isAdmin) {
+  if (isAdmin || loginDialogOpen) {
     return (
       <div className={styles['list-container']}>
         <div className={styles.button}>
