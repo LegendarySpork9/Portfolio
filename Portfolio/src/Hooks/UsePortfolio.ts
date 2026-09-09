@@ -40,9 +40,9 @@ export function useUpdatePortfolioItem() {
       id,
       request
     ),
-    onSuccess: (_data, { id }) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: queryKeys.portfolio.detail(id)
+        queryKey: queryKeys.portfolio.all
       });
     }
   });
@@ -55,7 +55,7 @@ export function useDeletePortfolioItem(id: number) {
     mutationFn: () => deletePortfolioItem(id),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: queryKeys.portfolio.detail(id)
+        queryKey: queryKeys.portfolio.all
       });
     }
   });
