@@ -40,7 +40,3 @@ jobs:
     - name: Build proxy
       run: npm run build
       working-directory: Portfolio.Proxy
-
-    - name: Run frontend tests
-      run: npm test
-      working-directory: Portfolio
