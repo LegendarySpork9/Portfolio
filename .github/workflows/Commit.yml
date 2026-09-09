@@ -1,0 +1,42 @@
+name: CI on Commit
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      CI: true
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+        cache: 'npm'
+        cache-dependency-path: |
+          Portfolio/package-lock.json
+          Portfolio.Proxy/package-lock.json
+
+    - name: Install frontend dependencies
+      run: npm ci
+      working-directory: Portfolio
+
+    - name: Install proxy dependencies
+      run: npm ci
+      working-directory: Portfolio.Proxy
+
+    - name: Build frontend
+      run: npm run build
+      working-directory: Portfolio
+
+    - name: Build proxy
+      run: npm run build
+      working-directory: Portfolio.Proxy
