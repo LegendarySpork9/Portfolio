@@ -19,7 +19,7 @@ import type { ItemModel, ItemRequestModel } from "./Types/Item";
 import type { MediaModel, MediaRequestModel, MediaUpdateRequestModel } from "./Types/Media";
 import type { SuccessResponseModel } from "./Types/API Response";
 
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV === "development") {
   const httpsAgent = new https.Agent({ rejectUnauthorized: false });
   axios.defaults.httpsAgent = httpsAgent;
 }
@@ -45,7 +45,7 @@ app.use(session({
   saveUninitialized: false,
   cookie: {
     httpOnly: true,
-    secure: false,
+    secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     maxAge: 60 * 60 * 1000
   }
@@ -671,14 +671,26 @@ app.post("/media/upload/:id", requireAuth, upload.single("file"), async (req: Re
       return res.status(400).json({ message: "No file provided" });
     }
 
+    const allowedMimeTypes = ["image/", "video/", "audio/"];
+
+    if (!allowedMimeTypes.some(type => req.file.mimetype.startsWith(type))) {
+      return res.status(400).json({ message: "File type not allowed" });
+    }
+
     if (!fs.existsSync(MEDIA_PATH)) {
       fs.mkdirSync(MEDIA_PATH, { recursive: true });
     }
 
     const file = req.file;
-    const extension = path.extname(file.originalname);
-    const name = path.basename(file.originalname, extension);
-    const filePath = path.join(MEDIA_PATH, file.originalname);
+    const safeName = path.basename(file.originalname);
+    const extension = path.extname(safeName);
+    const name = path.basename(safeName, extension);
+    const filePath = path.join(MEDIA_PATH, safeName);
+    const resolvedPath = path.resolve(filePath);
+
+    if (!resolvedPath.startsWith(path.resolve(MEDIA_PATH))) {
+      return res.status(400).json({ message: "Invalid file name" });
+    }
 
     fs.writeFileSync(filePath, file.buffer);
 
@@ -814,9 +826,11 @@ app.delete("/media/:id", requireAuth, async (req: Request<{ id: string }, {}, { 
     const token = await getServiceToken();
 
     if (req.body.fileName) {
-      const filePath = path.join(MEDIA_PATH, req.body.fileName);
+      const safeName = path.basename(req.body.fileName);
+      const filePath = path.join(MEDIA_PATH, safeName);
+      const resolvedPath = path.resolve(filePath);
 
-      if (fs.existsSync(filePath)) {
+      if (resolvedPath.startsWith(path.resolve(MEDIA_PATH)) && fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);
       }
     }
