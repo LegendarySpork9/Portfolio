@@ -671,17 +671,16 @@ app.post("/media/upload/:id", requireAuth, upload.single("file"), async (req: Re
       return res.status(400).json({ message: "No file provided" });
     }
 
+    const file = req.file;
     const allowedMimeTypes = ["image/", "video/", "audio/"];
 
-    if (!allowedMimeTypes.some(type => req.file.mimetype.startsWith(type))) {
+    if (!allowedMimeTypes.some(type => file.mimetype.startsWith(type))) {
       return res.status(400).json({ message: "File type not allowed" });
     }
 
     if (!fs.existsSync(MEDIA_PATH)) {
       fs.mkdirSync(MEDIA_PATH, { recursive: true });
     }
-
-    const file = req.file;
     const safeName = path.basename(file.originalname);
     const extension = path.extname(safeName);
     const name = path.basename(safeName, extension);
